@@ -2,8 +2,12 @@ package com.cdw_ticket.authentication_service.exception;
 
 import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @ControllerAdvice
@@ -25,5 +29,17 @@ public class GlobalExceptionHandler {
         baseResponse.setCode(errorCode.getCode());
         baseResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.status(errorCode.getStatusCode()).body(baseResponse);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    ResponseEntity<BaseResponse> handlingValidation(MethodArgumentNotValidException exception) {
+        Map<String, String> errors = new HashMap<>();
+        exception.getBindingResult().getFieldErrors()
+                .forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
+        BaseResponse baseResponse = new BaseResponse<>();
+        baseResponse.setStatus("Error");
+        baseResponse.setCode(400);
+        baseResponse.setData(errors);
+        return ResponseEntity.status(400).body(baseResponse);
     }
 }
