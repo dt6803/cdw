@@ -45,7 +45,11 @@ public class PermissionServiceImp implements PermissionService {
 
     @Override
     public PermissionResponse update(String id, PermissionRequest request) {
-        return null;
+        var permission = permissionRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.PERMISSION_NOT_EXISTED));
+        permissionMapper.update(permission, request);
+        permissionRepository.save(permission);
+        return permissionMapper.toPermissionResponse(permission);
     }
 
     @Override
