@@ -1,7 +1,10 @@
 package com.cdw_ticket.authentication_service.dto.response;
 
+import com.cdw_ticket.authentication_service.entity.Permission;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -13,4 +16,5 @@ public class RoleResponse {
     String id;
     String name;
     String createUserId;
+    List<Permission> permissions;
 }

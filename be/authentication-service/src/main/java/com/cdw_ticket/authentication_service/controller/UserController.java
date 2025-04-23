@@ -2,6 +2,7 @@ package com.cdw_ticket.authentication_service.controller;
 
 import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
+import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
 import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
 import com.cdw_ticket.authentication_service.dto.response.UserResponse;
 import com.cdw_ticket.authentication_service.service.UserService;
@@ -45,12 +46,17 @@ public class UserController {
                 .build();
     }
 
-    @Operation(method = "PUT",
-            summary = "Update user's information",
-            description = "Send a request via this API to update user's information by it's id"
-    )
     @PutMapping("/{id}")
-    public BaseResponse<UserResponse> updateById(@PathVariable String id, @Valid @RequestBody UserUpdateRequest request) {
+    public BaseResponse<UserResponse> updateById(@PathVariable String id,
+                                                 @Valid @RequestBody UserUpdateRequest request) {
+        return BaseResponse.<UserResponse>builder()
+                .data(userService.update(id, request))
+                .build();
+    }
+
+    @PutMapping("/updateRole/{id}")
+    public BaseResponse<UserResponse> updateRoleById(@PathVariable String id,
+                                                     @Valid @RequestBody UserUpdateRoleRequest request) {
         return BaseResponse.<UserResponse>builder()
                 .data(userService.update(id, request))
                 .build();
