@@ -11,6 +11,5 @@ import org.mapstruct.MappingTarget;
 public interface PermissionMapper {
     Permission toPermission(PermissionRequest request);
     PermissionResponse toPermissionResponse(Permission permission);
-    @Mapping(target = "createUserId", ignore = true)
     void update(@MappingTarget Permission permission, PermissionRequest request);
 }

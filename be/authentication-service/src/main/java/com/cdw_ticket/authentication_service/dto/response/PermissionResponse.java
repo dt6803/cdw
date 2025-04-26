@@ -14,7 +14,6 @@ import java.util.Date;
 public class PermissionResponse {
     String id;
     String name;
-    String createUserId;
     String description;
     Date createdAt;
     Date updatedAt;
