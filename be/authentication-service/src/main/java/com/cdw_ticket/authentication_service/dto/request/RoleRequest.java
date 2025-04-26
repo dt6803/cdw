@@ -17,6 +17,5 @@ public class RoleRequest {
     @NotBlank(message = "Role's name must be not null")
     @Size(min = 3, max = 50, message = "Role's name must be between 3 and 50 characters")
     String name;
-    String createUserId;
     List<String> permissions;
 }

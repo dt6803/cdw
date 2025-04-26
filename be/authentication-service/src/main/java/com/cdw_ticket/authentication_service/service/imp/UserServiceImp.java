@@ -5,6 +5,7 @@ import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
 import com.cdw_ticket.authentication_service.dto.response.UserResponse;
 import com.cdw_ticket.authentication_service.entity.Role;
+import com.cdw_ticket.authentication_service.enums.RoleEnum;
 import com.cdw_ticket.authentication_service.exception.AppException;
 import com.cdw_ticket.authentication_service.exception.ErrorCode;
 import com.cdw_ticket.authentication_service.mapper.UserMapper;
@@ -34,8 +35,10 @@ public class UserServiceImp implements UserService {
     @Override
     public UserResponse create(UserCreationRequest request) {
         var user = userMapper.toUser(request);
-        user = userRepository.save(user);
-        return userMapper.toUserResponse(user);
+        HashSet<Role> roles = new HashSet<>();
+        roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(roles::add);
+        user.setRoles(roles);
+        return userMapper.toUserResponse(userRepository.save(user));
     }
 
     @Override

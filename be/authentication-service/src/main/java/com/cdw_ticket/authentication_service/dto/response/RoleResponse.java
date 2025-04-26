@@ -15,6 +15,5 @@ import java.util.List;
 public class RoleResponse {
     String id;
     String name;
-    String createUserId;
     List<Permission> permissions;
 }
