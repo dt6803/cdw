@@ -39,3 +39,7 @@ app:
     username: admin
     password: admin
     email: admin123@gmail.com
+
+jwt:
+  secret-key: 8tpiQGxC0IMlKYVZ1oSiGl6X7eAvg8MZ
+  expiry-hour: 1
