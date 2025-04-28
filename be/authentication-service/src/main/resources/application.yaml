@@ -41,5 +41,14 @@ app:
     email: admin123@gmail.com
 
 jwt:
-  secret-key: 8tpiQGxC0IMlKYVZ1oSiGl6X7eAvg8MZ
-  expiry-hour: 1
+  secret-key: 3c03248c00967ffebb8cee416bd0382d130da0b0cc3015ea149e40536fb80de1
+  access-expiration: 24
+  refresh-expiration: 168
+
+#logging:
+#  level:
+#    org.springframework.web: DEBUG
+#    org.springframework.security: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.springframework.http.converter: TRACE
+#    com.fasterxml.jackson.databind: DEBUG

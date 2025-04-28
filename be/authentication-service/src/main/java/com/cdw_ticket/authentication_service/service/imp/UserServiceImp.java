@@ -5,6 +5,7 @@ import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
 import com.cdw_ticket.authentication_service.dto.response.UserResponse;
 import com.cdw_ticket.authentication_service.entity.Role;
+import com.cdw_ticket.authentication_service.entity.User;
 import com.cdw_ticket.authentication_service.enums.RoleEnum;
 import com.cdw_ticket.authentication_service.exception.AppException;
 import com.cdw_ticket.authentication_service.exception.ErrorCode;
@@ -18,6 +19,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,13 +35,14 @@ public class UserServiceImp implements UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;
-
+    PasswordEncoder passwordEncoder;
     @Override
     public UserResponse create(UserCreationRequest request) {
         var user = userMapper.toUser(request);
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(roles::add);
         user.setRoles(roles);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         return userMapper.toUserResponse(userRepository.save(user));
     }
 
@@ -87,5 +90,17 @@ public class UserServiceImp implements UserService {
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException());
+        return user;
+    }
+
+    @Override
+    public Set<String> getRolesById(String id) {
+        return userRepository.getRolesById(id);
     }
 }
