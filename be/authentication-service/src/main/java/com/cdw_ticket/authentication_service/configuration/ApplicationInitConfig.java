@@ -26,6 +26,7 @@ public class ApplicationInitConfig {
     UserRepository userRepository;
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
+
     PasswordEncoder passwordEncoder;
 
     @Value("${app.admin-info.username}")
@@ -71,7 +72,6 @@ public class ApplicationInitConfig {
                         User adminUser = User.builder()
                                 .username(usernameAdmin)
                                 .password(passwordEncoder.encode(passwordAdmin))
-                                .password(passwordAdmin)
                                 .email(emailAdmin)
                                 .build();
                         roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(adminUser.getRoles()::add);
