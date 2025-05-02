@@ -25,7 +25,6 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-
     String username;
     String password;
     String email;

@@ -1,5 +1,6 @@
 package com.cdw_ticket.authentication_service.mapper;
 
+import com.cdw_ticket.authentication_service.dto.request.RegisterRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
@@ -11,7 +12,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    User toUser(UserCreationRequest request);
+    User toUser(RegisterRequest request);
     UserResponse toUserResponse(User user);
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
     @Mapping(target = "roles", ignore = true)

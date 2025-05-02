@@ -1,5 +1,6 @@
 package com.cdw_ticket.authentication_service.service;
 
+import com.cdw_ticket.authentication_service.dto.request.RegisterRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserService {
-    UserResponse create(UserCreationRequest request);
+    UserResponse create(RegisterRequest request);
     List<UserResponse> getAll();
     UserResponse getById(String id);
     UserResponse update(String id, UserUpdateRequest request);

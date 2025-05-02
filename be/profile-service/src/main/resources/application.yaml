@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://cdw-ticket-profile-service-hoangtunqs134-03ce.j.aivencloud.com:14840/defaultdb?sslMode=REQUIRED
     username: avnadmin
-    password: ${AIVEN_PASSWORD}
+    password: AVNS_DGYHFQzWIY2P3f3UW53
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

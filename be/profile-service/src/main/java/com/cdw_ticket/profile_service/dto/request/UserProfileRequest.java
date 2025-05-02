@@ -14,7 +14,9 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserProfileRequest {
     @NotBlank(message = "User's id must be not blank")
-    int userId;
+    String userId;
+    @NotBlank(message = "User's id must be not blank")
+    String email;
     @NotBlank(message = "Full name must be not blank")
     String fullName;
     @NotBlank(message = "Date of birth must be not blank")

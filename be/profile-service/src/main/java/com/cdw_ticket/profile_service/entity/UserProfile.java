@@ -16,11 +16,11 @@ import java.time.LocalDate;
 @Table(name = "user_profiles")
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    String id;
 
     @Column(name = "user_id", unique = true)
-    int userId;
+    String userId;
 
     @Column(name = "full_name")
     String fullName;

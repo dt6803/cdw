@@ -1,5 +1,6 @@
 package com.cdw_ticket.authentication_service.controller;
 
+import com.cdw_ticket.authentication_service.dto.request.RegisterRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
@@ -26,7 +27,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/registration")
-    public BaseResponse<UserResponse> create(@Valid @RequestBody UserCreationRequest request) {
+    public BaseResponse<UserResponse> create(@Valid @RequestBody RegisterRequest request) {
         return BaseResponse.<UserResponse>builder()
                 .data(userService.create(request))
                 .build();

@@ -1,9 +1,10 @@
-package com.cdw_ticket.profile_service.dto.response;
+package com.cdw_ticket.authentication_service.dto.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+
 @Builder
 @Getter
 @Setter
