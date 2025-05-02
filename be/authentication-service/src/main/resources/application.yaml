@@ -7,9 +7,9 @@ spring:
   application:
     name: authentication-service
   datasource:
-    url: jdbc:postgresql://dpg-cvl0j7c9c44c73f970jg-a.singapore-postgres.render.com:5432/authentication_yyed
-    username: root
-    password: oTQIUKUbZ5zwQDT3IX18xvjNP6A3AfcU
+    url: "jdbc:postgresql://cdw-ticket-authentication-service-hoangtunqs134-03ce.c.aivencloud.com:14840/defaultdb?sslmode=require"
+    username: avnadmin
+    password: ENC(AVNS_p3IPiJOXS_p0fAofory)
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -17,14 +17,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
+
 springdoc:
   api-docs:
-    enabled: true        # B?t API Docs
-    path: /v1/api-docs      # ???ng d?n c?a API Docs (M?c ??nh: /v3/api-docs)
+    enabled: true
+    path: /v1/api-docs
   swagger-ui:
-    enabled: true        # B?t Swagger UI
-    path: /swagger-ui    # ???ng d?n giao di?n Swagger
-    operations-sorter: method # S?p x?p API
+    enabled: true
+    path: /swagger-ui
+    operations-sorter: method
 
 openapi:
   service:
@@ -39,7 +40,18 @@ app:
     username: admin
     password: admin
     email: admin123@gmail.com
+  services:
+    profile: http://localhost:8081/profile
 
 jwt:
-  secret-key: 8tpiQGxC0IMlKYVZ1oSiGl6X7eAvg8MZ
-  expiry-hour: 1
+  secret-key: 3c03248c00967ffebb8cee416bd0382d130da0b0cc3015ea149e40536fb80de1
+  access-expiration: 24
+  refresh-expiration: 168
+
+#logging:
+#  level:
+#    org.springframework.web: DEBUG
+#    org.springframework.security: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.springframework.http.converter: TRACE
+#    com.fasterxml.jackson.databind: DEBUG

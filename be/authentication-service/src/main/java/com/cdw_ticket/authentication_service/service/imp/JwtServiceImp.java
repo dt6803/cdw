@@ -1,15 +1,14 @@
 package com.cdw_ticket.authentication_service.service.imp;
 
 import com.cdw_ticket.authentication_service.service.JwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,7 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class JwtServiceImp implements JwtService {
 
     @NonFinal
@@ -29,42 +29,62 @@ public class JwtServiceImp implements JwtService {
     String SECRET_KEY;
 
     @NonFinal
-    @Value("${jwt.expiry-hour}")
-    int expiryHour;
+    @Value("${jwt.access-expiration}")
+    int accessExpiration;
+
+    @NonFinal
+    @Value("${jwt.refresh-expiration}")
+    int refreshExpiration;
+
     @Override
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token, Claims::getIssuer);
     }
 
     @Override
-    public String generateToken(UserDetails user) {
-        return generateToken(user, new HashMap<>());
+    public String generateAccessToken(UserDetails user) {
+        return buildToken(user, new HashMap<>(), accessExpiration);
+    }
+
+    @Override
+    public String generateRefreshToken(UserDetails user) {
+        return buildToken(user, new HashMap<>(), refreshExpiration);
     }
 
     @Override
     public boolean isValid(String token, UserDetails user) {
         final String username = extractUsername(token);
-
         return (username.equals(user.getUsername()) && !isExpiredToken(token));
     }
 
-    private String generateToken(UserDetails user, HashMap<String, Object> extraClaims) {
+    @Override
+    public boolean isValid(String token) {
+        return !isExpiredToken(token);
+    }
+
+    private String buildToken(UserDetails user, HashMap<String, Object> extraClaims, long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setIssuer(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * expiryHour))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     private boolean isExpiredToken(String token) {
-        return extractExpireDate(token).before(new Date());
+        try {
+            return extractExpireDate(token).before(new Date());
+        } catch (ExpiredJwtException e) {
+            return true;
+        } catch (JwtException e) {
+            return true;
+        }
     }
 
     private Date extractExpireDate(String token) {
-        return extractClaim(token, Claims::getIssuedAt);
+        return extractClaim(token, Claims::getExpiration);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimSolver) {

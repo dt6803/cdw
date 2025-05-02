@@ -16,6 +16,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class ApplicationInitConfig {
     RoleRepository roleRepository;
     PermissionRepository permissionRepository;
 
+    PasswordEncoder passwordEncoder;
 
     @Value("${app.admin-info.username}")
     @NonFinal
@@ -69,8 +71,7 @@ public class ApplicationInitConfig {
                     .ifPresentOrElse(user -> log.info("Admin user already exists"), () -> {
                         User adminUser = User.builder()
                                 .username(usernameAdmin)
-//                                .password(passwordEncoder.encode(passwordAdmin))
-                                .password(passwordAdmin)
+                                .password(passwordEncoder.encode(passwordAdmin))
                                 .email(emailAdmin)
                                 .build();
                         roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(adminUser.getRoles()::add);

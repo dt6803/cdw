@@ -1,13 +1,17 @@
 package com.cdw_ticket.authentication_service.service.imp;
 
+import com.cdw_ticket.authentication_service.client.ProfileClient;
+import com.cdw_ticket.authentication_service.dto.request.RegisterRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
 import com.cdw_ticket.authentication_service.dto.response.UserResponse;
 import com.cdw_ticket.authentication_service.entity.Role;
+import com.cdw_ticket.authentication_service.entity.User;
 import com.cdw_ticket.authentication_service.enums.RoleEnum;
 import com.cdw_ticket.authentication_service.exception.AppException;
 import com.cdw_ticket.authentication_service.exception.ErrorCode;
+import com.cdw_ticket.authentication_service.mapper.ProfileMapper;
 import com.cdw_ticket.authentication_service.mapper.UserMapper;
 import com.cdw_ticket.authentication_service.repository.RoleRepository;
 import com.cdw_ticket.authentication_service.repository.UserRepository;
@@ -18,6 +22,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,14 +38,24 @@ public class UserServiceImp implements UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;
-
+    PasswordEncoder passwordEncoder;
+    ProfileClient profileClient;
+    ProfileMapper profileMapper;
     @Override
-    public UserResponse create(UserCreationRequest request) {
+    public UserResponse create(RegisterRequest request) {
         var user = userMapper.toUser(request);
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(roles::add);
         user.setRoles(roles);
-        return userMapper.toUserResponse(userRepository.save(user));
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user = userRepository.save(user);
+
+        var profileRequest = profileMapper.toProfile(request);
+        profileRequest.setUserId(user.getId());
+        var profileResponse = profileClient.createProfile(profileRequest);
+        log.info("Profile created: {}", profileResponse.toString());
+
+        return userMapper.toUserResponse(user);
     }
 
     @Override
@@ -87,5 +102,17 @@ public class UserServiceImp implements UserService {
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        var user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException());
+        return user;
+    }
+
+    @Override
+    public Set<String> getRolesById(String id) {
+        return userRepository.getRolesById(id);
     }
 }
