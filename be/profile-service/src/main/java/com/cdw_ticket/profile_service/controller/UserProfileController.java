@@ -16,16 +16,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/profiles")
+@RequestMapping("/users")
 public class UserProfileController {
     UserProfileService userProfileService;
-
-    @PostMapping
-    public BaseResponse<UserProfileResponse> create(@Valid @RequestBody UserProfileRequest request) {
-        return BaseResponse.<UserProfileResponse>builder()
-                .data(userProfileService.create(request))
-                .build();
-    }
 
     @GetMapping("/{userId}")
     public BaseResponse<UserProfileResponse> getByUserId(@PathVariable String userId) {
