@@ -1,9 +1,11 @@
 package com.cdw_ticket.authentication_service.controller;
 
+import com.cdw_ticket.authentication_service.dto.request.IntrospectRequest;
 import com.cdw_ticket.authentication_service.dto.request.LogInRequest;
 import com.cdw_ticket.authentication_service.dto.request.RefreshRequest;
 import com.cdw_ticket.authentication_service.dto.response.AuthenticationResponse;
 import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
+import com.cdw_ticket.authentication_service.dto.response.IntrospectResponse;
 import com.cdw_ticket.authentication_service.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
@@ -35,6 +37,12 @@ public class AuthenticationController {
                 .build();
     }
 
+    @PostMapping("/introspect")
+    public BaseResponse<IntrospectResponse> introspect(@RequestBody IntrospectRequest request) {
+        return BaseResponse.<IntrospectResponse>builder()
+                .data(authenticationService.introspectToken(request))
+                .build();
+    }
 
     @PostMapping("/logout")
     public BaseResponse<String> logout(HttpServletRequest request) {

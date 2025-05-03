@@ -4,6 +4,10 @@ server:
 app:
   api-prefix: /api/v1
 
+services:
+  auth: http://localhost:8080/authentication
+  user: http://localhost:8081
+
 spring:
   application:
     name: api-gateway

@@ -1,8 +1,10 @@
 package com.cdw_ticket.authentication_service.service.imp;
 
+import com.cdw_ticket.authentication_service.dto.request.IntrospectRequest;
 import com.cdw_ticket.authentication_service.dto.request.LogInRequest;
 import com.cdw_ticket.authentication_service.dto.request.RefreshRequest;
 import com.cdw_ticket.authentication_service.dto.response.AuthenticationResponse;
+import com.cdw_ticket.authentication_service.dto.response.IntrospectResponse;
 import com.cdw_ticket.authentication_service.entity.Token;
 import com.cdw_ticket.authentication_service.entity.User;
 import com.cdw_ticket.authentication_service.exception.AppException;
@@ -100,5 +102,12 @@ public class AuthenticationServiceImp implements AuthenticationService {
         String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
         tokenService.delete(username);
+    }
+
+    @Override
+    public IntrospectResponse introspectToken(IntrospectRequest request) {
+        return IntrospectResponse.builder()
+                .isValid(jwtService.isValid(request.getToken()))
+                .build();
     }
 }
