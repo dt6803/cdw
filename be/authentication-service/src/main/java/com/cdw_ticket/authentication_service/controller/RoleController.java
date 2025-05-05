@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class RoleController {
     RoleService roleService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public BaseResponse<RoleResponse> create(@Valid @RequestBody RoleRequest request) {
         return BaseResponse.<RoleResponse>builder()
@@ -29,6 +31,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public BaseResponse<List<RoleResponse>> getAll() {
         return BaseResponse.<List<RoleResponse>>builder()
@@ -36,6 +39,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public BaseResponse<RoleResponse> getById(@PathVariable String id) {
         return BaseResponse.<RoleResponse>builder()
@@ -43,6 +47,7 @@ public class RoleController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public BaseResponse<String> delete(@PathVariable String id) {
         roleService.delete(id);

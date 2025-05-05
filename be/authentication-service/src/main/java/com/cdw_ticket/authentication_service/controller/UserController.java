@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public BaseResponse<List<UserResponse>> getAll() {
         return BaseResponse.<List<UserResponse>>builder()
@@ -40,6 +42,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public BaseResponse<UserResponse> getById(@PathVariable String id) {
         return BaseResponse.<UserResponse>builder()
@@ -47,6 +50,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public BaseResponse<UserResponse> updateById(@PathVariable String id,
                                                  @Valid @RequestBody UserUpdateRequest request) {
@@ -55,6 +59,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateRole/{id}")
     public BaseResponse<UserResponse> updateRoleById(@PathVariable String id,
                                                      @Valid @RequestBody UserUpdateRoleRequest request) {
@@ -63,6 +68,7 @@ public class UserController {
                 .build();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public BaseResponse<Void> deleteById(@PathVariable String id) {
         return BaseResponse.<Void>builder()
