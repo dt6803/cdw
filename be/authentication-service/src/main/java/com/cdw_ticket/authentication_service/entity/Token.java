@@ -22,9 +22,7 @@ public class Token {
     String username;
 
     @Column(name = "access_token")
-    @NotBlank
     String accessToken;
     @Column(name = "refresh_token")
-    @NotBlank
     String refreshToken;
 }
