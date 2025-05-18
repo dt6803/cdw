@@ -1,4 +1,4 @@
-package com.cdw_ticket.movie_service.service.imp;
+package com.cdw_ticket.movie_service.service.impl;
 
 import com.cdw_ticket.movie_service.dto.request.MovieRequest;
 import com.cdw_ticket.movie_service.dto.response.MovieResponse;
@@ -12,14 +12,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class MovieServiceImp implements MovieService {
+public class MovieServiceImpl implements MovieService {
     MovieRepository movieRepository;
     MovieMapper movieMapper;
 
