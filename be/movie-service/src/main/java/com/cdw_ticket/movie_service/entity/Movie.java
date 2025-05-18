@@ -47,17 +47,15 @@ public class Movie {
     @Builder.Default
     Set<Genre> genres = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "director_id")
-    Person director;
+    @Column(name = "director")
+    String directorName;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "movie_cast",
-            joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "cast_id")
-    )
-    Set<Person> casts = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(
+            name = "movie_casts",
+            joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "casts")
+    List<String> casts;
 
     @Enumerated(EnumType.STRING)
     Rating rating;
