@@ -1,6 +1,8 @@
 package com.cdw_ticket.movie_service.exception;
 
 import com.cdw_ticket.movie_service.dto.response.BaseResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,14 +14,17 @@ import java.util.Map;
 
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
-    ResponseEntity<BaseResponse> handlingRunTimeException(RuntimeException exception) {
-        BaseResponse baseResponse = new BaseResponse<>();
+    public ResponseEntity<BaseResponse<?>> handleUncaughtException(Exception exception) {
+        log.error("Unhandled exception caught: ", exception);
+        BaseResponse<?> baseResponse = new BaseResponse<>();
         baseResponse.setStatus("Error");
-        baseResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage());
+        baseResponse.setMessage(ErrorCode.UNCATEGORIZED_EXCEPTION.getMessage()
+                + " - " + exception.getMessage());
         baseResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
-        return ResponseEntity.badRequest().body(baseResponse);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(baseResponse);
     }
 
     @ExceptionHandler(value = AppException.class)

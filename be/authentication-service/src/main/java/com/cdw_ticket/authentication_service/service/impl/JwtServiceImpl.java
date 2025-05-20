@@ -1,4 +1,4 @@
-package com.cdw_ticket.authentication_service.service.imp;
+package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.service.JwtService;
 import io.jsonwebtoken.*;
@@ -22,7 +22,7 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class JwtServiceImp implements JwtService {
+public class JwtServiceImpl implements JwtService {
 
     @NonFinal
     @Value("${jwt.secret-key}")

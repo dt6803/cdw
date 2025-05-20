@@ -1,4 +1,4 @@
-package com.cdw_ticket.authentication_service.service.imp;
+package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.dto.request.RoleRequest;
 import com.cdw_ticket.authentication_service.dto.request.RoleUpdateRequest;
@@ -25,7 +25,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class RoleServiceImp implements RoleService {
+public class RoleServiceImpl implements RoleService {
     RoleRepository roleRepository;
     RoleMapper roleMapper;
     PermissionRepository permissionRepository;

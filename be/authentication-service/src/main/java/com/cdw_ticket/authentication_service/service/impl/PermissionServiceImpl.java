@@ -1,4 +1,4 @@
-package com.cdw_ticket.authentication_service.service.imp;
+package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.dto.request.PermissionRequest;
 import com.cdw_ticket.authentication_service.dto.response.PermissionResponse;
@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class PermissionServiceImp implements PermissionService {
+public class PermissionServiceImpl implements PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;
 

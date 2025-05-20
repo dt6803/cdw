@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/movies")
+@Slf4j
 public class MovieController {
     MovieService movieService;
 
@@ -27,7 +29,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<MovieResponse> getById(@RequestParam String id) {
+    public BaseResponse<MovieResponse> getById(@PathVariable String id) {
         return BaseResponse.<MovieResponse>builder()
                 .data(movieService.getById(id))
                 .build();
@@ -35,6 +37,7 @@ public class MovieController {
 
     @PostMapping
     public BaseResponse<MovieResponse> create(@Valid @RequestBody MovieRequest request) {
+        log.info(request.getDirector());
         return BaseResponse.<MovieResponse>builder()
                 .data(movieService.create(request))
                 .build();
@@ -42,7 +45,7 @@ public class MovieController {
 
     @PutMapping("/{id}")
     public BaseResponse<MovieResponse> updateById(
-            @RequestParam String id,
+            @PathVariable String id,
             @Valid @RequestBody MovieRequest request
     ) {
         return BaseResponse.<MovieResponse>builder()
@@ -51,7 +54,8 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public BaseResponse<Void> delete(@RequestParam String id) {
+    public BaseResponse<Void> delete(@PathVariable String id) {
+        movieService.deleteById(id);
         return BaseResponse.<Void>builder()
                 .message("Delete successfully!")
                 .build();

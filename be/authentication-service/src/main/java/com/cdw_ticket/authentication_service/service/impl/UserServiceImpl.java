@@ -1,8 +1,7 @@
-package com.cdw_ticket.authentication_service.service.imp;
+package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.client.ProfileClient;
 import com.cdw_ticket.authentication_service.dto.request.RegisterRequest;
-import com.cdw_ticket.authentication_service.dto.request.UserCreationRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRequest;
 import com.cdw_ticket.authentication_service.dto.request.UserUpdateRoleRequest;
 import com.cdw_ticket.authentication_service.dto.response.UserResponse;
@@ -34,7 +33,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-public class UserServiceImp implements UserService {
+public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;

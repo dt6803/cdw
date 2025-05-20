@@ -25,7 +25,7 @@ public class MovieResponse {
 
     Date releaseDate;
 
-    Set<Genre> genres;
+    Set<String> genres;
 
     String director;
 

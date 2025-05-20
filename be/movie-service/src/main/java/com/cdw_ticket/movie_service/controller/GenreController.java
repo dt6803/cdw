@@ -35,6 +35,7 @@ public class GenreController {
 
     @DeleteMapping("/{id}")
     public BaseResponse<Void> delete(@PathVariable String id) {
+        genreService.delete(id);
         return BaseResponse.<Void>builder()
                 .message("Delete successfully!")
                 .build();

@@ -1,6 +1,6 @@
 package com.cdw_ticket.movie_service.dto.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class GenreRequest {
-    @NotNull(message = "Genre's name must not be null")
+    @NotBlank(message = "Genre's name must not be blank")
     String name;
     String description;
 }

@@ -3,6 +3,7 @@ package com.cdw_ticket.movie_service.dto.request;
 import com.cdw_ticket.movie_service.entity.Genre;
 import com.cdw_ticket.movie_service.enums.MovieStatus;
 import com.cdw_ticket.movie_service.enums.Rating;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,7 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class MovieRequest {
-    @NotNull(message = "Title must not be null")
+    @NotBlank(message = "Title must not be blank")
     String title;
 
     String description;
@@ -27,7 +28,7 @@ public class MovieRequest {
 
     Date releaseDate;
 
-    Set<Genre> genres;
+    Set<String> genres;
 
     String director;
 

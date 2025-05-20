@@ -1,4 +1,4 @@
-package com.cdw_ticket.api_gateway.service.imp;
+package com.cdw_ticket.api_gateway.service.impl;
 
 import com.cdw_ticket.api_gateway.client.AuthenticationClient;
 import com.cdw_ticket.api_gateway.dto.request.IntrospectRequest;
@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationServiceImp implements AuthenticationService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     AuthenticationClient authClient;
 
     @Override
