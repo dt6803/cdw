@@ -48,7 +48,7 @@ public class Movie {
     Set<Genre> genres = new HashSet<>();
 
     @Column(name = "director")
-    String directorName;
+    String director;
 
     @ElementCollection
     @CollectionTable(

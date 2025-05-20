@@ -29,3 +29,18 @@ spring:
             - Path=${app.api-prefix}/profile/users/**
           filters:
             - StripPrefix=2
+
+        - id: movie-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=${app.api-prefix}/movies/**
+            - Path=${app.api-prefix}/genres/**
+          filters:
+            - StripPrefix=2
+
+        - id: showtime-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=${app.api-prefix}/showtimes/**
+          filters:
+            - StripPrefix=2

@@ -7,7 +7,7 @@ spring:
   application:
     name: authentication-service
   datasource:
-    url: "jdbc:postgresql://cdw-ticket-authentication-service-hoangtunqs134-03ce.c.aivencloud.com:14840/defaultdb?sslmode=require"
+    url: "jdbc:postgresql://cdw-ticket-authentication-service-hoangtunqs134-03ce.c.aivencloud.com:14840/authentication-service?sslmode=require"
     username: avnadmin
     password: AVNS_p3IPiJOXS_p0fAofory
     driver-class-name: org.postgresql.Driver

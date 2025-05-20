@@ -2,6 +2,7 @@ package com.cdw_ticket.movie_service.service.impl;
 
 import com.cdw_ticket.movie_service.dto.request.GenreRequest;
 import com.cdw_ticket.movie_service.dto.response.GenreResponse;
+import com.cdw_ticket.movie_service.entity.Genre;
 import com.cdw_ticket.movie_service.mapper.GenreMapper;
 import com.cdw_ticket.movie_service.repository.GenreRepository;
 import com.cdw_ticket.movie_service.service.GenreService;
@@ -10,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,11 +36,24 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.findAll()
                 .stream()
                 .map(genreMapper::toGenreResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public void delete(String id) {
         genreRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Genre> getGenresByNames(Set<String> names) {
+        return genreRepository.findByNameIn(names);
+    }
+
+    @Override
+    public Set<String> getStrGenres(Set<Genre> genres) {
+        if (genres == null) return Collections.emptySet();
+        return genres.stream()
+                .map(Genre::getName)
+                .collect(Collectors.toSet());
     }
 }

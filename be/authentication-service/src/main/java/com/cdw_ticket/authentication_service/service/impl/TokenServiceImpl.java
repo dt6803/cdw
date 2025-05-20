@@ -1,4 +1,4 @@
-package com.cdw_ticket.authentication_service.service.imp;
+package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.entity.Token;
 import com.cdw_ticket.authentication_service.exception.AppException;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class TokenServiceImp implements TokenService {
+public class TokenServiceImpl implements TokenService {
     TokenRepository tokenRepository;
     @Override
     public Token getByUsername(String username) {

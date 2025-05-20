@@ -30,9 +30,4 @@
 | POST   | `/api/genres`      | Thêm thể loại mới (Admin) |
 | DELETE | `/api/genres`      | Xóa thể loại (Admin)      |
 
-### 🎭 Person API Endpoints
-| Method | Endpoint       | Mô tả                   |
-|--------|----------------|-------------------------|
-| GET    | `/api/persons` | Lấy tất cả person       |
-| POST   | `/api/persons` | Thêm thể person (Admin) |
-| DELETE | `/api/persons` | Xóa person (Admin)      |
+

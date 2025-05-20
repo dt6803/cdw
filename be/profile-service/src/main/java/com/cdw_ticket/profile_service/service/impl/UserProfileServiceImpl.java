@@ -1,4 +1,4 @@
-package com.cdw_ticket.profile_service.service.imp;
+package com.cdw_ticket.profile_service.service.impl;
 
 import com.cdw_ticket.profile_service.dto.request.UserProfileRequest;
 import com.cdw_ticket.profile_service.dto.request.UserProfileUpdateRequest;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserProfileServiceImp implements UserProfileService {
+public class UserProfileServiceImpl implements UserProfileService {
     UserProfileRepository userProfileRepository;
     UserProfileMapper userProfileMapper;
 
