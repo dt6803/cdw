@@ -13,6 +13,10 @@ import org.springframework.http.HttpStatusCode;
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     BRAND_NOT_EXISTED(1001, "Brand not existed", HttpStatus.NOT_FOUND),
+    CINEMA_NOT_EXISTED(1001, "Cinema not existed", HttpStatus.NOT_FOUND),
+    ROOM_NOT_EXISTED(1004, "Room not existed", HttpStatus.NOT_FOUND),
+    SEAT_NOT_EXISTED(10045, "Seat not existed", HttpStatus.NOT_FOUND),
+    ROOM_CAPACITY_EXCEED(1011, "Cannot add more seats: capacity exceeded", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(403, "Access denied", HttpStatus.UNAUTHORIZED)
     ;
 

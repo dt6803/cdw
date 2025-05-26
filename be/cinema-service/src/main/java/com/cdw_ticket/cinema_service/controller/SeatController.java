@@ -1,0 +1,51 @@
+package com.cdw_ticket.cinema_service.controller;
+
+import com.cdw_ticket.cinema_service.dto.request.SeatLayoutRequest;
+import com.cdw_ticket.cinema_service.dto.request.SeatRequest;
+import com.cdw_ticket.cinema_service.dto.response.BaseResponse;
+import com.cdw_ticket.cinema_service.dto.response.SeatLayoutResponse;
+import com.cdw_ticket.cinema_service.dto.response.SeatResponse;
+import com.cdw_ticket.cinema_service.service.SeatService;
+import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+public class SeatController {
+    SeatService seatService;
+
+    @PostMapping("/rooms/{roomId}/seats/layout")
+    public BaseResponse<SeatLayoutResponse> createSeatLayout(@PathVariable String roomId,
+                                                             @Valid @RequestBody SeatLayoutRequest request) {
+        return BaseResponse.<SeatLayoutResponse>builder()
+                .data(seatService.createSeatLayout(request))
+                .build();
+    }
+
+    @GetMapping("/rooms/{roomId}/seats/layout")
+    public BaseResponse<SeatLayoutResponse> getSeatLayout(@PathVariable String roomId) {
+        return BaseResponse.<SeatLayoutResponse>builder()
+                .data(seatService.getSeatLayoutByRoomId(roomId))
+                .build();
+    }
+
+    @PutMapping("/rooms/{roomId}/seats/layout")
+    public BaseResponse<SeatLayoutResponse> updateSeatLayout(@PathVariable String roomId,
+                                                             @Valid @RequestBody SeatLayoutRequest request) {
+        return BaseResponse.<SeatLayoutResponse>builder()
+                .data(seatService.updateSeatLayoutByRoomId(roomId, request))
+                .build();
+    }
+
+    @PutMapping("/seats/{id}")
+    public BaseResponse<SeatResponse> updateSeat(@PathVariable String id,
+                                                 @Valid @RequestBody SeatRequest request) {
+        return BaseResponse.<SeatResponse>builder()
+                .data(seatService.updateSeat(id, request))
+                .build();
+    }
+}

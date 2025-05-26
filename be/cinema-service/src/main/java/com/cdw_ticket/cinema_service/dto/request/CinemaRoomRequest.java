@@ -1,16 +1,10 @@
 package com.cdw_ticket.cinema_service.dto.request;
 
-import com.cdw_ticket.cinema_service.entity.Cinema;
-import com.cdw_ticket.cinema_service.entity.Seat;
 import com.cdw_ticket.cinema_service.enums.RoomType;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Builder
 @Getter
@@ -21,9 +15,9 @@ import java.util.List;
 public class CinemaRoomRequest {
     @NotBlank(message = "Room's name must be not blank")
     String name;
+    @NotNull(message = "Room's type must be not null")
     RoomType type;
     @NotNull(message = "Cinema room's capacity must be not null")
     int capacity;
-
     String cinemaId;
 }

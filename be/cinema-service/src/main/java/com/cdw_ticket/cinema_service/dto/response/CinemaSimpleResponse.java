@@ -15,7 +15,7 @@ public class CinemaSimpleResponse {
     String name;
     String address;
     String city;
-    CinemaBrand cinemaBrand;
+    CinemaBrand brand;
     String description;
     String imageUrl;
 }

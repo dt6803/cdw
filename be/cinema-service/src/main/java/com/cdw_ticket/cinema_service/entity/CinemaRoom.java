@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "auditoriums")
+@Table(name = "rooms")
 public class CinemaRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,5 +36,4 @@ public class CinemaRoom {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     List<Seat> seats = new ArrayList<>();
-
 }

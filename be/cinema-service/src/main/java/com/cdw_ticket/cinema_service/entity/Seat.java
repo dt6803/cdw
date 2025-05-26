@@ -1,9 +1,12 @@
 package com.cdw_ticket.cinema_service.entity;
 
+import com.cdw_ticket.cinema_service.enums.SeatStatus;
 import com.cdw_ticket.cinema_service.enums.SeatType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.math.BigDecimal;
 
 @Entity
 @Builder
@@ -18,14 +21,24 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Column(name = "row_code") // A, B, C...
-    String rowCode;
+    @Column(name = "seat_code") // A, B, C...
+    String seatCode;
 
-    @Column(name = "seat_number") // 1, 2, 3...
-    int seatNumber;
+    @Column(name = "row_number") // 1, 2, 3...
+    int rowNumber;
+
+    @Column(name = "col_number") // 1, 2, 3...
+    int colNumber;
 
     @Enumerated(EnumType.STRING)
     SeatType type; // NORMAL, VIP, COUPLE
+
+    @Column(name = "price")
+    BigDecimal price;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    SeatStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")

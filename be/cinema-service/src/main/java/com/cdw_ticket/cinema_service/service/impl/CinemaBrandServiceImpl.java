@@ -2,6 +2,7 @@ package com.cdw_ticket.cinema_service.service.impl;
 
 import com.cdw_ticket.cinema_service.dto.request.CinemaBrandRequest;
 import com.cdw_ticket.cinema_service.dto.response.CinemaBrandResponse;
+import com.cdw_ticket.cinema_service.entity.CinemaBrand;
 import com.cdw_ticket.cinema_service.exception.AppException;
 import com.cdw_ticket.cinema_service.exception.ErrorCode;
 import com.cdw_ticket.cinema_service.mapper.CinemaBrandMapper;
@@ -48,5 +49,11 @@ public class CinemaBrandServiceImpl implements CinemaBrandService {
     @Override
     public void delete(String id) {
         cinemaBrandRepository.deleteById(id);
+    }
+
+    @Override
+    public CinemaBrand findById(String id) {
+        return cinemaBrandRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.BRAND_NOT_EXISTED));
     }
 }

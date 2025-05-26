@@ -1,6 +1,5 @@
 package com.cdw_ticket.cinema_service.dto.response;
 
-import com.cdw_ticket.cinema_service.enums.RoomType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -12,9 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CinemaRoomResponse {
-    String id;
-    String name;
-    RoomType type;
-    int capacity;
+public class SeatLayoutResponse {
+    String roomId;
+    int total;
+    List<SeatResponse> seats;
 }
