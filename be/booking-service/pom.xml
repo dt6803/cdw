@@ -8,11 +8,11 @@
 		<version>3.4.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.cdw_ticket</groupId>
-	<artifactId>profile-service</artifactId>
+	<groupId>com.cdw-ticket</groupId>
+	<artifactId>booking-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>profile-service</name>
-	<description>Profile Service</description>
+	<name>booking-service</name>
+	<description>Booking service</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -67,8 +67,22 @@
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 	</dependencies>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>2024.0.1</version> <!-- Chỉnh version phù hợp -->
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>

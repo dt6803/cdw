@@ -1,6 +1,9 @@
-package com.cdw_ticket.authentication_service.exception;
+package com.cdw_ticket.booking_service.exception;
 
-import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
+import com.cdw_ticket.booking_service.dto.response.BaseResponse;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.nio.file.AccessDeniedException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,5 +60,30 @@ public class GlobalExceptionHandler {
         baseResponse.setMessage(ErrorCode.UNAUTHENTICATED.getMessage());
         baseResponse.setCode(ErrorCode.UNAUTHENTICATED.getCode());
         return ResponseEntity.badRequest().body(baseResponse);
+    }
+
+    @ExceptionHandler(value = FeignException.class)
+    public ResponseEntity<BaseResponse<Object>> handlingFeignException(FeignException exception) {
+        String message = exception.getMessage();
+        String responseBody = exception.contentUTF8();
+        String errorMessage = extractMessageFromFeignResponse(responseBody);
+        BaseResponse<Object> response = BaseResponse.<Object>builder()
+                .status("Error")
+                .code(9998)
+                .message(errorMessage != null ? errorMessage : message)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(exception.status()).body(response);
+    }
+
+    private String extractMessageFromFeignResponse(String responseBody) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(responseBody);
+            return root.path("message").asText();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

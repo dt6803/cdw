@@ -1,0 +1,24 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /booking
+
+spring:
+  application:
+    name: booking-service
+  datasource:
+    url: jdbc:postgresql://ep-jolly-meadow-a12tbdro.ap-southeast-1.aws.neon.tech/booking-service?sslmode=require
+    username: neondb_owner
+    password: npg_oAz8IGRuOpt0
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+app:
+  services:
+    showtime-service: http://localhost:8083/showtime
+    cinema-service: http://localhost:8084/cinema
+    movie-service: http://localhost:8082/movie

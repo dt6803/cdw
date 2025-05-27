@@ -6,6 +6,7 @@ import com.cdw_ticket.cinema_service.dto.response.SeatLayoutResponse;
 import com.cdw_ticket.cinema_service.dto.response.SeatResponse;
 import com.cdw_ticket.cinema_service.entity.CinemaRoom;
 import com.cdw_ticket.cinema_service.entity.Seat;
+import com.cdw_ticket.cinema_service.enums.SeatStatus;
 import com.cdw_ticket.cinema_service.exception.AppException;
 import com.cdw_ticket.cinema_service.exception.ErrorCode;
 import com.cdw_ticket.cinema_service.mapper.SeatMapper;
@@ -83,5 +84,13 @@ public class SeatServiceImpl implements SeatService {
         seatMapper.updateSeat(seat, request);
         seatRepository.save(seat);
         return seatMapper.toSeatResponse(seat);
+    }
+
+    @Override
+    public List<SeatResponse> getAvailableSeatsByIds(List<String> seatIds) {
+        return seatRepository.findByIdInAndStatus(seatIds, SeatStatus.AVAILABLE)
+                .stream()
+                .map(seatMapper::toSeatResponse)
+                .toList();
     }
 }
