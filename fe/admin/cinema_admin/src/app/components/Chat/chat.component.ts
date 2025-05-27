@@ -1,10 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Account } from 'src/app/models/account.model';
-import { Chat, ListUser } from 'src/app/models/chat.model';
+// import { Chat, ListUser } from 'src/app/models/chat.model';
 
 
-import { ChatService } from 'src/app/services/chatService.service';
+// import { ChatService } from 'src/app/services/chatService.service';
 
 
 @Component({

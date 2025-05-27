@@ -1,6 +1,6 @@
 import { OnInit, Component } from '@angular/core';
-import { Cinema } from 'src/app/models/cinema.model';
-import { CinemaService } from 'src/app/services/cinema.service';
+// import { Cinema } from 'src/app/models/cinema.model';
+// import { CinemaService } from 'src/app/services/cinema.service';
 
 
 
