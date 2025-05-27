@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+ 
+
+    <button type="button" class="btn btn-primary"><a [routerLink]="['/admin/add-room']" style="color: white;">Thêm phòng</a></button>
+ 
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Danh sách các phòng phim của các rạp</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tên phòng</th>
+              <th>Tên rạp</th>
+              <th>Số ghế</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let room of rooms">
+              <tr>
+                <th>{{room.name}}</th>
+                <th>{{room.cinema}}</th>
+                <th>{{room.quantity}}</th>
+                <th>{{room.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
+                <th>
+                  <button  (click)="confirmDelete(room.id)" type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-x"></span>
+
+                  </button> | 
+                  <button (click)="confirmUpdate(room.id)"  type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-edit"></span>
+
+                  </button>
+                </th>
+              </tr>
+            </ng-container>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+  
+    
+  <!-- / Footer -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+<p-toast></p-toast>
