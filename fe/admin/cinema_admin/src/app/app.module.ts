@@ -6,10 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './components/Chat/chat.component';
 import { BaseUrlService } from './services/baseUrl.service';
-// import { ChatService } from './services/chatService.service';
+import { ChatService } from './services/chatService.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { Chat } from './models/chat.model';
+import { Chat } from './models/chat.model';
 import { DatePipe } from '@angular/common';
 import { LoginComponent } from './components/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/dashboard.component';
@@ -18,7 +18,7 @@ import { CheckLoginService } from './services/checkLogin.service';
 import { AccountService } from './services/account.service';
 import { AccessDenied } from './components/Access Denied/access_denied.component';
 import { CinemaComponent } from './components/Management/Cinema/cinema.component';
-// import { CinemaService } from './services/cinema.service';
+import { CinemaService } from './services/cinema.service';
 // import { RoomService } from './services/room.service';
 // import { RoomComponent } from './components/Management/Room/room.component';
 // import { AddRoomComponent } from './components/Management/Room/add_room.component';
@@ -102,11 +102,11 @@ import { FileUploadModule } from 'primeng/fileupload';
   ],
   providers: [
     BaseUrlService,
-    // ChatService,
+    ChatService,
     DatePipe,
     CheckLoginService,
     AccountService,
-    // CinemaService,
+    CinemaService,
     // RoomService,
     MessageService,
     ConfirmationService,
