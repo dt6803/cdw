@@ -1,0 +1,55 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+ 
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lí /</span> Lịch sử giao dịch</h4>
+ 
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Quản lý thanh toán vé</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th (click)="sortTable('bookingID')">Booking ID <i [ngClass]="getSortIcon('bookingID')"></i></th>
+              <th (click)="sortTable('paymentType')">Kiểu thanh toán <i [ngClass]="getSortIcon('paymentType')"></i></th>
+              <th (click)="sortTable('transactionNo')">Mã thanh toán <i [ngClass]="getSortIcon('transactionNo')"></i></th>
+              <th (click)="sortTable('ticketNumber')">Mã vé <i [ngClass]="getSortIcon('ticketNumber')"></i></th>
+              <th>QR</th>
+              <th (click)="sortTable('created')">Ngày thanh toán <i [ngClass]="getSortIcon('created')"></i></th>
+              <th (click)="sortTable('description')">Mô tả <i [ngClass]="getSortIcon('description')"></i></th>
+              <th (click)="sortTable('price')">Giá <i [ngClass]="getSortIcon('price')"></i></th>
+              <th (click)="sortTable('status')">Trạng thái <i [ngClass]="getSortIcon('status')"></i></th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let payment of sortedPayments">
+              <tr>
+                <th>{{payment.bookingID}}</th>
+                <th>{{payment.paymentType == 1 ? 'Paypal' : 'Phương thức khác'}}</th>
+                <th>{{payment.transactionNo}}</th>
+                <th>{{payment.ticketNumber}}</th>
+                <th>{{payment.QR}}</th>
+                <th>{{payment.created}}</th>
+                <th>{{payment.description}}</th>
+                <th>{{payment.price}}</th>
+                <th>{{payment.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+  
+    
+  <!-- / Footer -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+<p-toast></p-toast>
