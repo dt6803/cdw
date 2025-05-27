@@ -1,0 +1,55 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+ 
+   
+    <button type="button" class="btn btn-primary">Thêm rạp phim</button>
+ 
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Danh sách rạp phim</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tên rạp</th>
+              <th>Thành phố</th>
+              <th>Quận</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let cinema of cinemas">
+              <tr>
+                <th>{{cinema.name}}</th>
+                <th>{{cinema.city}}</th>
+                <th>{{cinema.district}}</th>
+                <th>{{cinema.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
+                <th>
+                  <button type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-x"></span>
+
+                  </button> | 
+                  <button type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-edit"></span>
+
+                  </button>
+                </th>
+              </tr>
+            </ng-container>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+  
+    
+  <!-- / Footer -->
+
+  <div class="content-backdrop fade"></div>
+</div>
