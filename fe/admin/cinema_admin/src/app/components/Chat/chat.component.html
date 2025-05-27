@@ -1,0 +1,38 @@
+<br><br>
+<div class="container">
+  <div class="chat-app">
+    <!-- User List Section -->
+    <div class="user-list">
+      <ng-container *ngFor="let user of listUser">
+        <button class="user-button" (click)="changeChat(user.accountId)">
+          {{ user.name }}
+        </button>
+      </ng-container>
+    </div>
+  
+    <!-- Chat Container -->
+    <div class="chat-container">
+      <h3 class="chat-header">{{ username }}</h3>
+      <div class="messages">
+        <table border="0" class="message-table">
+          <ng-container *ngFor="let msg of messages">
+            <tr *ngIf="msg.role == 1">
+              <td class="received-message">{{ msg.message }}</td>
+              <td></td>
+            </tr>
+            <tr *ngIf="msg.role == 0">
+              <td></td>
+              <td class="sent-message">{{ msg.message }}</td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+      <!-- Input Section -->
+      <div class="input-container">
+        <input type="text" [(ngModel)]="newMessage" class="message-input" placeholder="Nhập tin nhắn...">
+        <button (click)="sendMessage()" class="send-button">Gửi</button>
+      </div>
+    </div>
+  </div>
+  
+</div>
