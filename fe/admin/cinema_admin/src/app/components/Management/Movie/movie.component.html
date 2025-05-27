@@ -1,0 +1,142 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <button type="button" class="btn btn-primary"><a [routerLink]="['/admin/add-movie']" style="color: white;">Thêm
+        phim</a></button>
+
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <!-- <div class="card">
+      <h5 class="card-header">Danh sách phim đang chiếu</h5>
+      <div class="table-responsive text-nowrap"> -->
+    <div style="display: flex; gap: 30px;">
+      <ng-container *ngFor="let movie of paginatedMovies">
+        <div class="card h-100 d-flex flex-column" style="width: 32%; min-height: 620px; position: relative;">
+          <div class="card-body d-flex flex-column">
+            <div style="position: absolute; top: -5px; right: -10px;">
+              <!-- Three-dot menu (ellipsis) -->
+              <div class="dropdown">
+                <button type="button" class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow"
+                  data-bs-toggle="dropdown" [attr.id]="'dropdownMenuButton' + movie.id" aria-expanded="false">
+                  <i class="bx bx-dots-vertical-rounded"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" [attr.aria-labelledby]="'dropdownMenuButton' + movie.id">
+                  <li><a class="dropdown-item" (click)="confirmDelete(movie.id)">Xóa</a></li>
+                  <li><a class="dropdown-item" (click)="confirmUpdate(movie.id)">Chỉnh sửa</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <h5 class="card-title" style="min-height: 50px;">{{movie.title}}</h5>
+            <h6 class="card-subtitle text-muted" style="min-height: 30px;">Thể loại: {{movie.genre}}</h6>
+            <img class="img-fluid d-flex mx-auto my-4" style="width: 290px; height: 290px;" src="{{movie.photo}}"
+              alt="Card image cap" />
+            <p class="card-text" style="min-height: 20px;">Thời lượng: {{movie.duration}}</p>
+            <p class="card-text" style="min-height: 50px;">Diễn viên: {{movie.actor}}</p>
+            <div class="mt-auto">
+              <div class="col-lg-6 col-md-6">
+                <div style="display: flex; justify-content: space-between; gap: 60%;">
+                  <button type="button" style="margin-left: 40px;" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#youTubeModal" (click)="setVideo(movie.trailer)">
+                    Trailer
+                  </button>
+                  <button class="btn btn-primary" (click)="loadRating(movie.id)" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+                    Rating
+                  </button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="youTubeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Video Trailer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <iframe height="450" width="100%" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Rating -->
+                <div class="col-lg-3 col-md-6">
+                
+                  <div class="mt-3">
+
+                    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                      aria-labelledby="offcanvasBottomLabel">
+                      <div class="offcanvas-header">
+                        <h5 id="offcanvasBottomLabel" class="offcanvas-title">Đánh giá về phim </h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                          aria-label="Close"></button>
+                      </div>
+                      <div class="offcanvas-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Tài Khoản</th>
+                              <th>Nội dung</th>
+                              <th>Đánh giá</th>
+
+                            </tr>
+                          </thead>
+                          <tbody class="table-border-bottom-0">
+                            <ng-container *ngFor="let rating of ratings">
+                              <tr>
+                                <th>{{rating.id}}</th>
+                                <th>{{rating.accountId}}</th>
+                                <th>{{rating.comment}}</th>
+                                <th>
+                                  <p-rating [(ngModel)]="rating.rate" [readonly]="true" [cancel]="false"></p-rating>
+                                </th>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+    <nav aria-label="Page navigation" style="margin-top: 20px;">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+          [class.active]="currentPage === i + 1">
+          <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<!--/ Basic Bootstrap Table -->
+
+
+
+<!-- / Footer -->
+
+<div class="content-backdrop fade"></div>
+
+
+<p-toast></p-toast>

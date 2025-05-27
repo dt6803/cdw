@@ -12,7 +12,7 @@ import { CinemaComponent } from './components/Management/Cinema/cinema.component
 // import { AddRoomComponent } from './components/Management/Room/add_room.component';
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
-// import { MovieComponent } from './components/Management/Movie/movie.component';
+import { MovieComponent } from './components/Management/Movie/movie.component';
 // import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 // import { PaymentComponent } from './components/Management/Payment/payment.component';
@@ -24,7 +24,7 @@ import { AccountComponent } from './components/Management/Account/account.compon
 // import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
-// import { RatingComponent } from './components/Management/Rating/rating.component';
+import { RatingComponent } from './components/Management/Rating/rating.component';
 // import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
 // import { BookingComponent } from './components/Management/Booking/booking.component';
 
@@ -72,10 +72,10 @@ const routes: Routes = [
       //   path: "edit-room/:roomId",
       //   component: EditRoomComponent,
       // },
-      // {
-      //   path: "movie",
-      //   component: MovieComponent,
-      // },
+      {
+        path: "movie",
+        component: MovieComponent,
+      },
       // {
       //   path: "add-movie",
       //   component: AddMovieComponent,
@@ -124,10 +124,10 @@ const routes: Routes = [
       //   path: "edit-showtime/:showTimeId",
       //   component: EditShowtimeComponent,
       // },
-      // {
-      //   path: "rating",
-      //   component: RatingComponent,
-      // } ,
+      {
+        path: "rating",
+        component: RatingComponent,
+      } ,
       // {
       //   path: "booking",
       //   component: BookingComponent,

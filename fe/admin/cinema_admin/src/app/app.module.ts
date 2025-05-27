@@ -27,7 +27,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
-// import { MovieComponent } from './components/Management/Movie/movie.component';
+import { MovieComponent } from './components/Management/Movie/movie.component';
 import { MovieService } from './services/movie.service';
 // import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
@@ -47,7 +47,7 @@ import { MovieService } from './services/movie.service';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 // import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
-// import { RatingComponent } from './components/Management/Rating/rating.component';
+import { RatingComponent } from './components/Management/Rating/rating.component';
 import { RatingService } from './services/rating.service';
 import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
@@ -69,7 +69,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     // AddRoomComponent,
     // EditRoomComponent,
     AccountComponent, 
-    // MovieComponent,
+    MovieComponent,
     // AddMovieComponent,
     // EditMovieComponent,
     // PaymentComponent,
@@ -82,7 +82,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     // ShowtimeComponent,
     // AddShowtimeComponent,
     // EditShowtimeComponent,
-    // RatingComponent,
+    RatingComponent,
     // BookingComponent
 
   ],
