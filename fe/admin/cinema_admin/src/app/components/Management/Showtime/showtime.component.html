@@ -1,0 +1,74 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lí /</span> Suất Chiếu</h4>
+    <button type="button" class="btn btn-primary"><a [routerLink]="['/admin/add-showtime']" style="color: white;">Thêm
+        Suất Chiếu</a></button>
+
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Quản Lí Suất Chiếu</h5>
+      <div class="table-responsive text-nowrap">
+        <div class="card flex justify-content-center p-4">
+          <p-dropdown [options]="cinemas" [(ngModel)]="selectedCinema" optionLabel="name" placeholder="Chọn Rạp"
+            (onChange)="onCinemaChange($event.value)"></p-dropdown>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center"><div class="d-flex justify-content-center align-items-center">
+                Mã 
+                <button class="btn btn-outline ms-2" (click)="sort()">
+                  <i class='bx bx-sort'></i>
+                </button>
+              </div></th>
+              <th>Hình Ảnh</th>
+              <th>Tên Phim </th>
+              <th>Tên Rạp</th>
+              <th>Bắt Đầu Chiếu</th>
+              <th>Loại Phụ Đề</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let showtime of filteredShowtimes">
+              <tr>
+                <th>{{showtime.id}}</th>
+                <th> <img width="100px" class="img-fluid" src="{{showtime.photo}}"> </th>
+                <th> {{showtime.title}}</th>
+                <th> {{showtime.cinemaName}}</th>
+                <th> {{showtime.showDate}}</th>
+                <th> {{showtime.subName}}</th>
+                <th>{{showtime.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
+                <th>
+                  <button (click)="confirmDelete(showtime.id)" type="button"
+                    class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-x"></span>
+
+                  </button> |
+                  <button (click)="confirmUpdate(showtime.id)" type="button"
+                    class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-edit"></span>
+
+                  </button>
+                </th>
+              </tr>
+            </ng-container>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+
+
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  </div>
+  <p-toast></p-toast>

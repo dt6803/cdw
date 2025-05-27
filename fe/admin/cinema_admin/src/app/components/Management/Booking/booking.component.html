@@ -1,0 +1,105 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <br /><br />
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Các vé đã đặt</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tên người đặt</th>
+              <th>Tên phim</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th>Ngày đặt</th>
+              <th>Số ghế đặt</th>
+              <th>Combo đã đặt</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let booking of bookings">
+              <tr>
+                <th>{{ booking.name }}</th>
+                <th>{{ booking.movie }}</th>
+                <th>{{ booking.email }}</th>
+                <th>{{ booking.phone }}</th>
+                <th>{{ booking.created }}</th>
+
+                <th>{{ booking.countTicket }}</th>
+                <th>{{ booking.countCombo }}</th>
+                <th>
+                  <p-button
+                  (click)="showDialog(booking.id)"
+                  icon="pi pi-external-link"
+                  label="Chi tiết"
+                ></p-button>
+                </th>
+              </tr>
+             
+            
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
+<p-dialog
+header="Chi tiết vé"
+[(visible)]="visible"
+[style]="{ width: '50vw' }"
+>
+<table class="table">
+  <thead>
+    <tr>
+        <td>Tên phim</td>
+        <td>{{bookingDetails.movie}}</td>
+    </tr>
+     
+      <tr>
+        <td>Rạp</td>
+        <td>{{bookingDetails.cinema}}</td>
+      </tr>
+      <tr>
+        <td>Phụ đề</td>
+        <td>{{bookingDetails.sub}}</td>
+      </tr>
+      <tr>
+        <td>Phòng</td>
+        <td>{{bookingDetails.room}}</td>
+      </tr>
+      <tr>
+        <td>Suất chiếu</td>
+        <td>{{bookingDetails.showTime}}</td>
+      </tr>
+      <tr>
+        <td>Ghế</td>
+        <td>
+          <ng-container *ngFor="let ticket of bookingDetails.bookingDetails">
+            <span>{{ticket.seat}} &nbsp;</span>
+          </ng-container>
+        </td>
+      </tr>
+      <tr>
+        <td>Combo</td>
+        <td>
+          <ng-container *ngFor="let ticket of bookingDetails.comboDetails">
+            <span>{{ticket.combo}} &nbsp;</span> <span>Số lượng: {{ticket.quantity}}</span>
+          </ng-container>
+        </td>
+      </tr>
+  </thead>
+  <tbody class="table-border-bottom-0">
+     <th></th>
+
+  </tbody>
+</table>
+</p-dialog>
