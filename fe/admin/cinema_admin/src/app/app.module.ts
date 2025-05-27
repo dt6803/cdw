@@ -48,7 +48,7 @@ import { AccountComponent } from './components/Management/Account/account.compon
 // import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
 // import { RatingComponent } from './components/Management/Rating/rating.component';
-// import { RatingService } from './services/rating.service';
+import { RatingService } from './services/rating.service';
 import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
 // import { BookingComponent } from './components/Management/Booking/booking.component';
@@ -116,7 +116,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     // SeatService,
     // ComboService,
     // ShowtimeService,
-    // RatingService,
+    RatingService,
     // BookingService
     
   ],

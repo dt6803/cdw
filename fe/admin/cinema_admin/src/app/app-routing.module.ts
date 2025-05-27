@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { Chat } from './models/chat.model';
+import { Chat } from './models/chat.model';
 import { ChatComponent } from './components/Chat/chat.component';
 import { LoginComponent } from './components/Login/login.component';
 import { DashboardComponent } from './components/Dashboard/dashboard.component';
