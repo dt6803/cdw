@@ -1,0 +1,61 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lí /</span> Ghế</h4>
+    </h4>
+    <button type="button" class="btn btn-primary">
+      <a [routerLink]="['/admin/add-seat']" style="color: white">Thêm ghế</a>
+    </button>
+
+    <br /><br />
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Danh sách ghế</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tên ghế</th>
+              <th>Số phòng</th>
+              <th>Loại ghế</th>
+              <th>Giá</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let seat of seats">
+              <tr>
+                <th>{{ seat.name }}</th>
+                <th>{{ seat.roomId }}</th>
+                <th>{{ seat.seatType }}</th>
+                <th>{{ seat.price }}</th>
+                <th>{{ seat.status ? "Hoạt động" : "Không hoạt động" }}</th>
+                <th>
+                  <button  (click)="confirmDelete(seat.id)" type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-x"></span>
+
+                  </button>
+                  |
+                  <button
+                    type="button"
+                    class="btn rounded-pill btn-icon btn-outline-primary"
+                  >
+                    <span class="tf-icons bx bx-edit"></span>
+                  </button>
+                </th>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  </div>
+</div>
