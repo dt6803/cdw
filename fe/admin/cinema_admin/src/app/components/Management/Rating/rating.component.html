@@ -1,0 +1,56 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+ 
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Basic Tables</h4>
+    <button type="button" class="btn btn-primary"></button>
+ 
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Table Basic</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tài Khoản</th>
+              <th>Nội dung</th>
+              <th>Đánh giá</th>
+              
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            <ng-container *ngFor="let rating of ratings">
+              <tr>
+                <th>{{rating.id}}</th>
+                <th>{{rating.accountId}}</th>
+                <th>{{rating.comment}}</th>
+                <th>{{rating.rate}}</th>
+                <!-- <th>{{rating.status ? 'Hoạt động' : 'Không hoạt động'}}</th> -->
+                <th>
+                  <button type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-x"></span>
+
+                  </button> | 
+                  <button type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                    <span class="tf-icons bx bx-edit"></span>
+
+                  </button>
+                </th>
+              </tr>
+            </ng-container>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Basic Bootstrap Table -->
+
+  
+    
+  <!-- / Footer -->
+
+  <div class="content-backdrop fade"></div>
+</div>

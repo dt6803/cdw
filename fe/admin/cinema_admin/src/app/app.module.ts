@@ -28,7 +28,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
 // import { MovieComponent } from './components/Management/Movie/movie.component';
-// import { MovieService } from './services/movie.service';
+import { MovieService } from './services/movie.service';
 // import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 // import { PaymentComponent } from './components/Management/Payment/payment.component';
@@ -110,7 +110,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     // RoomService,
     MessageService,
     ConfirmationService,
-    // MovieService,
+    MovieService,
     // PaymentService,
     // SubService,
     // SeatService,
