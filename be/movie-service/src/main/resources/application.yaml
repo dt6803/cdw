@@ -7,9 +7,9 @@ spring:
   application:
     name: movie-service
   datasource:
-    url: "jdbc:postgresql://cdw-ticket-authentication-service-hoangtunqs134-03ce.c.aivencloud.com:14840/movie-service?sslmode=require"
-    username: avnadmin
-    password: AVNS_p3IPiJOXS_p0fAofory
+    url: jdbc:postgresql://ep-jolly-meadow-a12tbdro.ap-southeast-1.aws.neon.tech/movie-service?sslmode=require
+    username: neondb_owner
+    password: npg_oAz8IGRuOpt0
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

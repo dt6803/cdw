@@ -1,6 +1,7 @@
 package com.cdw_ticket.cinema_service.repository;
 
 import com.cdw_ticket.cinema_service.entity.Seat;
+import com.cdw_ticket.cinema_service.enums.SeatStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,4 +19,6 @@ public interface SeatRepository extends JpaRepository<Seat, String> {
     @Transactional
     @Query("DELETE FROM Seat s WHERE s.room.id = :roomId")
     void deleteAllByRoomId(@Param("roomId") String roomId);
+
+    List<Seat> findByIdInAndStatus(List<String> ids, SeatStatus status);
 }

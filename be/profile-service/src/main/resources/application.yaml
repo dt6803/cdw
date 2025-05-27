@@ -7,11 +7,12 @@ spring:
   application:
     name: profile-service
   datasource:
-    url: jdbc:mysql://cdw-ticket-profile-service-hoangtunqs134-03ce.j.aivencloud.com:14840/defaultdb?sslMode=REQUIRED
-    username: avnadmin
-    password: AVNS_DGYHFQzWIY2P3f3UW53
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://ep-jolly-meadow-a12tbdro.ap-southeast-1.aws.neon.tech/profile-service?sslmode=require
+    username: neondb_owner
+    password: npg_oAz8IGRuOpt0
+    driver-class-name: org.postgresql.Driver
   jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true

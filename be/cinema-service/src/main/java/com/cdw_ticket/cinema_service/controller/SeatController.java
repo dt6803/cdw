@@ -5,12 +5,15 @@ import com.cdw_ticket.cinema_service.dto.request.SeatRequest;
 import com.cdw_ticket.cinema_service.dto.response.BaseResponse;
 import com.cdw_ticket.cinema_service.dto.response.SeatLayoutResponse;
 import com.cdw_ticket.cinema_service.dto.response.SeatResponse;
+import com.cdw_ticket.cinema_service.entity.Seat;
 import com.cdw_ticket.cinema_service.service.SeatService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +49,13 @@ public class SeatController {
                                                  @Valid @RequestBody SeatRequest request) {
         return BaseResponse.<SeatResponse>builder()
                 .data(seatService.updateSeat(id, request))
+                .build();
+    }
+
+    @PostMapping("/seats")
+    public BaseResponse<List<SeatResponse>> getAvailableSeats(@RequestBody List<String> seatIds) {
+        return BaseResponse.<List<SeatResponse>>builder()
+                .data(seatService.getAvailableSeatsByIds(seatIds))
                 .build();
     }
 }

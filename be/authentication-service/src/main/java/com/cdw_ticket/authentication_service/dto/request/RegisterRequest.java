@@ -27,7 +27,6 @@ public class RegisterRequest {
     String email;
     @NotBlank(message = "Full name must be not blank")
     String fullName;
-    @NotBlank(message = "Date of birth must be not blank")
     LocalDate dob;
     @NotBlank(message = "Phone number must be not blank")
     String phoneNumber;
