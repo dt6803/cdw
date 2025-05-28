@@ -15,11 +15,11 @@ import { AccountComponent } from './components/Management/Account/account.compon
 import { MovieComponent } from './components/Management/Movie/movie.component';
 // import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
-// import { PaymentComponent } from './components/Management/Payment/payment.component';
-// import { SubComponent } from './components/Management/Sub/sub.component';
+import { PaymentComponent } from './components/Management/Payment/payment.component';
+import { SubComponent } from './components/Management/Sub/sub.component';
 // import { AddSubComponent } from './components/Management/Sub/add_sub.component';
-// import { SeatComponent } from './components/Management/Seat/seat.component';
-// import { ComboComponent } from './components/Management/Combo/combo.component';
+import { SeatComponent } from './components/Management/Seat/seat.component';
+import { ComboComponent } from './components/Management/Combo/combo.component';
 // import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 // import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
@@ -80,26 +80,26 @@ const routes: Routes = [
       //   path: "add-movie",
       //   component: AddMovieComponent,
       // },
-      // {
-      //   path: "sub",
-      //   component: SubComponent,
-      // },
+      {
+        path: "sub",
+        component: SubComponent,
+      },
       // {
       //   path: "add-sub",
       //   component: AddSubComponent,
       // },
-      // {
-      //   path: "seat",
-      //   component: SeatComponent,
-      // },
+      {
+        path: "seat",
+        component: SeatComponent,
+      },
       // {
       //   path: "add-seat",
       //   component: AddSeatComponent,
       // },
-      // {
-      //   path: "combo",
-      //   component: ComboComponent,
-      // },
+      {
+        path: "combo",
+        component: ComboComponent,
+      },
       // {
       //   path: "add-combo",
       //   component: AddComboComponent,
@@ -108,10 +108,10 @@ const routes: Routes = [
       //   path: "edit-movie/:movieId",
       //   component: EditMovieComponent,
       // },
-      // {
-      //   path: "payment",
-      //   component: PaymentComponent,
-      // },
+      {
+        path: "payment",
+        component: PaymentComponent,
+      },
       // {
       //   path: "showtime",
       //   component: ShowtimeComponent,
