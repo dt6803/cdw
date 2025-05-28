@@ -19,8 +19,8 @@ import { AccountService } from './services/account.service';
 import { AccessDenied } from './components/Access Denied/access_denied.component';
 import { CinemaComponent } from './components/Management/Cinema/cinema.component';
 import { CinemaService } from './services/cinema.service';
-// import { RoomService } from './services/room.service';
-// import { RoomComponent } from './components/Management/Room/room.component';
+import { RoomService } from './services/room.service';
+import { RoomComponent } from './components/Management/Room/room.component';
 // import { AddRoomComponent } from './components/Management/Room/add_room.component';
 import { ToastModule } from "primeng/toast";
 import { ConfirmationService, MessageService } from "primeng/api";
@@ -42,17 +42,17 @@ import { SeatService } from './services/seat.service';
 import { ComboService } from './services/combo.service';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 // import { AddComboComponent } from './components/Management/Combo/add_combo.component';
-// import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
+import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
-// import { ShowtimeService } from './services/showtime.service';
+import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { RatingComponent } from './components/Management/Rating/rating.component';
 import { RatingService } from './services/rating.service';
 import { RatingModule } from 'primeng/rating';
 import { CalendarModule } from 'primeng/calendar';
-// import { BookingComponent } from './components/Management/Booking/booking.component';
-// import { BookingService } from './services/booking.service';
+import { BookingComponent } from './components/Management/Booking/booking.component';
+import { BookingService } from './services/booking.service';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
 
@@ -65,7 +65,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     LayoutComponent,
     AccessDenied,
     CinemaComponent,
-    // RoomComponent,
+    RoomComponent,
     // AddRoomComponent,
     // EditRoomComponent,
     AccountComponent, 
@@ -79,11 +79,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     // AddSubComponent,
     ComboComponent,
     // AddComboComponent,
-    // ShowtimeComponent,
+    ShowtimeComponent,
     // AddShowtimeComponent,
     // EditShowtimeComponent,
     RatingComponent,
-    // BookingComponent
+    BookingComponent
 
   ],
   imports: [
@@ -107,7 +107,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     CheckLoginService,
     AccountService,
     CinemaService,
-    // RoomService,
+    RoomService,
     MessageService,
     ConfirmationService,
     MovieService,
@@ -115,9 +115,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     SubService,
     SeatService,
     ComboService,
-    // ShowtimeService,
+    ShowtimeService,
     RatingService,
-    // BookingService
+    BookingService
     
   ],
   bootstrap: [AppComponent]

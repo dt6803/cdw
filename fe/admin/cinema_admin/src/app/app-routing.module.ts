@@ -8,7 +8,7 @@ import { LayoutComponent } from './components/Layout/layout.component';
 import { CheckLoginService } from './services/checkLogin.service';
 import { AccessDenied } from './components/Access Denied/access_denied.component';
 import { CinemaComponent } from './components/Management/Cinema/cinema.component';
-// import { RoomComponent } from './components/Management/Room/room.component';
+import { RoomComponent } from './components/Management/Room/room.component';
 // import { AddRoomComponent } from './components/Management/Room/add_room.component';
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
@@ -21,7 +21,7 @@ import { SubComponent } from './components/Management/Sub/sub.component';
 import { SeatComponent } from './components/Management/Seat/seat.component';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 // import { AddComboComponent } from './components/Management/Combo/add_combo.component';
-// import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
+import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { RatingComponent } from './components/Management/Rating/rating.component';
@@ -56,10 +56,10 @@ const routes: Routes = [
         path: "cinema",
         component: CinemaComponent,
       },
-      // {
-      //   path: "room",
-      //   component: RoomComponent,
-      // },
+      {
+        path: "room",
+        component: RoomComponent,
+      },
       {
         path: "account",
         component: AccountComponent,
@@ -112,10 +112,10 @@ const routes: Routes = [
         path: "payment",
         component: PaymentComponent,
       },
-      // {
-      //   path: "showtime",
-      //   component: ShowtimeComponent,
-      // } ,
+      {
+        path: "showtime",
+        component: ShowtimeComponent,
+      } ,
       // {
       //   path: "add-showtime",
       //   component: AddShowtimeComponent,
