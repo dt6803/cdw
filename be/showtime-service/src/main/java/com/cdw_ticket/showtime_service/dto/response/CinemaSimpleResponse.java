@@ -1,0 +1,19 @@
+package com.cdw_ticket.showtime_service.dto.response;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CinemaSimpleResponse {
+    String id;
+    String name;
+    String address;
+    String city;
+    String description;
+    String imageUrl;
+}

@@ -74,7 +74,7 @@ public class ApplicationInitConfig {
                                 .password(passwordEncoder.encode(passwordAdmin))
                                 .email(emailAdmin)
                                 .build();
-                        roleRepository.findByName(RoleEnum.USER.toString()).ifPresent(adminUser.getRoles()::add);
+                        roleRepository.findByName(RoleEnum.ADMIN.toString()).ifPresent(adminUser.getRoles()::add);
                         userRepository.save(adminUser);
                         log.warn("✅ Admin user has been created with default password: {}, please change it.", passwordAdmin);
                     });

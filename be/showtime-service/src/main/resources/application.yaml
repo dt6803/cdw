@@ -16,3 +16,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+app:
+  services:
+    cinema-service: http://localhost:8084/cinema
+    movie-service: http://localhost:8082/movie
