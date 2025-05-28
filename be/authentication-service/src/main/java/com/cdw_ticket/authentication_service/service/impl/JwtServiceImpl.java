@@ -10,12 +10,15 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -63,6 +66,12 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private String buildToken(UserDetails user, HashMap<String, Object> extraClaims, long expiration) {
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+        List<String> roles = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        extraClaims.put("roles", roles);
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

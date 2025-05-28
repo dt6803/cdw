@@ -33,14 +33,31 @@ spring:
         - id: movie-service
           uri: http://localhost:8082
           predicates:
-            - Path=${app.api-prefix}/movies/**
-            - Path=${app.api-prefix}/genres/**
+            - Path=${app.api-prefix}/movie/**
           filters:
             - StripPrefix=2
 
         - id: showtime-service
           uri: http://localhost:8083
           predicates:
-            - Path=${app.api-prefix}/showtimes/**
+            - Path=${app.api-prefix}/showtime/**
           filters:
             - StripPrefix=2
+
+        - id: cinema-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=${app.api-prefix}/cinema/**
+          filters:
+            - StripPrefix=2
+
+        - id: booking-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=${app.api-prefix}/booking/**
+          filters:
+            - StripPrefix=2
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

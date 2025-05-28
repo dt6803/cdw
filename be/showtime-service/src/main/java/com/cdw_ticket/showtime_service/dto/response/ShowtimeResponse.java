@@ -17,7 +17,9 @@ import java.time.LocalDateTime;
 public class ShowtimeResponse {
     String id;
     String movieId;
+    String movieTitle;
     String cinemaId;
+    String cinemaName;
     LocalDateTime startTime;
     LocalDateTime endTime;
     BigDecimal price;
