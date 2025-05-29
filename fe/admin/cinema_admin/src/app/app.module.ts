@@ -21,7 +21,7 @@ import { CinemaComponent } from './components/Management/Cinema/cinema.component
 import { CinemaService } from './services/cinema.service';
 import { RoomService } from './services/room.service';
 import { RoomComponent } from './components/Management/Room/room.component';
-// import { AddRoomComponent } from './components/Management/Room/add_room.component';
+import { AddRoomComponent } from './components/Management/Room/add_room.component';
 import { ToastModule } from "primeng/toast";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -66,7 +66,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     AccessDenied,
     CinemaComponent,
     RoomComponent,
-    // AddRoomComponent,
+    AddRoomComponent,
     // EditRoomComponent,
     AccountComponent, 
     MovieComponent,
