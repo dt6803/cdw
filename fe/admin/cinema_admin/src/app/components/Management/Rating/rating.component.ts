@@ -1,6 +1,5 @@
 import { OnInit, Component } from '@angular/core';
 import { MovieRatings } from 'src/app/models/movieRatings.model';
-import { CinemaService } from 'src/app/services/cinema.service';
 import { RatingService } from 'src/app/services/rating.service';
 
 

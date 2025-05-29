@@ -1,0 +1,134 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+
+
+    <!-- Basic Layout -->
+    <div class="row">
+
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Sửa phim</h5>
+
+          </div>
+          <div class="card-body">
+            <form [formGroup]="editMovieForm" (ngSubmit)="edit()">
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Tên phim</label>
+                <input type="text" class="form-control" formControlName="title" id="basic-default-fullname"
+                  placeholder="Nhập tên phim..." />
+                <div *ngIf="editMovieForm.get('title')?.invalid && editMovieForm.get('title')?.touched">
+                  <small *ngIf="editMovieForm.get('title')?.errors?.['required']">Tên phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Poster</label>
+                <input type="text" class="form-control" formControlName="photo" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('photo')?.invalid && editMovieForm.get('photo')?.touched">
+                  <small *ngIf="editMovieForm.get('photo')?.errors?.['required']">Poster phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Mô tả</label>
+                <textarea class="form-control" formControlName="description" id="exampleFormControlTextarea1"
+                  rows="3"></textarea>
+                <div *ngIf="editMovieForm.get('description')?.invalid && editMovieForm.get('description')?.touched">
+                  <small *ngIf="editMovieForm.get('description')?.errors?.['required']">Mô tả phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Thời lượng</label>
+                <input type="text" class="form-control" formControlName="duration" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('duration')?.invalid && editMovieForm.get('duration')?.touched">
+                  <small *ngIf="editMovieForm.get('duration')?.errors?.['required']">Thời lượng phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Thế loại</label>
+                <input type="text" class="form-control" formControlName="genre" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('genre')?.invalid && editMovieForm.get('genre')?.touched">
+                  <small *ngIf="editMovieForm.get('genre')?.errors?.['required']">Thể loại phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="html5-date-input" class="col-md-2 col-form-label">Ngày phát hành</label>
+                <div class="col-md-10">
+                  <input class="form-control" type="text" formControlName="releaseDate" id="html5-date-input" />
+                </div>
+                <!-- <div class="col-md-10">
+                                <input
+                                  class="form-control"
+                                  type="datetime-local"
+                                  formControlName="releaseDate"
+                                  value="2021-06-18T12:30:00"
+                                  id="html5-datetime-local-input"
+                                />
+                              </div> -->
+                <div *ngIf="editMovieForm.get('releaseDate')?.invalid && editMovieForm.get('releaseDate')?.touched">
+                  <small *ngIf="editMovieForm.get('releaseDate')?.errors?.['required']">Bắt buộc phải có ngày phát
+                    hành.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Giới hạn tuổi</label>
+                <input type="number" formControlName="age" class="form-control" id="basic-default-fullname"
+                  placeholder="1" />
+                <div *ngIf="editMovieForm.get('age')?.invalid && editMovieForm.get('age')?.touched">
+                  <small *ngIf="editMovieForm.get('age')?.errors?.['required']">Giới hạn tuổi là bắt buộc.</small>
+                  <small *ngIf="editMovieForm.get('age')?.errors?.['min']">Giới hạn tuổi phải lớn hơn 0.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Trailer</label>
+                <input type="text" class="form-control" formControlName="trailer" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('trailer')?.invalid && editMovieForm.get('trailer')?.touched">
+                  <small *ngIf="editMovieForm.get('trailer')?.errors?.['required']">Cần phải có trailer phim.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Đạo diễn</label>
+                <input type="text" class="form-control" formControlName="director" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('director')?.invalid && editMovieForm.get('director')?.touched">
+                  <small *ngIf="editMovieForm.get('director')?.errors?.['required']">Đạo diễn phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Diễn viên</label>
+                <input type="text" class="form-control" formControlName="actor" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('actor')?.invalid && editMovieForm.get('actor')?.touched">
+                  <small *ngIf="editMovieForm.get('actor')?.errors?.['required']">Diễn viên phim là bắt buộc.</small>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname">Nhà sản xuất</label>
+                <input type="text" class="form-control" formControlName="publisher" id="basic-default-fullname"
+                  placeholder="" />
+                <div *ngIf="editMovieForm.get('publisher')?.invalid && editMovieForm.get('publisher')?.touched">
+                  <small *ngIf="editMovieForm.get('publisher')?.errors?.['required']">Thời lượng phim là bắt
+                    buộc.</small>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Sửa phim</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- / Content -->
+
+
+
+  <div class="content-backdrop fade"></div>
+</div>
+<p-toast></p-toast>

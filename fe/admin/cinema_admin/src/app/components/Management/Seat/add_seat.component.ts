@@ -2,7 +2,6 @@ import { OnInit, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Cinema } from 'src/app/models/cinema.model';
 import { Room } from 'src/app/models/room.model';
 import { Seat } from 'src/app/models/seat.model';
 
