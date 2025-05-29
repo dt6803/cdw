@@ -9,7 +9,7 @@ import { Observable, lastValueFrom } from 'rxjs';
 export class AuthService {
 
 
-  private apiUrl = 'http://localhost:5113/api/google'; 
+  private apiUrl = 'http://localhost:8888/api/google'; 
 
 
   constructor(

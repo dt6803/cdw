@@ -1,6 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { Show } from "src/app/models/show.model";
-import { ShowAPIService } from "src/app/services/showAPI.service";
 import * as moment from "moment";
 import { MovieService } from "src/app/services/movie.service";
 import { Movie } from "src/app/models/movie.model";

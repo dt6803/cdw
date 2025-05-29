@@ -14,7 +14,7 @@ export class ChatService {
     private baseUrlService: BaseUrlService,
     private httpClient: HttpClient
   ) {
-    this.socket$ = webSocket('ws://localhost:5113/ws');
+    this.socket$ = webSocket('ws://localhost:8888/ws');
   }
 
   sendMessage(message: string, accountId: number) {
