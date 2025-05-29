@@ -9,7 +9,7 @@ import { CheckLoginService } from './services/checkLogin.service';
 import { AccessDenied } from './components/Access Denied/access_denied.component';
 import { CinemaComponent } from './components/Management/Cinema/cinema.component';
 import { RoomComponent } from './components/Management/Room/room.component';
-// import { AddRoomComponent } from './components/Management/Room/add_room.component';
+import { AddRoomComponent } from './components/Management/Room/add_room.component';
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
 import { MovieComponent } from './components/Management/Movie/movie.component';
@@ -26,7 +26,7 @@ import { ShowtimeComponent } from './components/Management/Showtime/showtime.com
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { RatingComponent } from './components/Management/Rating/rating.component';
 // import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
-// import { BookingComponent } from './components/Management/Booking/booking.component';
+import { BookingComponent } from './components/Management/Booking/booking.component';
 
 const routes: Routes = [
   {
@@ -64,10 +64,10 @@ const routes: Routes = [
         path: "account",
         component: AccountComponent,
       },
-      // {
-      //   path: "add-room",
-      //   component: AddRoomComponent,
-      // },
+      {
+        path: "add-room",
+        component: AddRoomComponent,
+      },
       // {
       //   path: "edit-room/:roomId",
       //   component: EditRoomComponent,
@@ -128,10 +128,10 @@ const routes: Routes = [
         path: "rating",
         component: RatingComponent,
       } ,
-      // {
-      //   path: "booking",
-      //   component: BookingComponent,
-      // } ,
+      {
+        path: "booking",
+        component: BookingComponent,
+      } ,
 
     ]
   },
