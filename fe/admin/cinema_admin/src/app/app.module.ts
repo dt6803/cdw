@@ -34,14 +34,14 @@ import { MovieService } from './services/movie.service';
 import { PaymentComponent } from './components/Management/Payment/payment.component';
 import { PaymentService } from './services/payment.service';
 import { SeatComponent } from './components/Management/Seat/seat.component';
-// import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
+import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
 import { SubComponent } from './components/Management/Sub/sub.component';
-// import { AddSubComponent } from './components/Management/Sub/add_sub.component';
+import { AddSubComponent } from './components/Management/Sub/add_sub.component';
 import { SubService } from './services/sub.service';
 import { SeatService } from './services/seat.service';
 import { ComboService } from './services/combo.service';
 import { ComboComponent } from './components/Management/Combo/combo.component';
-// import { AddComboComponent } from './components/Management/Combo/add_combo.component';
+import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
@@ -74,11 +74,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     // EditMovieComponent,
     PaymentComponent,
     SeatComponent,
-    // AddSeatComponent,
+    AddSeatComponent,
     SubComponent,
-    // AddSubComponent,
+    AddSubComponent,
     ComboComponent,
-    // AddComboComponent,
+    AddComboComponent,
     ShowtimeComponent,
     // AddShowtimeComponent,
     // EditShowtimeComponent,

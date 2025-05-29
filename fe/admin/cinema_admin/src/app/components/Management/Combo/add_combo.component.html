@@ -1,0 +1,52 @@
+<div class="content-wrapper">
+  <!-- Content -->
+
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Basic Layout -->
+    <div class="row">
+      <div class="col-xl">
+        <div class="card mb-4">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <h5 class="mb-0">Thêm combo</h5>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="addComboForm" (ngSubmit)="add()">
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-company"
+                  >Thêm combo</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  id="basic-default-fullname"
+                  placeholder="Tên combo"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="basic-default-fullname"
+                  >Giá tiền</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="price"
+                  id="basic-default-fullname"
+                  placeholder="45000"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Thêm combo</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / Content -->
+
+  <div class="content-backdrop fade"></div>
+</div>
+<p-toast></p-toast>
