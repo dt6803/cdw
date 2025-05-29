@@ -13,7 +13,7 @@ import { AddRoomComponent } from './components/Management/Room/add_room.componen
 // import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
 import { MovieComponent } from './components/Management/Movie/movie.component';
-// import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
+import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 import { PaymentComponent } from './components/Management/Payment/payment.component';
 import { SubComponent } from './components/Management/Sub/sub.component';
@@ -22,7 +22,7 @@ import { SeatComponent } from './components/Management/Seat/seat.component';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
-// import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
+import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { RatingComponent } from './components/Management/Rating/rating.component';
 import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
@@ -76,10 +76,10 @@ const routes: Routes = [
         path: "movie",
         component: MovieComponent,
       },
-      // {
-      //   path: "add-movie",
-      //   component: AddMovieComponent,
-      // },
+      {
+        path: "add-movie",
+        component: AddMovieComponent,
+      },
       {
         path: "sub",
         component: SubComponent,
@@ -116,10 +116,10 @@ const routes: Routes = [
         path: "showtime",
         component: ShowtimeComponent,
       } ,
-      // {
-      //   path: "add-showtime",
-      //   component: AddShowtimeComponent,
-      // } ,
+      {
+        path: "add-showtime",
+        component: AddShowtimeComponent,
+      } ,
       // {
       //   path: "edit-showtime/:showTimeId",
       //   component: EditShowtimeComponent,
