@@ -29,7 +29,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AccountComponent } from './components/Management/Account/account.component';
 import { MovieComponent } from './components/Management/Movie/movie.component';
 import { MovieService } from './services/movie.service';
-// import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
+import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 import { PaymentComponent } from './components/Management/Payment/payment.component';
 import { PaymentService } from './services/payment.service';
@@ -43,7 +43,7 @@ import { ComboService } from './services/combo.service';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
-// import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
+import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
@@ -70,7 +70,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     // EditRoomComponent,
     AccountComponent, 
     MovieComponent,
-    // AddMovieComponent,
+    AddMovieComponent,
     // EditMovieComponent,
     PaymentComponent,
     SeatComponent,
@@ -80,7 +80,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ComboComponent,
     AddComboComponent,
     ShowtimeComponent,
-    // AddShowtimeComponent,
+    AddShowtimeComponent,
     // EditShowtimeComponent,
     RatingComponent,
     BookingComponent
