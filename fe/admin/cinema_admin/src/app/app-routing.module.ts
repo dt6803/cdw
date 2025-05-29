@@ -17,15 +17,15 @@ import { MovieComponent } from './components/Management/Movie/movie.component';
 // import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 import { PaymentComponent } from './components/Management/Payment/payment.component';
 import { SubComponent } from './components/Management/Sub/sub.component';
-// import { AddSubComponent } from './components/Management/Sub/add_sub.component';
+import { AddSubComponent } from './components/Management/Sub/add_sub.component';
 import { SeatComponent } from './components/Management/Seat/seat.component';
 import { ComboComponent } from './components/Management/Combo/combo.component';
-// import { AddComboComponent } from './components/Management/Combo/add_combo.component';
+import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 // import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
 // import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { RatingComponent } from './components/Management/Rating/rating.component';
-// import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
+import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
 import { BookingComponent } from './components/Management/Booking/booking.component';
 
 const routes: Routes = [
@@ -84,26 +84,26 @@ const routes: Routes = [
         path: "sub",
         component: SubComponent,
       },
-      // {
-      //   path: "add-sub",
-      //   component: AddSubComponent,
-      // },
+      {
+        path: "add-sub",
+        component: AddSubComponent,
+      },
       {
         path: "seat",
         component: SeatComponent,
       },
-      // {
-      //   path: "add-seat",
-      //   component: AddSeatComponent,
-      // },
+      {
+        path: "add-seat",
+        component: AddSeatComponent,
+      },
       {
         path: "combo",
         component: ComboComponent,
       },
-      // {
-      //   path: "add-combo",
-      //   component: AddComboComponent,
-      // },
+      {
+        path: "add-combo",
+        component: AddComboComponent,
+      },
       // {
       //   path: "edit-movie/:movieId",
       //   component: EditMovieComponent,
