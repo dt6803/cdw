@@ -1,8 +1,6 @@
 import { BookingService } from './../../../services/booking.service';
 import { OnInit, Component } from '@angular/core';
 import { Booking, BookingDetails } from 'src/app/models/booking.model';
-import { Cinema } from 'src/app/models/cinema.model';
-import { CinemaService } from 'src/app/services/cinema.service';
 
 
 

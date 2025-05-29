@@ -25,12 +25,12 @@ import { AddRoomComponent } from './components/Management/Room/add_room.componen
 import { ToastModule } from "primeng/toast";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-// import { EditRoomComponent } from './components/Management/Room/edit_room.component';
+import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
 import { MovieComponent } from './components/Management/Movie/movie.component';
 import { MovieService } from './services/movie.service';
 import { AddMovieComponent } from './components/Management/Movie/add_movie.component';
-// import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
+import { EditMovieComponent } from './components/Management/Movie/edit_movie.component';
 import { PaymentComponent } from './components/Management/Payment/payment.component';
 import { PaymentService } from './services/payment.service';
 import { SeatComponent } from './components/Management/Seat/seat.component';
@@ -44,7 +44,7 @@ import { ComboComponent } from './components/Management/Combo/combo.component';
 import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
 import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
-// import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
+import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { RatingComponent } from './components/Management/Rating/rating.component';
@@ -67,11 +67,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     CinemaComponent,
     RoomComponent,
     AddRoomComponent,
-    // EditRoomComponent,
+    EditRoomComponent,
     AccountComponent, 
     MovieComponent,
     AddMovieComponent,
-    // EditMovieComponent,
+    EditMovieComponent,
     PaymentComponent,
     SeatComponent,
     AddSeatComponent,
@@ -81,7 +81,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     AddComboComponent,
     ShowtimeComponent,
     AddShowtimeComponent,
-    // EditShowtimeComponent,
+    EditShowtimeComponent,
     RatingComponent,
     BookingComponent
 

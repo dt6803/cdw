@@ -1,8 +1,6 @@
 import { MessageService } from 'primeng/api';
 import { OnInit, Component } from '@angular/core';
-import { Cinema } from 'src/app/models/cinema.model';
 import { Room } from 'src/app/models/room.model';
-import { CinemaService } from 'src/app/services/cinema.service';
 import { RoomService } from 'src/app/services/room.service';
 import { Router } from '@angular/router';
 
