@@ -1,10 +1,8 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ShowDetail } from "src/app/models/show.model";
 import { ShowAPIService } from "src/app/services/showAPI.service";
 import * as moment from "moment";
-import { TicketAddPost } from "src/app/models/ticket.model";
 import { TicketAPIService } from "src/app/services/ticketAPI.service";
 import { MessageService } from "primeng/api";
 import { ShowTimeService } from "src/app/services/showTime.service";
