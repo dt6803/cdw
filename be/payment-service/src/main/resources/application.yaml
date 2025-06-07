@@ -1,0 +1,26 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /payment
+
+spring:
+  application:
+    name: payment-service
+  datasource:
+    url: jdbc:postgresql://ep-jolly-meadow-a12tbdro.ap-southeast-1.aws.neon.tech/booking-service?sslmode=require
+    username: neondb_owner
+    password: npg_oAz8IGRuOpt0
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+payment:
+  vnpay:
+    tmn-code: 0UDSA0P1
+    secret-key: 05G3NDKYBVOOMGJIRMMNKEZRNR6DLS0F
+    init-payment-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    return-url: https://www.example.com/
+    timeout: 15 # in minutes
