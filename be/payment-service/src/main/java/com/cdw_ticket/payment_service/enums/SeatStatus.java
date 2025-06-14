@@ -1,4 +1,4 @@
-package com.cdw_ticket.cinema_service.enums;
+package com.cdw_ticket.payment_service.enums;
 
 public enum SeatStatus {
     AVAILABLE,      // Ghế trống, có thể đặt

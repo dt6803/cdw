@@ -16,7 +16,7 @@ export class MovieService{
 
     async findAllByStatus() : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'movie/findAllByStatus'));
+        + 'movie/movies'));
     }
 
     async findMovieById(id: number) : Promise<any>{

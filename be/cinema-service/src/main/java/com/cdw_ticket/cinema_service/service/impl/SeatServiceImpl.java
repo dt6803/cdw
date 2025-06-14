@@ -87,10 +87,25 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
+    public SeatResponse getInfo(String id) {
+        var seat = seatRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.SEAT_NOT_EXISTED));
+        return seatMapper.toSeatResponse(seat);
+    }
+
+    @Override
     public List<SeatResponse> getAvailableSeatsByIds(List<String> seatIds) {
         return seatRepository.findByIdInAndStatus(seatIds, SeatStatus.AVAILABLE)
                 .stream()
                 .map(seatMapper::toSeatResponse)
                 .toList();
+    }
+
+    @Override
+    public void updateStatusBySeatIds(List<String> ids, SeatStatus status) {
+        int updated = seatRepository.updateStatusBySeatIds(ids, status);
+        if (updated != ids.size()) {
+            throw new AppException(ErrorCode.SEAT_UPDATE_FAILED);
+        }
     }
 }

@@ -77,7 +77,7 @@ export class MovieDetailsComponent implements OnInit{
     this.route.params.subscribe((params) => {
         const showIdParam = params["movieId"];
         this.movieId = showIdParam;
-     
+
       });
 
       this.date1 = this.todayDate1.setDate(this.todayDate1.getDate() + 0);
@@ -87,9 +87,9 @@ export class MovieDetailsComponent implements OnInit{
       this.date5 = this.todayDate5.setDate(this.todayDate5.getDate() + 4);
       this.date6 = this.todayDate6.setDate(this.todayDate6.getDate() + 5);
       this.date7 = this.todayDate7.setDate(this.todayDate7.getDate() + 6);
-  
-  
-  
+
+
+
       this.dateSelected = this.todayDate1;
       this.dateSelectedString = this.datePipe.transform(this.dateSelected, 'dd/MM/yyyy');
       // Tìm thông tin phim dựa vào id
@@ -101,7 +101,7 @@ export class MovieDetailsComponent implements OnInit{
               this.parseDate(this.movie.releaseDate),
               'dd/MM/yyyy'
             );
-            this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.trailer);
+            this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.trailerUrl);
         },
         (err) => {
 
@@ -122,18 +122,18 @@ export class MovieDetailsComponent implements OnInit{
                 this.movies.forEach(m => {
                   // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
                   const uniqueShowtimes = new Map<number, ShowTime>();
-            
+
                   m.showtimes.forEach(s => {
                     if (!uniqueShowtimes.has(s.subId)) {
                       uniqueShowtimes.set(s.subId, s);
                     }
                   });
-            
+
                   // Chỉ giữ lại showtimes duy nhất
                   m.subs = Array.from(uniqueShowtimes.values());
-                  
+
                 });
-             
+
               },
               (err) => {
                 console.error(err);
@@ -144,7 +144,7 @@ export class MovieDetailsComponent implements OnInit{
           console.error(err);
         }
       );
-     
+
       this.account = JSON.parse(localStorage.getItem('account'));
       if(this.account) {
         this.accountUsername = this.account.username;
@@ -170,7 +170,7 @@ export class MovieDetailsComponent implements OnInit{
     calculateStarDisplay(): void {
       this.filledStars = Array(Math.floor(this.averageStars)).fill(0);
       const decimalPart = this.averageStars % 1;
-  
+
       if (decimalPart > 0) {
         this.halfFilledStarIndex = Math.floor(this.averageStars);
       } else {
@@ -182,19 +182,19 @@ export class MovieDetailsComponent implements OnInit{
       console.log(this.cinemaId);
       this.movieService.findMovie(this.dateSelectedString, this.cinemaId, this.movieId).then(
         (res) => {
-        
+
           console.log(this.dateSelectedString);
           this.movies = res as Movie[];
           this.movies.forEach(m => {
             // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
             const uniqueShowtimes = new Map<number, ShowTime>();
-      
+
             m.showtimes.forEach(s => {
               if (!uniqueShowtimes.has(s.subId)) {
                 uniqueShowtimes.set(s.subId, s);
               }
             });
-      
+
             // Chỉ giữ lại showtimes duy nhất
             m.subs = Array.from(uniqueShowtimes.values());
             console.log(m.subs);
@@ -208,7 +208,7 @@ export class MovieDetailsComponent implements OnInit{
     }
     check(evt: any) {
       var value: any = evt.target.value;
-      
+
       console.log("checkkkkkkkkkkkkk", value);
       this.dateSelectedString = value;
       this.movieService.findMovie(value, this.cinemaId, this.movieId).then(
@@ -217,13 +217,13 @@ export class MovieDetailsComponent implements OnInit{
           this.movies.forEach(m => {
             // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
             const uniqueShowtimes = new Map<number, ShowTime>();
-      
+
             m.showtimes.forEach(s => {
               if (!uniqueShowtimes.has(s.subId)) {
                 uniqueShowtimes.set(s.subId, s);
               }
             });
-      
+
             // Chỉ giữ lại showtimes duy nhất
             m.subs = Array.from(uniqueShowtimes.values());
             console.log(m.subs);
@@ -240,7 +240,7 @@ export class MovieDetailsComponent implements OnInit{
       // Chuyển đổi chuỗi ngày từ định dạng dd/MM/yyyy HH:mm:ss thành đối tượng Date
       const [day, month, year] = dateString.split(' ')[0].split('/').map(Number);
       return new Date(year, month - 1, day); // Ngày tháng trong JavaScript bắt đầu từ 0 (tháng 0 = tháng 1)
-    }  
+    }
 
   convertDateToString(date: Date) {
     const formattedDate = moment(date).format("DD-MM-YYYY");
@@ -277,7 +277,7 @@ export class MovieDetailsComponent implements OnInit{
       }
       if (userName && userComment && rating) {
         this.comments.push({ userName, text: userComment, rating });
-        
+
 
          this.messageService.add({
           severity: "success",
@@ -299,7 +299,7 @@ export class MovieDetailsComponent implements OnInit{
           ratingInput.checked = false; // Bỏ chọn tất cả các đánh giá
       }
       (form.querySelector('#userComment') as HTMLTextAreaElement).value = "";
-    
+
       }
     } else {
       this.messageService.add({

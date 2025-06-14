@@ -3,7 +3,7 @@
         <div class="row g-5">
             <div class="col-lg-6">
                 <div class="left-image" style="text-align: center;">
-                  <img src="{{movie.photo}}" alt=""  width="65%"/>
+                  <img src="{{movie.posterUrl}}" alt=""  width="65%"/>
                 </div>
               </div>
             <div class="col-lg-6">
@@ -25,7 +25,7 @@
                                 <h5>Diễn phim: </h5>
                             </div>
                             <div class="col-7">
-                                <p style="font-size: 16px;text-align: left;margin-top: 0;">{{movie.actor}}</p>
+                                <p style="font-size: 16px;text-align: left;margin-top: 0;">{{movie.director}}</p>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -41,7 +41,7 @@
                                 <h5>Nhà sản xuất: </h5>
                             </div>
                             <div class="col-7">
-                                <p style="font-size: 16px;text-align: left;margin-top: 0;">{{movie.publisher}}</p>
+                                <p style="font-size: 16px;text-align: left;margin-top: 0;">{{movie.releaseDate}}</p>
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -65,12 +65,12 @@
                                 <h5>Giới hạn tuổi: </h5>
                             </div>
                             <div class="col-7">
-                                <p style="font-size: 16px;text-align: left;margin-top: 0;">T{{movie.age}}</p>
+                                <p style="font-size: 16px;text-align: left;margin-top: 0;">T{{movie.rating}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
@@ -85,7 +85,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Date -->
           <div class="col-lg-12">
             <div class="btn-group custom-radio-group" role="group" aria-label="Basic radio toggle button group">
@@ -100,7 +100,7 @@
                 checked
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio1">{{ date1 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date2 | date : 'dd/MM/yyyy' }}"
@@ -111,7 +111,7 @@
                 autocomplete="off"
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio2">{{ date2 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date3 | date : 'dd/MM/yyyy' }}"
@@ -122,7 +122,7 @@
                 autocomplete="off"
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio3">{{ date3 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date4 | date : 'dd/MM/yyyy' }}"
@@ -132,7 +132,7 @@
                 id="btnradio4"
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio4">{{ date4 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date5 | date : 'dd/MM/yyyy' }}"
@@ -143,7 +143,7 @@
                 autocomplete="off"
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio5">{{ date5 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date6 | date : 'dd/MM/yyyy' }}"
@@ -154,7 +154,7 @@
                 autocomplete="off"
               />
               <label class="btn btn-outline-primary custom-radio-label" for="btnradio6">{{ date6 | date : "dd/MM/yyyy" }}</label>
-          
+
               <input
                 (click)="check($event)"
                 value="{{ date7 | date : 'dd/MM/yyyy' }}"
@@ -182,7 +182,7 @@
                   <div style="display: flex; margin-bottom: 5px;padding: 20px 0;">
                     <div style="margin-right: 10px">
                       <img
-                        src="{{ movie.photo }}"
+                        src="{{ movie.posterUrl }}"
                         alt=""
                         style="
                           width: 200px;
@@ -204,14 +204,14 @@
                             margin: 10px 0 40px 0;
                           "
                         >
-                          {{ movie.duration }} - {{ movie.genre }}
+                          {{ movie.duration }} - {{ movie.genres }}
                         </h6>
                         <!-- <h6 style="color: #888">{{ show.movieTimeLast }}</h6> -->
                       </div>
-    
+
                       <div style="margin-top: 10px">
                         <!-- <ng-container *ngFor="let showTime of movie.showtimes"> -->
-    
+
                         <ng-container *ngFor="let sub of movie.subs">
                           <h6 style="margin-left: 10px">{{ sub.subName }}</h6>
                           <br />
@@ -234,26 +234,26 @@
                               </a>
                             </span>
                           </span>
-    
+
                           <br /><br />
                         </ng-container>
-    
-                        <!--  <a 
+
+                        <!--  <a
                             class="show-link"
                             >aaaa</a
                           >
                           <br>
                           <br> -->
-    
+
                         <!-- </ng-container> -->
                         <!-- <br> <br>
                         <ng-container *ngFor="let showTime of movie.showtimes">
                           <a
                             class="show-link"
-                           
+
                             >{{showTime.showDate}}</a
                           >
-        
+
                         </ng-container> -->
                       </div>
                     </div>
@@ -286,13 +286,13 @@
                 <h1 class="m-4">Trailer</h1>
              </div>
              <div class="qr-code mt-2 text-center">
-                <iframe 
-                width="560" 
-                height="315" 
-                [src]="trailerUrl" 
-                title="YouTube video player" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                <iframe
+                width="560"
+                height="315"
+                [src]="trailerUrl"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen>
             </iframe>
              </div>
@@ -303,7 +303,7 @@
               <div class="section-heading">
                   <h2>Bình luận và Đánh giá</h2>
               </div>
-              
+
               <!-- Comment Form -->
               <div class="comment-form mb-4">
                   <form (submit)="submitComment($event)">
@@ -320,25 +320,25 @@
                           <div class="rating">
                             <input type="radio" id="star5" name="rating" value="5">
                             <label for="star5" title="5 stars"></label>
-                        
+
                             <input type="radio" id="star4" name="rating" value="4">
                             <label for="star4" title="4 stars"></label>
-                        
+
                             <input type="radio" id="star3" name="rating" value="3">
                             <label for="star3" title="3 stars"></label>
-                        
+
                             <input type="radio" id="star2" name="rating" value="2">
                             <label for="star2" title="2 stars"></label>
-                        
+
                             <input type="radio" id="star1" name="rating" value="1">
                             <label for="star1" title="1 star"></label>
                         </div>
-                        
+
                       </div>
                       <button type="submit" class="btn btn-primary">Gửi</button>
                   </form>
               </div>
-              
+
               <!-- Display Comments and Ratings -->
               <div class="comments-section">
                   <h3>Những bình luận và đánh giá</h3>

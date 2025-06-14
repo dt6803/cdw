@@ -21,5 +21,4 @@ public class SeatResponse {
     int colNumber;
     BigDecimal price;
     SeatStatus status;
-
 }

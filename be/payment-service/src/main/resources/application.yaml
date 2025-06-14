@@ -17,10 +17,16 @@ spring:
       ddl-auto: update
     show-sql: true
 
+app:
+  services:
+    booking-service: http://localhost:8085/booking
+    cinema-service: http://localhost:8084/cinema
+
+
 payment:
   vnpay:
-    tmn-code: 0UDSA0P1
-    secret-key: 05G3NDKYBVOOMGJIRMMNKEZRNR6DLS0F
+    tmn-code: 4I4FEVKE
+    secret-key: XQ8LNANJO4K2QBW8SX005JOB8ZBVCX6U
     init-payment-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
     return-url: https://www.example.com/
     timeout: 15 # in minutes
