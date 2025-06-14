@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Date -->
       <div class="col-lg-12">
         <div class="btn-group custom-radio-group" role="group" aria-label="Basic radio toggle button group">
@@ -52,7 +52,7 @@
             checked
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio1">{{ date1 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date2 | date : 'dd/MM/yyyy' }}"
@@ -63,7 +63,7 @@
             autocomplete="off"
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio2">{{ date2 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date3 | date : 'dd/MM/yyyy' }}"
@@ -74,7 +74,7 @@
             autocomplete="off"
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio3">{{ date3 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date4 | date : 'dd/MM/yyyy' }}"
@@ -84,7 +84,7 @@
             id="btnradio4"
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio4">{{ date4 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date5 | date : 'dd/MM/yyyy' }}"
@@ -95,7 +95,7 @@
             autocomplete="off"
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio5">{{ date5 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date6 | date : 'dd/MM/yyyy' }}"
@@ -106,7 +106,7 @@
             autocomplete="off"
           />
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio6">{{ date6 | date : "dd/MM/yyyy" }}</label>
-      
+
           <input
             (click)="check($event)"
             value="{{ date7 | date : 'dd/MM/yyyy' }}"
@@ -119,7 +119,7 @@
           <label class="btn btn-outline-primary custom-radio-label" for="btnradio7">{{ date7 | date : "dd/MM/yyyy" }}</label>
         </div>
       </div>
-      
+
 
       <div class="col-lg-12" style="margin-top: 50px">
         <ng-container *ngFor="let movie of movies">
@@ -135,7 +135,7 @@
               <div style="display: flex; margin-bottom: 5px;padding: 20px 0;">
                 <div style="margin-right: 10px">
                   <img
-                    src="{{ movie.photo }}"
+                    src="{{ movie.posterUrl }}"
                     alt=""
                     style="
                       width: 200px;
@@ -157,7 +157,7 @@
                         margin: 10px 0 40px 0;
                       "
                     >
-                      {{ movie.duration }} - {{ movie.genre }}
+                      {{ movie.duration }} - {{ movie.genres }}
                     </h6>
                     <!-- <h6 style="color: #888">{{ show.movieTimeLast }}</h6> -->
                   </div>
@@ -191,7 +191,7 @@
                       <br /><br />
                     </ng-container>
 
-                    <!--  <a 
+                    <!--  <a
                         class="show-link"
                         >aaaa</a
                       >
@@ -203,10 +203,10 @@
                     <ng-container *ngFor="let showTime of movie.showtimes">
                       <a
                         class="show-link"
-                       
+
                         >{{showTime.showDate}}</a
                       >
-    
+
                     </ng-container> -->
                   </div>
                 </div>

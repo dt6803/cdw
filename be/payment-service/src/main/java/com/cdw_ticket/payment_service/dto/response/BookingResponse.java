@@ -1,11 +1,8 @@
-package com.cdw_ticket.booking_service.dto.response;
+package com.cdw_ticket.payment_service.dto.response;
 
-import com.cdw_ticket.booking_service.entity.BookingSeat;
-import com.cdw_ticket.booking_service.enums.BookingStatus;
-import jakarta.persistence.*;
+import com.cdw_ticket.payment_service.enums.BookingStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +24,4 @@ public class BookingResponse {
     BookingStatus status;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
-    List<BookingSeatResponse> bookingSeats;
-    String urlPayment;
 }

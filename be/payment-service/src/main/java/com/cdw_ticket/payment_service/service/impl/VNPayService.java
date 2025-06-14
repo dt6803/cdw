@@ -63,7 +63,7 @@ public class VNPayService implements PaymentService {
 
         var ipAddress = request.getIpAddress();
         var orderInfo = buildPaymentDetail(request);
-        var requestId = request.getRequestId();
+//        var requestId = request.getRequestId();
 
         Map<String, String> params = new HashMap<>();
 
@@ -87,7 +87,7 @@ public class VNPayService implements PaymentService {
         params.put(VNPayParams.ORDER_TYPE, ORDER_TYPE);
 
         var initPaymentUrl = buildInitPaymentUrl(params);
-        log.debug("[request_id={}] Init payment url: {}", requestId, initPaymentUrl);
+//        log.debug("[request_id={}] Init payment url: {}", requestId, initPaymentUrl);
         return InitPaymentResponse.builder()
                 .vpnUrl(initPaymentUrl)
                 .build();
@@ -99,6 +99,34 @@ public class VNPayService implements PaymentService {
 
     private String buildReturnUrl(String txnRef) {
         return String.format(returnUrlFormat, txnRef);
+    }
+
+    public boolean verifyIpn(Map<String, String> params) {
+        var reqSecureHash = params.get(VNPayParams.SECURE_HASH);
+        params.remove(VNPayParams.SECURE_HASH);
+        params.remove(VNPayParams.SECURE_HASH_TYPE);
+        var hashPayload = new StringBuilder();
+        var fieldNames = new ArrayList<>(params.keySet());
+        Collections.sort(fieldNames);
+
+        var itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            var fieldName = itr.next();
+            var fieldValue = params.get(fieldName);
+            if ((fieldValue != null) && (!fieldValue.isEmpty())) {
+                //Build hash data
+                hashPayload.append(fieldName);
+                hashPayload.append(Symbol.EQUAL);
+                hashPayload.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII));
+
+                if (itr.hasNext()) {
+                    hashPayload.append(Symbol.AND);
+                }
+            }
+        }
+
+        var secureHash = cryptoService.sign(hashPayload.toString());
+        return secureHash.equals(reqSecureHash);
     }
 
     @SneakyThrows

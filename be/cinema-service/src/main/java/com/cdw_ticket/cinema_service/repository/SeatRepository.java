@@ -21,4 +21,9 @@ public interface SeatRepository extends JpaRepository<Seat, String> {
     void deleteAllByRoomId(@Param("roomId") String roomId);
 
     List<Seat> findByIdInAndStatus(List<String> ids, SeatStatus status);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Seat s SET s.status = :status WHERE s.id IN :seatIds")
+    int updateStatusBySeatIds(@Param("seatIds") List<String> seatIds, @Param("status") SeatStatus status);
 }

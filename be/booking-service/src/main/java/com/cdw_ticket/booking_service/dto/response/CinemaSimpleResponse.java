@@ -1,10 +1,7 @@
 package com.cdw_ticket.booking_service.dto.response;
 
-import com.cdw_ticket.booking_service.enums.SeatType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.math.BigDecimal;
 
 @Builder
 @Getter
@@ -12,9 +9,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookingSeatResponse {
-    String seatId;
-    String seatCode;
-    SeatType type;
-    BigDecimal price;
+public class CinemaSimpleResponse {
+    String id;
+    String name;
+    String address;
+    String city;
+
 }

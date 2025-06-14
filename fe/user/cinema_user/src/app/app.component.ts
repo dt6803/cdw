@@ -21,11 +21,11 @@ interface AutoCompleteCompleteEvent {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  account: Account | null = null; 
-  movies: Movie[] = []; 
-  filteredMovies: Movie[] = []; 
-  movie: Movie | null = null; 
-  private routeSub: Subscription = new Subscription(); 
+  account: Account | null = null;
+  movies: Movie[] = [];
+  filteredMovies: Movie[] = [];
+  movie: Movie | null = null;
+  private routeSub: Subscription = new Subscription();
   isFollowed: boolean;
   selectedLanguage: string = 'vi';
   constructor(
@@ -49,11 +49,11 @@ export class AppComponent implements OnInit {
         res => {
           console.log(res);
           this.isFollowed = res.status;
-        
+
         }
       );
     }
-   
+
     this.accountService.getAccount().subscribe(account => {
       if (account) {
           this.account = account;
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
 
   // filterMovies(event: AutoCompleteCompleteEvent): void {
   //   const query = event.query.toLowerCase();
-  //   this.filteredMovies = this.movies.filter(movie => 
+  //   this.filteredMovies = this.movies.filter(movie =>
   //     movie.title.toLowerCase().startsWith(query)
   //   );
   // }
@@ -106,12 +106,12 @@ export class AppComponent implements OnInit {
   //       window.location.reload();
   //       this.movie = null; // Clear selection
   //     });
-     
+
   //   }
   // }
   filterMovies(event: AutoCompleteCompleteEvent): void {
     const query = event.query.toLowerCase();
-    this.filteredMovies = this.movies.filter(movie => 
+    this.filteredMovies = this.movies.filter(movie =>
       movie.title.toLowerCase().includes(query)
     );
 }
@@ -127,9 +127,9 @@ onMovieSelect(event: any): void {
 
   title = 'mall_admin';
   follow(){
-  
+
     const account = JSON.parse(localStorage.getItem('account'));
-   
+
     if(account == null){
       this.messageService.add({
         severity: "error",
@@ -197,9 +197,9 @@ onMovieSelect(event: any): void {
             }
           }
         );
-       
+
       }
-     
+
     }
     console.log(account);
   }

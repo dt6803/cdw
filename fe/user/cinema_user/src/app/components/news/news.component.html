@@ -6,19 +6,19 @@
       </div>
       <div class="row g-4">
         <ng-container *ngFor="let movie of movies">
-          <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-              <div class="service-item">
+          <div class="col-sm-6 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
+              <div class="service-item rounded-3 border ">
                   <div class="overflow-hidden d-flex justify-content-center">
-                      <img class="img-fluid rounded-3" src="{{movie.photo}}" alt="">
+                      <img class="img-fluid rounded-3" src="{{movie.posterUrl}}" alt="">
                   </div>
-                  <div class="p-4 text-center">
+                <a style="background-color: #B31E8D; color: white; padding-left: 10px;" class="fw-medium py-2 mt-4 d-flex justify-content-center"  [routerLink]="['/movie-details', movie.id]">Mua vé<i class="fa fa-arrow-right ms-2 pt-1"></i></a>
+                  <div class="py-2 text-center">
                       <h4 class="" style="color: #B31E8D; padding-left: 10px;">
-                        {{movie.title}}</h4>
-                      <div class="p-4" style="height: 90px;">
-                        <h6 class="pb-2">Thể loại:  <span>{{movie.genre}}</span></h6>
-                        <h6 class="pb-2">Thời lượng:  <span>{{movie.duration}}</span></h6>
-                      </div>
-                      <a class="fw-medium p-4 d-flex justify-content-center"  [routerLink]="['/movie-details', movie.id]">Mua vé<i class="fa fa-arrow-right ms-2 pt-1"></i></a>
+                        {{movie.title}}
+                      </h4>
+                      <h5 class="" style=" padding-left: 10px;">
+                        {{movie.releaseDate | date : 'dd/MM/yyyy'}}
+                      </h5>
                   </div>
               </div>
           </div>

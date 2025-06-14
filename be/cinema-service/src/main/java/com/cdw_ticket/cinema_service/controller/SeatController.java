@@ -6,6 +6,7 @@ import com.cdw_ticket.cinema_service.dto.response.BaseResponse;
 import com.cdw_ticket.cinema_service.dto.response.SeatLayoutResponse;
 import com.cdw_ticket.cinema_service.dto.response.SeatResponse;
 import com.cdw_ticket.cinema_service.entity.Seat;
+import com.cdw_ticket.cinema_service.enums.SeatStatus;
 import com.cdw_ticket.cinema_service.service.SeatService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -56,6 +57,21 @@ public class SeatController {
     public BaseResponse<List<SeatResponse>> getAvailableSeats(@RequestBody List<String> seatIds) {
         return BaseResponse.<List<SeatResponse>>builder()
                 .data(seatService.getAvailableSeatsByIds(seatIds))
+                .build();
+    }
+
+    @GetMapping("/seats/{id}/info")
+    public BaseResponse<SeatResponse> getInfo(@PathVariable String id) {
+        return BaseResponse.<SeatResponse>builder()
+                .data(seatService.getInfo(id))
+                .build();
+    }
+
+    @GetMapping("/seats/updateStatus/")
+    public BaseResponse<Void> updateStatusByIds(List<String> ids, SeatStatus status) {
+        seatService.updateStatusBySeatIds(ids, status);
+        return BaseResponse.<Void>builder()
+                .message("Update status: " + status)
                 .build();
     }
 }

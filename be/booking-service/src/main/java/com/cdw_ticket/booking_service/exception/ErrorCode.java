@@ -19,6 +19,7 @@ public enum ErrorCode {
     ROOM_CAPACITY_EXCEED(1006, "Cannot add more seats: capacity exceeded", HttpStatus.BAD_REQUEST),
     SHOWTIME_NOT_AVAILABLE(1007, "Showtime not available", HttpStatus.BAD_REQUEST),
     INVALID_SEAT(1008, "Invalid Seat", HttpStatus.BAD_REQUEST),
+    BOOKING_NOT_FOUND(1008, "Booking not found", HttpStatus.NOT_FOUND),
     UNAUTHENTICATED(403, "Access denied", HttpStatus.UNAUTHORIZED)
     ;
 
