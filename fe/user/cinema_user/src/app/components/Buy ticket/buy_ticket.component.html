@@ -184,7 +184,7 @@
                 >Danh sách ghế đã chọn:</label
                 >
                 <input
-                  [value]="selectedSeats1"
+                  [value]="selectedSeatStr"
                   class="w-full"
 
                   disabled
@@ -307,7 +307,7 @@
 
               <ng-container *ngFor="let seat of row">
                 <button
-                  (click)="toggleSeat(seat.seatCode)"
+                  (click)="toggleSeat(seat)"
                   *ngIf="seat"
                   [disabled]="seat.status === 'BOOKED'"
                   [ngClass]="{
@@ -329,10 +329,10 @@
 
 
           <!-- Hiển thị thông tin ghế đã chọn -->
-          <div *ngIf="selectedSeats.size > 0" class="selected-info">
-            Selected Seats:
-            <span *ngFor="let seat of selectedSeats">{{ seat }} </span>
-          </div>
+<!--          <div *ngIf="selectedSeats.length > 0" class="selected-info">-->
+<!--            Selected Seats:-->
+<!--            <span *ngFor="let seat of selectedSeats">{{ seat }} </span>-->
+<!--          </div>-->
 
         </div>
       </div>
