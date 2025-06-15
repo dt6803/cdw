@@ -19,6 +19,7 @@ public class ShowtimeResponse {
     String movieId;
     String movieTitle;
     String cinemaId;
+    String roomId;
     String cinemaName;
     LocalDateTime startTime;
     LocalDateTime endTime;

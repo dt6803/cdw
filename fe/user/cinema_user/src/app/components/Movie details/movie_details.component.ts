@@ -1,28 +1,26 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { Movie } from 'src/app/models/movie.model';
-import { Payment, TicketDetail } from 'src/app/models/payment.model';
-import { MovieService } from 'src/app/services/movie.service';
-import { PaymentService } from 'src/app/services/payment.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { DatePipe } from "@angular/common";
-import { ShowTimeService } from 'src/app/services/showTime.service';
-import { ShowTime } from 'src/app/models/showtime.model';
-import { Cinema } from 'src/app/models/cinema.model';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Movie} from 'src/app/models/movie.model';
+import {MovieService} from 'src/app/services/movie.service';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {DatePipe} from "@angular/common";
+import {ShowTimeService} from 'src/app/services/showTime.service';
+import {Cinema} from 'src/app/models/cinema.model';
 import * as moment from 'moment';
-import { CinemaService } from 'src/app/services/cinema.service';
-import { CommonModule } from '@angular/common';
-import { RatingService } from 'src/app/services/rating.service';
-import { Account } from 'src/app/models/account.model';
-import { MovieRatings } from 'src/app/models/movieRatings.model';
-import { MessageService } from 'primeng/api';
-import { AccountService } from 'src/app/services/account.service';
+import {CinemaService} from 'src/app/services/cinema.service';
+import {RatingService} from 'src/app/services/rating.service';
+import {Account} from 'src/app/models/account.model';
+import {MovieRatings} from 'src/app/models/movieRatings.model';
+import {MessageService} from 'primeng/api';
+import {AccountService} from 'src/app/services/account.service';
+import {MovieWithShowtimes} from "../../models/movieShowtimes.model";
+import {Showtime} from "../../models/showtime.model";
 
 @Component({
   templateUrl: './movie_details.component.html',
   styleUrls: ['./movie_details.component.css']
 })
-export class MovieDetailsComponent implements OnInit{
+export class MovieDetailsComponent implements OnInit {
 
   todayDate1: Date = new Date();
   todayDate2: Date = new Date();
@@ -39,7 +37,28 @@ export class MovieDetailsComponent implements OnInit{
   date6: number;
   date7: number;
   formattedReleaseDate: string;
-
+  movieId: string;
+  movie: Movie;
+  movies: Movie[];
+  seatNames: string;
+  trailerUrl: SafeResourceUrl;
+  dateSelected: Date;
+  cinemas: Cinema[];
+  cinemaId: string = '';
+  dateSelectedString: string;
+  hoursString: string;
+  comments: { userName: string, text: string, rating: number }[] = [];
+  ratingNumber: number;
+  rating: MovieRatings;
+  account: Account;
+  accountUsername: string = null;
+  listComment: MovieRatings[];
+  starsArray: number[] = [1, 2, 3, 4, 5];
+  averageStars: number;
+  filledStars: number[] = [];
+  halfFilledStarIndex: number = -1;
+  moviesWithShowtimes: MovieWithShowtimes[] = [];
+  showtimes:Showtime[] = [];
   constructor(
     private route: ActivatedRoute,
     private movieService: MovieService,
@@ -52,207 +71,130 @@ export class MovieDetailsComponent implements OnInit{
     private router: Router,
     private cdr: ChangeDetectorRef,
     private accountService: AccountService,
-  ){}
-    movieId: number;
-    movie: Movie;
-    movies: Movie[];
-    seatNames: string;
-    trailerUrl: SafeResourceUrl;
-    dateSelected: Date;
-    cinemas: Cinema[];
-    cinemaId: number = 0;
-    dateSelectedString: string;
-    hoursString: string;
-    comments: { userName: string, text: string, rating: number }[] = [];
-    ratingNumber: number;
-    rating: MovieRatings;
-    account: Account;
-    accountUsername: string = null;
-    listComment: MovieRatings[];
-    starsArray: number[] = [1, 2, 3, 4, 5];
-    averageStars: number;
-    filledStars: number[] = [];
-    halfFilledStarIndex: number = -1;
+  ) {
+  }
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-        const showIdParam = params["movieId"];
-        this.movieId = showIdParam;
+      const showIdParam = params["movieId"];
+      this.movieId = showIdParam;
 
-      });
+    });
 
-      this.date1 = this.todayDate1.setDate(this.todayDate1.getDate() + 0);
-      this.date2 = this.todayDate2.setDate(this.todayDate2.getDate() + 1);
-      this.date3 = this.todayDate3.setDate(this.todayDate3.getDate() + 2);
-      this.date4 = this.todayDate4.setDate(this.todayDate4.getDate() + 3);
-      this.date5 = this.todayDate5.setDate(this.todayDate5.getDate() + 4);
-      this.date6 = this.todayDate6.setDate(this.todayDate6.getDate() + 5);
-      this.date7 = this.todayDate7.setDate(this.todayDate7.getDate() + 6);
+    this.date1 = this.todayDate1.setDate(this.todayDate1.getDate() + 0);
+    this.date2 = this.todayDate2.setDate(this.todayDate2.getDate() + 1);
+    this.date3 = this.todayDate3.setDate(this.todayDate3.getDate() + 2);
+    this.date4 = this.todayDate4.setDate(this.todayDate4.getDate() + 3);
+    this.date5 = this.todayDate5.setDate(this.todayDate5.getDate() + 4);
+    this.date6 = this.todayDate6.setDate(this.todayDate6.getDate() + 5);
+    this.date7 = this.todayDate7.setDate(this.todayDate7.getDate() + 6);
 
 
+    this.dateSelected = this.todayDate1;
+    this.dateSelectedString = this.datePipe.transform(this.dateSelected, 'yyyy-MM-dd');
+    // Tìm thông tin phim dựa vào id
+    this.movieService.findMovieById(this.movieId).then(
+      (response) => {
+        this.movie = response.data as Movie;
+        this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.getEmbedUrl(this.movie.trailerUrl));
+      },
+      (err) => {
 
-      this.dateSelected = this.todayDate1;
-      this.dateSelectedString = this.datePipe.transform(this.dateSelected, 'dd/MM/yyyy');
-      // Tìm thông tin phim dựa vào id
-      this.movieService.findMovieById(this.movieId).then(
-        (response) => {
-            this.movie = response as Movie;
-            console.log(this.movie.releaseDate);
-            this.formattedReleaseDate = this.datePipe.transform(
-              this.parseDate(this.movie.releaseDate),
-              'dd/MM/yyyy'
-            );
-            this.trailerUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.trailerUrl);
-        },
-        (err) => {
-
-        }
-      );
-
-      // Tìm xuất chiếu của phim đó theo từng rạp
-      this.cinemaService.findAll().then(
-        (res) => {
-            this.cinemas = res as Cinema[];
-            this.cinemaId = this.cinemas[0].id;
-            console.log(this.cinemaId);
-            this.movieService.findMovie(this.dateSelectedString, this.cinemaId, this.movieId).then(
-              (res) => {
-                this.movies = res as Movie[];
-                console.log(res);
-                console.log(this.dateSelectedString);
-                this.movies.forEach(m => {
-                  // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-                  const uniqueShowtimes = new Map<number, ShowTime>();
-
-                  m.showtimes.forEach(s => {
-                    if (!uniqueShowtimes.has(s.subId)) {
-                      uniqueShowtimes.set(s.subId, s);
-                    }
-                  });
-
-                  // Chỉ giữ lại showtimes duy nhất
-                  m.subs = Array.from(uniqueShowtimes.values());
-
-                });
-
-              },
-              (err) => {
-                console.error(err);
-              }
-            );
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-
-      this.account = JSON.parse(localStorage.getItem('account'));
-      if(this.account) {
-        this.accountUsername = this.account.username;
       }
+    );
 
-      this.ratingService.findAll(this.movieId).then(
-        (res) => {
-           this.listComment = res.status as MovieRatings[];
-           console.log(this.listComment);
-        },
+    // Tìm xuất chiếu của phim đó theo từng rạp, ngày
+    this.cinemaService.findAll().then(
+      (res) => {
+        this.cinemas = res.data as Cinema[];
+        this.cinemaId = this.cinemas[0].id;
 
-      )
+        this.movieService.findShowtimesByMovieId(this.dateSelectedString, this.cinemaId, this.movieId).then(
+          (res) => {
+            this.showtimes = res.data;
+            console.log(this.showtimes);
+          },
+          (err) => console.error(err)
+        );
+      },
+      (err) => console.error(err)
+    );
 
-      this.ratingService.avg(this.movieId).then(
-        (res) => {
-           this.averageStars = res.status as number;
-           this.calculateStarDisplay();
-        },
 
-      )
+    this.account = JSON.parse(localStorage.getItem('account'));
+    if (this.account) {
+      this.accountUsername = this.account.username;
     }
 
-    calculateStarDisplay(): void {
-      this.filledStars = Array(Math.floor(this.averageStars)).fill(0);
-      const decimalPart = this.averageStars % 1;
+    this.ratingService.findAll(this.movieId).then(
+      (res) => {
+        this.listComment = res.status as MovieRatings[];
+        console.log(this.listComment);
+      },
+    )
 
-      if (decimalPart > 0) {
-        this.halfFilledStarIndex = Math.floor(this.averageStars);
-      } else {
-        this.halfFilledStarIndex = -1;
-      }
+    this.ratingService.avg(this.movieId).then(
+      (res) => {
+        this.averageStars = res.status as number;
+        this.calculateStarDisplay();
+      },
+    )
+  }
+
+  calculateStarDisplay(): void {
+    this.filledStars = Array(Math.floor(this.averageStars)).fill(0);
+    const decimalPart = this.averageStars % 1;
+
+    if (decimalPart > 0) {
+      this.halfFilledStarIndex = Math.floor(this.averageStars);
+    } else {
+      this.halfFilledStarIndex = -1;
     }
-    selectCinema(evt: any){
-      this.cinemaId = evt.target.value;
-      console.log(this.cinemaId);
-      this.movieService.findMovie(this.dateSelectedString, this.cinemaId, this.movieId).then(
-        (res) => {
+  }
 
-          console.log(this.dateSelectedString);
-          this.movies = res as Movie[];
-          this.movies.forEach(m => {
-            // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-            const uniqueShowtimes = new Map<number, ShowTime>();
+  selectCinema(evt: any) {
+    this.cinemaId = evt.target.value;
+    console.log('cinama id:', this.cinemaId);
+    this.movieService.findShowtimesByMovieId(this.dateSelectedString, this.cinemaId, this.movieId).then(
+      (res) => {
+        this.showtimes = res.data;
+        console.log(this.showtimes);
+      },
+      (err) => console.error(err)
+    );
+  }
 
-            m.showtimes.forEach(s => {
-              if (!uniqueShowtimes.has(s.subId)) {
-                uniqueShowtimes.set(s.subId, s);
-              }
-            });
+  check(evt: any) {
+    var value: any = evt.target.value;
 
-            // Chỉ giữ lại showtimes duy nhất
-            m.subs = Array.from(uniqueShowtimes.values());
-            console.log(m.subs);
-          });
-          console.log(this.movies);
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-    }
-    check(evt: any) {
-      var value: any = evt.target.value;
+    this.dateSelectedString = value;
+    this.movieService.findShowtimesByMovieId(this.dateSelectedString, this.cinemaId, this.movieId).then(
+      (res) => {
+        this.showtimes = res.data;
+        console.log(this.showtimes);
+      },
+      (err) => console.error(err)
+    );
+  }
 
-      console.log("checkkkkkkkkkkkkk", value);
-      this.dateSelectedString = value;
-      this.movieService.findMovie(value, this.cinemaId, this.movieId).then(
-        (res) => {
-          this.movies = res as Movie[];
-          this.movies.forEach(m => {
-            // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-            const uniqueShowtimes = new Map<number, ShowTime>();
-
-            m.showtimes.forEach(s => {
-              if (!uniqueShowtimes.has(s.subId)) {
-                uniqueShowtimes.set(s.subId, s);
-              }
-            });
-
-            // Chỉ giữ lại showtimes duy nhất
-            m.subs = Array.from(uniqueShowtimes.values());
-            console.log(m.subs);
-          });
-          console.log(this.movies);
-        },
-        (err) => {
-          console.error(err);
-        }
-      );
-    }
-
-    parseDate(dateString: string): Date {
-      // Chuyển đổi chuỗi ngày từ định dạng dd/MM/yyyy HH:mm:ss thành đối tượng Date
-      const [day, month, year] = dateString.split(' ')[0].split('/').map(Number);
-      return new Date(year, month - 1, day); // Ngày tháng trong JavaScript bắt đầu từ 0 (tháng 0 = tháng 1)
-    }
+  parseDate(dateString: string): Date {
+    // Chuyển đổi chuỗi ngày từ định dạng dd/MM/yyyy HH:mm:ss thành đối tượng Date
+    const [day, month, year] = dateString.split(' ')[0].split('/').map(Number);
+    return new Date(year, month - 1, day); // Ngày tháng trong JavaScript bắt đầu từ 0 (tháng 0 = tháng 1)
+  }
 
   convertDateToString(date: Date) {
     const formattedDate = moment(date).format("DD-MM-YYYY");
     console.log("AAAAAAAAAAAAAAAAAAAAa", formattedDate);
     return formattedDate;
   }
-   // Phương thức để cắt chuỗi showDate
-   getFormattedDate(date: string): string {
+
+  // Phương thức để cắt chuỗi showDate
+  getFormattedDate(date: string): string {
     return date.split(' ')[1]; // Cắt lấy phần dd/MM/yyyy
   }
 
-  checkHours(hours: string): boolean{
+  checkHours(hours: string): boolean {
     this.hoursString = this.datePipe.transform(this.todayDate1, 'dd/MM/yyyy HH:mm');
     return this.hoursString > hours;
   }
@@ -266,20 +208,20 @@ export class MovieDetailsComponent implements OnInit{
     const ratingInput = form.querySelector('input[name="rating"]:checked') as HTMLInputElement;
     const rating = ratingInput ? parseInt(ratingInput.value, 10) : 0;
     this.ratingNumber = rating;
-    if(this.account) {
+    if (this.account) {
       this.accountUsername = this.account.username;
-       this.rating = {
-          id: 0,
-          comment: userComment,
-          movieId:  this.movieId,
-          accountId: this.account.id,
-          rate: this.ratingNumber
+      this.rating = {
+        id: 0,
+        comment: userComment,
+        movieId: this.movieId,
+        accountId: this.account.id,
+        rate: this.ratingNumber
       }
       if (userName && userComment && rating) {
-        this.comments.push({ userName, text: userComment, rating });
+        this.comments.push({userName, text: userComment, rating});
 
 
-         this.messageService.add({
+        this.messageService.add({
           severity: "success",
           summary: "Bình luận thành công",
           detail: "Bạn đã bình luận thành công. Cảm ơn bạn đã đóng góp ý kiến."
@@ -297,8 +239,8 @@ export class MovieDetailsComponent implements OnInit{
         this.cdr.detectChanges();
         if (ratingInput) {
           ratingInput.checked = false; // Bỏ chọn tất cả các đánh giá
-      }
-      (form.querySelector('#userComment') as HTMLTextAreaElement).value = "";
+        }
+        (form.querySelector('#userComment') as HTMLTextAreaElement).value = "";
 
       }
     } else {
@@ -312,6 +254,12 @@ export class MovieDetailsComponent implements OnInit{
 
   getStars(rating: number) {
     return new Array(rating).fill(this.ratingNumber);
+  }
+
+  getEmbedUrl(url: string): string {
+    const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]{11})/;
+    const match = url.match(regExp);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : '';
   }
 
 }

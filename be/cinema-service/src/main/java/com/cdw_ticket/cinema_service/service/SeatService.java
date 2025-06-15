@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public interface SeatService {
-    SeatLayoutResponse createSeatLayout(SeatLayoutRequest request);
+    SeatLayoutResponse createSeatLayout(String roomId, SeatLayoutRequest request);
     SeatLayoutResponse getSeatLayoutByRoomId(String roomId);
     SeatLayoutResponse updateSeatLayoutByRoomId(String roomId, SeatLayoutRequest request);
     void deleteAllSeatByRoomId(String roomId);

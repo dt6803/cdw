@@ -26,7 +26,7 @@ public class SeatController {
     public BaseResponse<SeatLayoutResponse> createSeatLayout(@PathVariable String roomId,
                                                              @Valid @RequestBody SeatLayoutRequest request) {
         return BaseResponse.<SeatLayoutResponse>builder()
-                .data(seatService.createSeatLayout(request))
+                .data(seatService.createSeatLayout(roomId, request))
                 .build();
     }
 

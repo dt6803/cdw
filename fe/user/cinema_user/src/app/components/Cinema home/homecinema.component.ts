@@ -2,13 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import * as moment from "moment";
 import { MovieService } from "src/app/services/movie.service";
 import { Movie } from "src/app/models/movie.model";
-import { ShowTime } from "src/app/models/showtime.model";
 import { DatePipe } from "@angular/common";
 import { ShowTimeService } from "src/app/services/showTime.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CinemaService } from "src/app/services/cinema.service";
 import { Cinema } from "src/app/models/cinema.model";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import {MovieWithShowtimes} from "../../models/movieShowtimes.model";
 
 @Component({
   templateUrl: "./homecinema.component.html",
@@ -31,20 +31,21 @@ export class HomeCinemaComponent implements OnInit {
   date5: number;
   date6: number;
   date7: number;
- 
 
-  constructor(private movieService: MovieService, private datePipe: DatePipe, private showTimeService: ShowTimeService, private router: Router, private route: ActivatedRoute, 
+
+  constructor(private movieService: MovieService, private datePipe: DatePipe, private showTimeService: ShowTimeService, private router: Router, private route: ActivatedRoute,
     private cinemaService: CinemaService
     ) {}
   movies: Movie[];
   dateSelected: Date;
   cinemas: Cinema[];
-  cinemaId: number = 0;
+  cinemaId: string = '';
   dateSelectedString: string;
   hoursString: string;
+  moviesWithShowtimes: MovieWithShowtimes[] = [];
+
   ngOnInit() {
-    
-    
+
     this.route.queryParams.subscribe(params => {
       this.myParam = params['status'];
       if(this.myParam == 'false'){
@@ -60,104 +61,125 @@ export class HomeCinemaComponent implements OnInit {
     this.date7 = this.todayDate7.setDate(this.todayDate7.getDate() + 6);
 
 
-
     this.dateSelected = this.todayDate1;
-    this.dateSelectedString = this.datePipe.transform(this.dateSelected, 'dd/MM/yyyy');
+    this.dateSelectedString = this.datePipe.transform(this.dateSelected, 'yyyy-MM-dd');
     this.cinemaService.findAll().then(
       (res) => {
-          this.cinemas = res as Cinema[];
-          this.cinemaId = this.cinemas[0].id;
-          console.log(this.cinemaId);
-          this.movieService.findAll(this.dateSelectedString, this.cinemaId).then(
-            (res) => {
-              this.movies = res as Movie[];
-              console.log(res);
-              console.log(this.dateSelectedString);
-              this.movies.forEach(m => {
-                // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-                const uniqueShowtimes = new Map<number, ShowTime>();
-          
-                m.showtimes.forEach(s => {
-                  if (!uniqueShowtimes.has(s.subId)) {
-                    uniqueShowtimes.set(s.subId, s);
-                  }
-                });
-          
-                // Chỉ giữ lại showtimes duy nhất
-                m.subs = Array.from(uniqueShowtimes.values());
-                
-              });
-           
-            },
-            (err) => {
-              console.error(err);
-            }
-          );
+        this.cinemas = res.data as Cinema[];
+        this.cinemaId = this.cinemas[0].id;
+
+        this.movieService.findAll(this.dateSelectedString, this.cinemaId).then(
+          async (res) => {
+            const showtimes = res.data;
+
+            // Lấy danh sách movieId duy nhất
+            const movieIds = [...new Set(showtimes.map((s: any) => s.movieId))] as string[];
+
+            // Gọi API lấy thông tin từng phim
+            const movieResponses = await Promise.all(
+              movieIds.map((id) =>
+                this.movieService.findMovieById(id).then((res) => res.data)
+              )
+            );
+
+            // Map movieId -> movie
+            const movieMap: { [key: string]: any } = {};
+            movieIds.forEach((id, index) => {
+              movieMap[id] = movieResponses[index];
+            });
+
+            // Gộp showtimes vào từng phim
+            this.moviesWithShowtimes = movieIds.map((id) => ({
+              movie: movieMap[id],
+              showtimes: showtimes.filter((s: any) => s.movieId === id),
+            }));
+
+
+            console.log('movie showtime:', this.moviesWithShowtimes);
+            console.log(this.moviesWithShowtimes[0])
+          },
+          (err) => console.error(err)
+        );
       },
-      (err) => {
-        console.error(err);
-      }
+      (err) => console.error(err)
     );
-   
-    
-  
+
+
+
+
   }
   selectCinema(evt: any){
     this.cinemaId = evt.target.value;
-    console.log(this.cinemaId);
+    console.log('selected cinema: ', this.cinemaId);
     this.movieService.findAll(this.dateSelectedString, this.cinemaId).then(
-      (res) => {
-      
-        console.log(this.dateSelectedString);
-        this.movies = res as Movie[];
-        this.movies.forEach(m => {
-          // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-          const uniqueShowtimes = new Map<number, ShowTime>();
-    
-          m.showtimes.forEach(s => {
-            if (!uniqueShowtimes.has(s.subId)) {
-              uniqueShowtimes.set(s.subId, s);
-            }
-          });
-    
-          // Chỉ giữ lại showtimes duy nhất
-          m.subs = Array.from(uniqueShowtimes.values());
-          console.log(m.subs);
+      async (res) => {
+        const showtimes = res.data;
+
+        // Lấy danh sách movieId duy nhất
+        const movieIds = [...new Set(showtimes.map((s: any) => s.movieId))] as string[];
+
+        // Gọi API lấy thông tin từng phim
+        const movieResponses = await Promise.all(
+          movieIds.map((id) =>
+            this.movieService.findMovieById(id).then((res) => res.data)
+          )
+        );
+
+        // Map movieId -> movie
+        const movieMap: { [key: string]: any } = {};
+        movieIds.forEach((id, index) => {
+          movieMap[id] = movieResponses[index];
         });
-        console.log(this.movies);
+
+        // Gộp showtimes vào từng phim
+        this.moviesWithShowtimes = movieIds.map((id) => ({
+          movie: movieMap[id],
+          showtimes: showtimes.filter((s: any) => s.movieId === id),
+        }));
+
+
+        console.log('movie showtime:', this.moviesWithShowtimes);
+
       },
-      (err) => {
-        console.error(err);
-      }
+      (err) => console.error(err)
     );
   }
   check(evt: any) {
     var value: any = evt.target.value;
-    
-    console.log("checkkkkkkkkkkkkk", value);
+
+    console.log("selected date: ", value);
     this.dateSelectedString = value;
-    this.movieService.findAll(value, this.cinemaId).then(
-      (res) => {
-        this.movies = res as Movie[];
-        this.movies.forEach(m => {
-          // Sử dụng Map để đảm bảo showtimes với subId và subName duy nhất
-          const uniqueShowtimes = new Map<number, ShowTime>();
-    
-          m.showtimes.forEach(s => {
-            if (!uniqueShowtimes.has(s.subId)) {
-              uniqueShowtimes.set(s.subId, s);
-            }
-          });
-    
-          // Chỉ giữ lại showtimes duy nhất
-          m.subs = Array.from(uniqueShowtimes.values());
-          console.log(m.subs);
+    this.movieService.findAll(this.dateSelectedString, this.cinemaId).then(
+      async (res) => {
+        const showtimes = res.data;
+
+        // Lấy danh sách movieId duy nhất
+        const movieIds = [...new Set(showtimes.map((s: any) => s.movieId))] as string[];
+
+        // Gọi API lấy thông tin từng phim
+        const movieResponses = await Promise.all(
+          movieIds.map((id) =>
+            this.movieService.findMovieById(id).then((res) => res.data)
+          )
+        );
+
+        // Map movieId -> movie
+        const movieMap: { [key: string]: any } = {};
+        movieIds.forEach((id, index) => {
+          movieMap[id] = movieResponses[index];
         });
-        console.log(this.movies);
+
+        // Gộp showtimes vào từng phim
+        this.moviesWithShowtimes = movieIds.map((id) => ({
+          movie: movieMap[id],
+          showtimes: showtimes.filter((s: any) => s.movieId === id),
+        }));
+
+
+        console.log('movie showtime:', this.moviesWithShowtimes);
+        console.log(this.moviesWithShowtimes[0])
       },
-      (err) => {
-        console.error(err);
-      }
+      (err) => console.error(err)
     );
   }
   convertDateToString(date: Date) {
@@ -171,8 +193,11 @@ export class HomeCinemaComponent implements OnInit {
   }
 
   // Phương thức để cắt chuỗi showDate
-  getFormattedDate(date: string): string {
-    return date.split(' ')[1]; 
+  getFormattedDate(isoString: string): string {
+    const date = new Date(isoString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
 }

@@ -8,14 +8,18 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("/showtimes")
+@Slf4j
 public class ShowtimeController {
     ShowtimeService showtimeService;
 
@@ -55,6 +59,30 @@ public class ShowtimeController {
         showtimeService.delete(id);
         return BaseResponse.<Void>builder()
                 .message("Delete successfully!")
+                .build();
+    }
+
+    @GetMapping("/findAll/by")
+    public BaseResponse<List<ShowtimeResponse>> getShowtimesByDateAndCinema (
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam("cinemaId") String cinemaId) {
+        log.info("date {}", date);
+        log.info("id {}", cinemaId);
+        return BaseResponse.<List<ShowtimeResponse>>builder()
+                .data(showtimeService.getShowTimesByCinemaIdAndDate(date, cinemaId))
+                .build();
+    }
+
+    @GetMapping("/findAll/byMovie")
+    public BaseResponse<List<ShowtimeResponse>> getShowtimesByMovieIdAndDateAndCinema (
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam("cinemaId") String cinemaId,
+            @RequestParam("movieId") String movieId
+    ) {
+        log.info("date {}", date);
+        log.info("id {}", cinemaId);
+        return BaseResponse.<List<ShowtimeResponse>>builder()
+                .data(showtimeService.getShowTimesByMovieIdAndCinemaIdAndDate(date, cinemaId, movieId))
                 .build();
     }
 }

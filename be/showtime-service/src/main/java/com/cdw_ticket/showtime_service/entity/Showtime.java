@@ -27,6 +27,9 @@ public class Showtime {
     @Column(name = "cinema_id", nullable = false)
     String cinemaId;
 
+    @Column(name = "room_id", nullable = false)
+    String roomId;
+
     @Column(name = "start_time", nullable = false)
     LocalDateTime startTime;
 

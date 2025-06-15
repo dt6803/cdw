@@ -1,46 +1,140 @@
+.seating-chart-wrapper {
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
 .seating-chart {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .seating-chart > div {
-    display: flex;
-    align-items: center;
-  }
-  
-  .row-label {
-    margin-right: 10px;
-    font-weight: bold;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 350px;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.row-label {
+  width: 24px;
+  font-weight: bold;
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 14px;
+  transition: background-color 0.3s, border 0.3s;
+  flex-shrink: 0;
+}
+
+.seat.double-seat {
+  width: 90px;
+}
+
+.seat.selected {
+  background-color: #B31E8D;
+  color: white;
+}
+
+.seat:hover:not(.booked):not(.selected) {
+  background-color: #EFB3DB;
+}
+
+.seat.available {
+  border: 1px solid #B31E8D;
+}
+
+.seat.booked {
+  background-color: #F2F2F2;
+  border: 1px solid #999;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.empty-seat {
+  width: 40px;
+  height: 40px;
+  margin: 2px;
+  visibility: hidden;
+}
+
+/* ✅ Responsive cho màn nhỏ */
+@media (max-width: 576px) {
   .seat {
-    width: 40px;
-    height: 40px;
-    margin: 2px;
-    background-color: #ddd;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  }
-  
-  .double-seat {
-    width: 90px; 
-  }
-  
-  .seat.selected {
-    background-color: #ff6347;
-  }
-  
-  .seat:hover {
-    background-color: #ccc;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
   }
 
-  .seat.available {
-    border: 1px solid #60e360;
+  .row-label {
+    width: 20px;
+    font-size: 12px;
+  }
+}
+
+
+.seat-note-container {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.seat-note-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #B31E8D;
+}
+
+.seat-note-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.note-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.note-item .seat {
+  width: 28px;
+  height: 28px;
+
+
+}
+
+.note-item .label {
+  font-size: 14px;
+  color: #444;
+}
+
+@media (max-width: 576px) {
+  .seat-note-row {
+    gap: 20px;
   }
 
-  .seat.booked {
-    border: 1px solid #e33333;
-    cursor: not-allowed;
+  .note-item .seat {
+    width: 24px;
+    height: 24px;
   }
+
+  .note-item .label {
+    font-size: 12px;
+  }
+}
+
+

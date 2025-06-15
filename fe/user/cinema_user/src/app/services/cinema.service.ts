@@ -11,7 +11,7 @@ export class CinemaService{
     ){}
     async findAll() : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'cinema/findAll'));
+        + 'cinema/cinemas'));
     }
-   
+
 }

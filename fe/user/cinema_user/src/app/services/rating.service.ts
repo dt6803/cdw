@@ -15,12 +15,12 @@ export class RatingService {
         + 'rating/create', rating));
     }
 
-    async findAll(movieId: number) : Promise<any>{
+    async findAll(movieId: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'rating/findAll/' + movieId));
     }
 
-    async avg(movieId: number) : Promise<any>{
+    async avg(movieId: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'rating/average/' + movieId));
     }

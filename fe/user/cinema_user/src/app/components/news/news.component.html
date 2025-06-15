@@ -1,28 +1,48 @@
 
 <div class="container-xxl py-5">
   <div class="container">
-      <div class="section-title text-center">
-          <h1 class="display-5 mb-5">{{ 'now_showing' | translate }}</h1>
-      </div>
-      <div class="row g-4">
-        <ng-container *ngFor="let movie of movies">
-          <div class="col-sm-6 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
-              <div class="service-item rounded-3 border ">
-                  <div class="overflow-hidden d-flex justify-content-center">
-                      <img class="img-fluid rounded-3" src="{{movie.posterUrl}}" alt="">
-                  </div>
-                <a style="background-color: #B31E8D; color: white; padding-left: 10px;" class="fw-medium py-2 mt-4 d-flex justify-content-center"  [routerLink]="['/movie-details', movie.id]">Mua vé<i class="fa fa-arrow-right ms-2 pt-1"></i></a>
-                  <div class="py-2 text-center">
-                      <h4 class="" style="color: #B31E8D; padding-left: 10px;">
-                        {{movie.title}}
-                      </h4>
-                      <h5 class="" style=" padding-left: 10px;">
-                        {{movie.releaseDate | date : 'dd/MM/yyyy'}}
-                      </h5>
-                  </div>
-              </div>
+    <div class="section-title text-center">
+      <h1 class="display-5 mb-5">{{ 'now_showing' | translate }}</h1>
+    </div>
+    <div class="row g-4">
+      <ng-container *ngFor="let movie of movies">
+        <div class="col-sm-6 col-md-4 col-lg-3 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="service-item rounded-3 border">
+            <!-- Hình ảnh -->
+            <div class="overflow-hidden position-relative" style="height: 300px;">
+              <img
+                class="w-100 h-100 object-fit-cover rounded-3"
+                [src]="movie.posterUrl"
+                alt=""
+              />
+            </div>
+
+            <!-- Nút mua vé -->
+            <a
+              style="background-color: #B31E8D; color: white; padding-left: 10px;"
+              class="fw-medium py-2 mt-4 d-flex justify-content-center"
+              [routerLink]="['/movie-details', movie.id]"
+            >
+              Mua vé<i class="fa fa-arrow-right ms-2 pt-1"></i>
+            </a>
+
+            <!-- Tiêu đề và ngày phát hành -->
+            <div class="py-2 text-center px-2">
+              <h4
+                class="text-truncate"
+                style="color: #B31E8D; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                [title]="movie.title"
+              >
+                {{ movie.title }}
+              </h4>
+              <h5 style="padding-left: 10px;">
+                {{ movie.releaseDate | date: 'dd/MM/yyyy' }}
+              </h5>
+            </div>
           </div>
-        </ng-container>
-      </div>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </div>
+
