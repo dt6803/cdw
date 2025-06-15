@@ -1,8 +1,8 @@
-import { ShowTime } from "./showtime.model";
+import { Showtime } from "./showtime.model";
 import { Sub } from "./sub.model";
 
 export class Movie{
-     showtimes: ShowTime[]
+  showtimes: Showtime[]
     // id: number;
     // title: string;
     // description: string;
@@ -18,7 +18,7 @@ export class Movie{
     // director: string;
     // listSubId: number[];
     // listSubName: string[];
-  subs: ShowTime[];
+
   id: string;
   title: string;
   description: string;

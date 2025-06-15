@@ -9,13 +9,13 @@ export class ShowTimeService{
         private baseUrlService: BaseUrlService,
         private httpClient: HttpClient
     ){}
-    async findById(id: number) : Promise<any>{
+    async findById(id: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'showTime/findById/'+ id));
+        + 'showtime/showtimes/'+ id));
     }
-    async checkSeat(id: number) : Promise<any>{
+    async getSeatLayout(id: String) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'showTime/checkSeat/'+ id));
+        + 'cinema/rooms/'+ id + '/seats/layout'));
     }
     async findMovie(date: string, cinemaId: number, movieId: number) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()

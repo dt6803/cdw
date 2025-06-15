@@ -9,9 +9,9 @@ export class MovieService{
         private baseUrlService: BaseUrlService,
         private httpClient: HttpClient
     ){}
-    async findAll(date: string, id: number) : Promise<any>{
+    async findAll(date: string, id: string) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'movie/findAll?date='+ date.split(' ')[0] + '&cinemaId=' + id));
+        + 'showtime/showtimes/findAll/by?date='+ date.split(' ')[0] + '&cinemaId=' + id));
     }
 
     async findAllByStatus() : Promise<any>{
@@ -19,13 +19,13 @@ export class MovieService{
         + 'movie/movies'));
     }
 
-    async findMovieById(id: number) : Promise<any>{
+    async findMovieById(id: string) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'movie/findMovieById/' + id));
+        + 'movie/movies/' + id));
     }
 
-    async findMovie(date: string, cinemaId: number, movieId: number) : Promise<any>{
+    async findShowtimesByMovieId(date: string, cinemaId: string, movieId: string) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'movie/findMovie?date='+ date + '&cinemaId=' + cinemaId + '&movieId=' + movieId));
+        + 'showtime/showtimes/findAll/byMovie?date='+ date + '&cinemaId=' + cinemaId + '&movieId=' + movieId));
     }
 }

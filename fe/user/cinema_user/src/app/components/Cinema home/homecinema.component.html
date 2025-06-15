@@ -7,8 +7,8 @@
           <h6><span style="color:#B31E8D"> T Cinema</span> Hân Hạnh Chào Đón Bạn Đến Với</h6>
           <h2>Trải nghiệm xem phim 2D,3D hàng đầu Việt Nam</h2>
           <p>
-            Mang bom tấn thế giới đến gần bạn hơn! <br />
-            Phòng chiếu phim với công nghệ hiện đại nhất hiện nay. <br />
+            Mang bom tấn thế giới đến gần bạn hơn! <br/>
+            Phòng chiếu phim với công nghệ hiện đại nhất hiện nay. <br/>
             Đặt vé và thanh toán dễ dàng hơn bao giờ hết!
           </p>
         </div>
@@ -29,7 +29,7 @@
       <div class="col-lg-12 mb-5 mt-5">
         <div class="section-heading">
           <div class="select-wrapper">
-            <select name="" id="" class="select-cinema" (change)="selectCinema($event)">
+            <select (change)="selectCinema($event)" class="select-cinema" id="" name="">
               <ng-container *ngFor="let cinema of cinemas">
                 <option value="{{ cinema.id }}">{{ cinema.name }}</option>
               </ng-container>
@@ -40,194 +40,186 @@
 
       <!-- Date -->
       <div class="col-lg-12">
-        <div class="btn-group custom-radio-group" role="group" aria-label="Basic radio toggle button group">
+        <div aria-label="Basic radio toggle button group" class="btn-group custom-radio-group" role="group">
           <input
             (click)="check($event)"
-            value="{{ date1 | date : 'dd/MM/yyyy' }}"
-            type="radio"
-            class="btn-check"
-            name="btnradio"
-            id="btnradio1"
             autocomplete="off"
             checked
+            class="btn-check"
+            id="btnradio1"
+            name="btnradio"
+            type="radio"
+            value="{{ date1 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio1">{{ date1 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio1">{{ date1 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date2 | date : 'dd/MM/yyyy' }}"
-            type="radio"
+            autocomplete="off"
             class="btn-check"
-            name="btnradio"
             id="btnradio2"
-            autocomplete="off"
+            name="btnradio"
+            type="radio"
+            value="{{ date2 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio2">{{ date2 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio2">{{ date2 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date3 | date : 'dd/MM/yyyy' }}"
-            type="radio"
+            autocomplete="off"
             class="btn-check"
-            name="btnradio"
             id="btnradio3"
-            autocomplete="off"
+            name="btnradio"
+            type="radio"
+            value="{{ date3 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio3">{{ date3 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio3">{{ date3 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date4 | date : 'dd/MM/yyyy' }}"
-            type="radio"
             class="btn-check"
-            name="btnradio"
             id="btnradio4"
+            name="btnradio"
+            type="radio"
+            value="{{ date4 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio4">{{ date4 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio4">{{ date4 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date5 | date : 'dd/MM/yyyy' }}"
-            type="radio"
+            autocomplete="off"
             class="btn-check"
-            name="btnradio"
             id="btnradio5"
-            autocomplete="off"
+            name="btnradio"
+            type="radio"
+            value="{{ date5 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio5">{{ date5 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio5">{{ date5 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date6 | date : 'dd/MM/yyyy' }}"
-            type="radio"
+            autocomplete="off"
             class="btn-check"
-            name="btnradio"
             id="btnradio6"
-            autocomplete="off"
+            name="btnradio"
+            type="radio"
+            value="{{ date6 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio6">{{ date6 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio6">{{ date6 | date : "dd/MM/yyyy" }}</label>
 
           <input
             (click)="check($event)"
-            value="{{ date7 | date : 'dd/MM/yyyy' }}"
-            type="radio"
-            class="btn-check"
-            name="btnradio"
-            id="btnradio7"
             autocomplete="off"
+            class="btn-check"
+            id="btnradio7"
+            name="btnradio"
+            type="radio"
+            value="{{ date7 | date : 'yyyy-MM-dd' }}"
           />
-          <label class="btn btn-outline-primary custom-radio-label" for="btnradio7">{{ date7 | date : "dd/MM/yyyy" }}</label>
+          <label class="btn btn-outline-primary custom-radio-label"
+                 for="btnradio7">{{ date7 | date : "dd/MM/yyyy" }}</label>
         </div>
       </div>
 
 
       <div class="col-lg-12" style="margin-top: 50px">
-        <ng-container *ngFor="let movie of movies">
-          <div class="col-lg-12" *ngIf="movie.showtimes.length != 0">
+        <ng-container *ngFor="let movieWithShowtimes of moviesWithShowtimes">
+          <div *ngIf="movieWithShowtimes.showtimes.length != 0" class="col-lg-12">
             <div
               style="
-                display: flex;
-                flex-direction: column;
-                border-bottom: 1px solid #aaa;
-                padding: 0;
-              "
+          display: flex;
+          flex-direction: column;
+          border-bottom: 1px solid #aaa;
+          padding: 0;
+        "
             >
-              <div style="display: flex; margin-bottom: 5px;padding: 20px 0;">
+              <div style="display: flex; margin-bottom: 5px; padding: 20px 0">
                 <div style="margin-right: 10px">
-                  <img
-                    src="{{ movie.posterUrl }}"
-                    alt=""
-                    style="
-                      width: 200px;
-                      height: 300px;
-                      object-fit: cover;
-                      object-position: center;
-                    "
-                  />
+                  <a [routerLink]="['/movie-details', movieWithShowtimes.movie.id]">
+                    <img
+                      [src]="movieWithShowtimes.movie.posterUrl"
+                      alt=""
+                      style="
+      width: 200px;
+      height: 300px;
+      object-fit: cover;
+      object-position: center;
+      cursor: pointer;
+    "
+                    />
+                  </a>
+
                 </div>
                 <div>
                   <div style="margin-left: 8px">
                     <h3 style="color: #333; text-transform: uppercase">
-                      {{ movie.title }}
+                      {{ movieWithShowtimes.movie.title }}
                     </h3>
-                    <h6
+                    <h5
                       style="
-                        color: #555;
-                        text-transform: capitalize;
-                        margin: 10px 0 40px 0;
-                      "
+                  color: #555;
+                  text-transform: capitalize;
+                  margin: 10px 0 5px 0;
+                "
                     >
-                      {{ movie.duration }} - {{ movie.genres }}
-                    </h6>
-                    <!-- <h6 style="color: #888">{{ show.movieTimeLast }}</h6> -->
+                      {{ movieWithShowtimes.movie.rating }} - {{ movieWithShowtimes.movie.genres }}
+
+                    </h5>
+                    <p style="color: #777; font-size: 14px">
+                      {{ movieWithShowtimes.movie.duration + ' phút' }}
+                    </p>
+                    <p style="color: #777; font-size: 14px">
+                      {{ 'Phụ đề: ' + movieWithShowtimes.movie.subtitle }}
+                    </p>
                   </div>
 
-                  <div style="margin-top: 10px">
-                    <!-- <ng-container *ngFor="let showTime of movie.showtimes"> -->
-
-                    <ng-container *ngFor="let sub of movie.subs">
-                      <h6 style="margin-left: 10px">{{ sub.subName }}</h6>
-                      <br />
-                      <span *ngFor="let showTime of movie.showtimes">
-                        <span *ngIf="showTime.subId == sub.subId">
-                          <a
-                            [routerLink]="['/buy-ticket', showTime.id]"
-                            class="show-link"
-                            [ngStyle]="
-                              checkHours(showTime.showDate)
-                                ? {
-                                    'pointer-events': 'none',
-                                    color: 'gray',
-                                    cursor: 'not-allowed'
-                                  }
-                                : {}
-                            "
-                          >
-                          {{ getFormattedDate(showTime.showDate) }}
-                          </a>
-                        </span>
-                      </span>
-
-                      <br /><br />
-                    </ng-container>
-
-                    <!--  <a
-                        class="show-link"
-                        >aaaa</a
-                      >
-                      <br>
-                      <br> -->
-
-                    <!-- </ng-container> -->
-                    <!-- <br> <br>
-                    <ng-container *ngFor="let showTime of movie.showtimes">
+                  <div style="margin-top: 20px">
+                    <ng-container *ngFor="let showTime of movieWithShowtimes.showtimes">
                       <a
+                        [ngStyle]="
+                    checkHours(showTime.startTime)
+                      ? {
+                          'pointer-events': 'none',
+                          color: 'gray',
+                          cursor: 'not-allowed'
+                        }
+                      : {}
+                  "
+                        [routerLink]="['/buy-ticket', showTime.id]"
                         class="show-link"
-
-                        >{{showTime.showDate}}</a
                       >
+                        {{ getFormattedDate(showTime.startTime) }}
 
-                    </ng-container> -->
+                      </a>
+                      &nbsp;
+                    </ng-container>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </ng-container>
+
         <div
-          *ngIf="movies.length == 0"
+          *ngIf="moviesWithShowtimes?.length == 0"
           style="
-            margin-bottom: 250px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            gap: 30px;
-          "
+      margin-bottom: 250px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 30px;
+    "
         >
           <img
-            src="https://img.freepik.com/free-vector/film-rolls-concept-illustration_114360-6734.jpg?size=626&ext=jpg&uid=R42465319&semt=ais"
             alt=""
+            src="https://img.freepik.com/free-vector/film-rolls-concept-illustration_114360-6734.jpg?size=626&ext=jpg&uid=R42465319&semt=ais"
             style="width: 200px"
           />
           <span>Sorry, we don't have any show times for today.</span>

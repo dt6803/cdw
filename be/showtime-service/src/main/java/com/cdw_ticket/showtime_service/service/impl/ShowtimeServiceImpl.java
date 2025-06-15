@@ -18,6 +18,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +71,22 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     @Override
     public void delete(String id) {
         showtimeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ShowtimeResponse> getShowTimesByCinemaIdAndDate(LocalDate date, String cinemaId) {
+        return showtimeRepository.findByStartDateAndCinemaId(date, cinemaId).stream()
+                .map(showtimeMapper::toShowtimeResponse)
+                .toList();
+    }
+
+    @Override
+    public List<ShowtimeResponse> getShowTimesByMovieIdAndCinemaIdAndDate(LocalDate date,
+                                                                          String cinemaId,
+                                                                          String movieId) {
+        return showtimeRepository.findByMovieIdAndDateAndCinemaId(date, cinemaId, movieId).stream()
+                .map(showtimeMapper::toShowtimeResponse)
+                .toList();
     }
 
     private ShowtimeResponse buildFullShowtimeResponse(Showtime showtime) {

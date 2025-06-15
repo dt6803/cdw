@@ -31,8 +31,8 @@ public class SeatServiceImpl implements SeatService {
     CinemaRoomService roomService;
 
     @Override
-    public SeatLayoutResponse createSeatLayout(SeatLayoutRequest request) {
-        CinemaRoom room = roomService.getRoomById(request.getRoomId());
+    public SeatLayoutResponse createSeatLayout(String roomId, SeatLayoutRequest request) {
+        CinemaRoom room = roomService.getRoomById(roomId);
         if (room.getSeats().size() + request.getSeats().size() > room.getCapacity())
             throw new AppException(ErrorCode.ROOM_CAPACITY_EXCEED);
         List<Seat> seats = new ArrayList<>();
@@ -69,7 +69,7 @@ public class SeatServiceImpl implements SeatService {
     @Override
     public SeatLayoutResponse updateSeatLayoutByRoomId(String roomId, SeatLayoutRequest request) {
         deleteAllSeatByRoomId(roomId);
-        return createSeatLayout(request);
+        return createSeatLayout(roomId, request);
     }
 
     @Override

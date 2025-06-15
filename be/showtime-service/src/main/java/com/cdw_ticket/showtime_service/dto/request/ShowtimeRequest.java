@@ -25,6 +25,11 @@ public class ShowtimeRequest {
     @NotBlank(message = "Cinema's id must be not blank")
     @NotNull(message = "Cinema's id must be null")
     String cinemaId;
+
+    @NotBlank(message = "Cinema's id must be not blank")
+    @NotNull(message = "Cinema's id must be null")
+    String roomId;
+
     @NotNull(message = "Start time must not be null")
     LocalDateTime startTime;
     @NotNull(message = "End time must not be null")

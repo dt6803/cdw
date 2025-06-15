@@ -3,5 +3,5 @@ export class MovieRatings  {
     comment: string;
     rate: number;
     accountId: number;
-    movieId: number;
+    movieId: string;
 }
