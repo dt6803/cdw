@@ -24,7 +24,7 @@ export class AccountSignup {
 
 
 export class AccountLogin {
-    email: string;
+    username: string;
     password: string;
 }
 

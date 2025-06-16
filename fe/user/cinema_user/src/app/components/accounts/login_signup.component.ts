@@ -46,7 +46,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     });
 
     this.loginForm = this.formBuilder.group({
-      emailLogin: ['', [Validators.required, Validators.email]],
+      usernameLogin: ['', [Validators.required]],
       passwordLogin: ['', Validators.required],
     })
   }
@@ -140,6 +140,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
   }
 
   async login(): Promise<void> {
+    console.log(this.loginForm)
     if (!this.loginForm.valid) {
       this.messageService.add({
         severity: "error",
@@ -150,7 +151,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     }
   
     const loginAccount: AccountLogin = {
-      email: this.loginForm.value.emailLogin,
+      username: this.loginForm.value.usernameLogin,
       password: this.loginForm.value.passwordLogin,
     };
   
@@ -158,7 +159,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
       const res = await this.accountService.login(loginAccount);
   
       if (res.status) {
-        const accountResponse = await this.accountService.findByEmail(loginAccount.email);
+        const accountResponse = await this.accountService.findByUsername(loginAccount.username);
         this.account = accountResponse as Account;
         localStorage.setItem('account', JSON.stringify(this.account));
   

@@ -63,7 +63,7 @@ export class ProfileComponent implements OnInit{
                 (res) => {
                     var accountFindById = res as Account;
                     var accountLogin: AccountLogin = {
-                        email: accountFindById.email,
+                        username: accountFindById.username,
                         password: this.updateForm.value.currentPassword,
                     }
                     if(this.updateForm.value.newPassword || this.updateForm.value.confirmPassword) {
