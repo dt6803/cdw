@@ -1,17 +1,17 @@
 <div class="single-product section">
-  <div *ngIf="visible">
-    <p-dialog
-      [(visible)]="visible"
-      [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-      [maximizable]="true"
-      [modal]="true"
-      [style]="{ width: '50rem' }"
-      header="Phương thức thanh toán">
-      <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-      <br>
-      <button (click)="onPay()">Thanh toán VNPay</button>
-    </p-dialog>
-  </div>
+<!--  <div *ngIf="visible">-->
+<!--    <p-dialog-->
+<!--      [(visible)]="visible"-->
+<!--      [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"-->
+<!--      [maximizable]="true"-->
+<!--      [modal]="true"-->
+<!--      [style]="{ width: '50rem' }"-->
+<!--      header="Phương thức thanh toán">-->
+<!--      <ngx-paypal [config]="payPalConfig"></ngx-paypal>-->
+<!--      <br>-->
+<!--      <button (click)="onPay()">Thanh toán VNPay</button>-->
+<!--    </p-dialog>-->
+<!--  </div>-->
 
 
   <div class="container">
@@ -21,12 +21,12 @@
         <div class="row">
           <div class="col-lg-5">
             <div class="left-image" style="border: 1px solid #eee">
-              <img alt="" src="{{this.movie.posterUrl}}"/>
+              <img alt="" src="{{this.movie?.posterUrl}}"/>
             </div>
           </div>
           <div class="col-lg-7 align-self-center">
             <div>
-              <h1 class="display-2 text-uppercase">{{ showDetail.movieTitle }} </h1>
+              <h1 class="display-2 text-uppercase">{{ showDetail?.movieTitle }} </h1>
               <h5>Ngày chiếu : {{ showDetail.startTime  | date: 'dd/MM/YYYY' }} - Suất chiếu
                 : {{ showDetail.startTime | date: 'HH:mm' }}</h5
               >
@@ -34,11 +34,11 @@
               <ul class="display-5" style="margin-top: 20px;">
                 <li>
                   <span>Độ tuổi:</span>
-                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie.rating }}</span>
+                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.rating }}</span>
                 </li>
                 <li>
                   <span>Thể loại:</span>
-                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie.genres }}</span>
+                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.genres }}</span>
                 </li>
                 <li>
                   <span>Thời lượng:</span>
@@ -47,15 +47,15 @@
                 <li>
                   <span>Ngày ra mắt:</span>
                   <span
-                    style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie.releaseDate | date: 'dd/MM/YYYY' }}  </span>
+                    style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.releaseDate | date: 'dd/MM/YYYY' }}  </span>
                 </li>
                 <li>
                   <span>Ngôn ngữ:</span>
-                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie.language }}</span>
+                  <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.language }}</span>
                 </li>
                 <li>
                   <span>Phụ đề:</span>
-                  <span style="color: #333; text-transform: capitalize;  width: 350px;">{{ this.movie.subtitle }}</span>
+                  <span style="color: #333; text-transform: capitalize;  width: 350px;">{{ this.movie?.subtitle }}</span>
                 </li>
               </ul>
             </div>
@@ -200,21 +200,103 @@
                 margin-bottom: 20px;
               "
               >
-                <label class="block text-900 font-medium mb-2"
-                >Chọn combo:</label
-                >
-                <table>
+                <label class="block text-900 font-medium mb-2">Chọn combo:</label>
+
+                <table class="table table-bordered">
+                  <thead>
                   <tr>
-                    <td>Tên combo</td>
-                    <td>Số lượng</td>
+                    <th>Tên combo</th>
+                    <th class="text-center">Số lượng</th>
                   </tr>
+                  </thead>
+                  <tbody>
                   <tr *ngFor="let combo of combos">
                     <td>{{ combo.name }}</td>
-                    <td><input (input)="onValueChange($event, combo.id, combo.price)" type="number" value="0"></td>
+                    <td>
+                      <div class="d-flex justify-content-center align-items-center quantity-control">
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary px-2"
+                          (click)="adjustQuantity(combo.id, -1)"
+                        >−</button>
+
+                        <input
+                          type="number"
+                          class="form-control text-center mx-2 quantity-input"
+                          [value]="quantities[combo.id] || 0"
+                          min="0" disabled
+                        />
+
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-outline-primary px-2"
+                          (click)="adjustQuantity(combo.id, 1)"
+                        >+</button>
+                      </div>
+                    </td>
                   </tr>
+                  </tbody>
                 </table>
 
-                <input formControlName="showTimeId" type="hidden" value="{{showDetail.id}}">
+
+
+                <div class="text-end mt-4 p-3 bg-light border rounded shadow-sm">
+                  <h5 class="mb-0">
+                    Tổng tiền:
+                    <span class="text-primary fw-bold">{{ getTotalPrice() | number }} VND</span>
+                  </h5>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label fw-bold">Phương thức thanh toán:</label>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="form-check payment-option">
+                        <input
+                          class="form-check-input custom-radio"
+                          type="radio"
+                          id="vnpay"
+                          value="VNPAY"
+                          formControlName="paymentMethod"
+                        />
+                        <label class="form-check-label d-flex align-items-center" for="vnpay">
+                          <img
+                            src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png"
+                            alt="VNPay"
+                            class="me-2"
+                            width="24"
+                            height="24"
+                          />
+                          <span>VNPay</span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-check payment-option">
+                        <input
+                          class="form-check-input custom-radio"
+                          type="radio"
+                          id="momo"
+                          value="CASH"
+                          formControlName="paymentMethod"
+                        />
+                        <label class="form-check-label d-flex align-items-center" for="momo">
+                          <img
+                            src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png"
+                            alt="MoMo"
+                            class="me-2"
+                            width="24"
+                            height="24"
+                          />
+                          <span>MoMo</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+<!--                <input formControlName="showTimeId" type="hidden" value="{{showDetail.id}}">-->
 
               </div>
               <div style="width: 100%">

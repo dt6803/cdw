@@ -1,12 +1,6 @@
-export class Booking{
-    id: number;
-    email: string;
-    phone: string;
-    name: string;
-    showTimeId: number;
-}
-
-export class BookingDetails{
-    bookingId: number;
-    seatId: number;
+export class BookingRequest {
+  userId!: string;
+  showtimeId!: string;
+  seatIds!: string[];
+  paymentMethod!: 'VNPAY' | 'MOMO';  // Ràng buộc chỉ cho phép 2 loại
 }

@@ -10,12 +10,13 @@ export class CheckLoginService implements CanActivate{
     canActivate(){
         var username = localStorage.getItem("username");
         console.log(username);
-        if(username != null){
-            return true;
-        } else{
-            this.router.navigate(['/access-denied']);
-           return false;
-        }
-     
+        // if(username != null){
+        //     return true;
+        // } else{
+        //     this.router.navigate(['/access-denied']);
+        //    return false;
+        // }
+      return true;
+
     }
 }

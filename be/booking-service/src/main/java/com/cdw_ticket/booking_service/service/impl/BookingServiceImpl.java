@@ -53,7 +53,7 @@ public class BookingServiceImpl implements BookingService {
             throw new AppException(ErrorCode.INVALID_SEAT);
 
         Booking booking = bookingMapper.toBooking(request);
-        booking.setTotalPrice(calculateTotal(seats));
+        booking.setTotalPrice(request.getTotal());
         booking.setStatus(BookingStatus.CONFIRMED);
         seats.forEach(seat -> {
             BookingSeat bookingSeat = BookingSeat.builder()
@@ -72,7 +72,7 @@ public class BookingServiceImpl implements BookingService {
         var initPaymentRequest = InitPaymentRequest.builder()
                 .userId(request.getUserId())
                 .txnRef(booking.getId())
-                .amount(booking.getTotalPrice().longValue())
+                .amount(request.getTotal().longValue())
                 .build();
 
         var urlPayment = paymentClient.initPayment(initPaymentRequest).getData();
