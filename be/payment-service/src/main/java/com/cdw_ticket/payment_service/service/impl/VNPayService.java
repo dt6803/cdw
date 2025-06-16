@@ -164,7 +164,10 @@ public class VNPayService implements PaymentService {
         // 4. Finalize query
         query.append("&vnp_SecureHash=");
         query.append(secureHash);
-
+        log.info("Hash payload: {}", hashPayload.toString());
+        log.info("Query string: {}", query.toString());
+        log.info("Secure hash: {}", secureHash);
+        log.info("secureHash: {}", secureHash);
         return initPaymentPrefixUrl + "?" + query;
     }
 }

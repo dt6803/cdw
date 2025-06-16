@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BaseUrlService } from "./baseUrl.service";
 import { HttpClient } from "@angular/common/http";
 import { lastValueFrom } from "rxjs";
-import { Booking, BookingDetails } from "../models/booking.model";
+// import { Booking, BookingDetails } from "../models/booking.model";
 import { Payment, PaymentRequest } from "../models/payment.model";
 
 @Injectable()
@@ -35,7 +35,7 @@ export class PaymentService{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
         + 'vnpay/initiate', paymentRequest));
     }
-    
+
     paymentService(_status: boolean){
         this.status = _status;
     }

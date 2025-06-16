@@ -11,7 +11,7 @@ export class ComboService{
     ){}
     async findAll() : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'combo/findAll'));
+        + 'cinema/combos'));
     }
     async createComboDetails(comboDetails: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()

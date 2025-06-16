@@ -1,7 +1,7 @@
-import { BookingDetails } from "./booking.model";
+//import { BookingDetails } from "./booking.model";
 
 export class Payment{
-   
+
     bookingId: number;
     paymentType: number;
     transactionNo: string;
@@ -24,7 +24,7 @@ export class TicketDetail{
     price: number;
     transactionNo: string;
     room: string;
-    bookingDetails: BookingDetails[];
+//    bookingDetails: BookingDetails[];
 }
 
 export class PaymentRequest {

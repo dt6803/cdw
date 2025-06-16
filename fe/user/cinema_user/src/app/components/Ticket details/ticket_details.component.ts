@@ -20,7 +20,7 @@ export class TicketDetailsComponent implements OnInit{
     this.route.params.subscribe((params) => {
         const showIdParam = params["paymentId"];
         this.paymentId = showIdParam;
-     
+
       });
       this.paymentService.findById(this.paymentId).then(
         (response) => {
@@ -34,7 +34,7 @@ export class TicketDetailsComponent implements OnInit{
       );
   }
 
-  getSeatNames(): string {
-    return this.payment.bookingDetails.map(detail => detail.seatId).join(', ');
-  }
+  // getSeatNames(): string {
+  //   return this.payment.bookingDetails.map(detail => detail.seatId).join(', ');
+  // }
 }

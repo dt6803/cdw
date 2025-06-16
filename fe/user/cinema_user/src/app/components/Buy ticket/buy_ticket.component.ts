@@ -2,12 +2,11 @@ import {Component} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ShowAPIService} from "src/app/services/showAPI.service";
-import * as moment from "moment";
 import {TicketAPIService} from "src/app/services/ticketAPI.service";
 import {MessageService} from "primeng/api";
 import {ShowTimeService} from "src/app/services/showTime.service";
 import {ComboService} from "src/app/services/combo.service";
-import {Combo, ComboDetails} from "src/app/models/combo.model";
+import {Combo} from "src/app/models/combo.model";
 import {BookingService} from "src/app/services/booking.service";
 import {IPayPalConfig} from "ngx-paypal";
 import {PaymentService} from "src/app/services/payment.service";
@@ -41,11 +40,10 @@ export class BuyTicketComponent {
   showId: string;
   selectedSeats: Seat[] = [];
   combos: Combo[];
-  selectedCombo: Combo;
-  comboNumber: number;
+  selectedCombos: Combo[];
+  quantities: { [comboId: string]: number } = {};
   ticketForm: FormGroup;
   comboId: number = -1;
-  comboDetails: ComboDetails[];
   payPalConfig: IPayPalConfig;
   lastElementsArray = [];
   visible: boolean = false;
@@ -118,30 +116,26 @@ export class BuyTicketComponent {
       }
     );
 
-
+    this.comboService.findAll().then(
+      (res) => {
+        this.combos = res.data as Combo[];
+        console.log('fetch combo: ', this.combos);
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
 
 
     this.checkShow();
 
-
-
-    // this.comboService.findAll().then(
-    //   (res) => {
-    //     this.combos = res as Combo[];
-    //
-    //
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   }
-    // );
     this.ticketForm = this.formBuilder.group({
       name: ['', Validators.required], // Thêm Validators.required
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]], // Thêm Validators.required và pattern
       email: ['', [Validators.required, Validators.email]], // Thêm Validators.required và email
-      showTimeId: this.showId
+      paymentMethod: ['VNPAY', Validators.required]
     });
-    this.comboDetails = [];
+    // this.comboDetails = [];
 
 
   }
@@ -158,11 +152,6 @@ export class BuyTicketComponent {
 
   // Get the CSS class based on seat status
 
-  convertDateToString(date: Date) {
-    const formattedDate = moment(date).format("DD/MM/YYYY");
-
-    return formattedDate;
-  }
 
   reloadCurrentRoute(): void {
     const currentUrl = this.router.url;
@@ -196,7 +185,6 @@ export class BuyTicketComponent {
   }
 
 
-
   updateSelectedSeatStr(): void {
     this.selectedSeatStr = this.selectedSeats.map(seat => seat.seatCode).join(',');
   }
@@ -206,117 +194,143 @@ export class BuyTicketComponent {
     this.comboId = evt.target.value;
   }
 
-   buyTicket() {
-  //
-  //   if (this.ticketForm.valid && this.selectedSeats1 !== '') {
-  //     this.visible = true;
-  //
-  //     // Split the seats into an array and sort by row letters and seat numbers.
-  //     let seats = this.selectedSeats1.split(', ');
-  //     console.log("Các ghế đã đặt: ", seats);
-  //
-  //     let seatsArray = seats.map(seat => {
-  //       return {
-  //         row: seat.charAt(0),
-  //         number: parseInt(seat.slice(1), 10)
-  //       };
-  //     });
-  //
-  //     seatsArray.sort((a, b) => {
-  //       if (a.row === b.row) {
-  //         return a.number - b.number;
-  //       } else {
-  //         return a.row.localeCompare(b.row);
-  //       }
-  //     });
-  //
-  //     console.log("Sorted Seats Array: ", seatsArray);
-  //
-  //     for (let i = 0; i < seatsArray.length - 1; i++) {
-  //       if (seatsArray[i].row === seatsArray[i + 1].row) {
-  //         let difference = seatsArray[i + 1].number - seatsArray[i].number;
-  //         console.log("Difference: ", difference);
-  //         if (difference >= 2) {
-  //           this.visible = false;
-  //           this.messageService.add({
-  //             severity: "error",
-  //             summary: "Đặt vé thất bại",
-  //             detail: "Bạn vui lòng chọn ghế không cách quá 1 ghế. Vui lòng bạn chọn lại ghế"
-  //           });
-  //           return;
-  //         }
-  //       } else {
-  //         this.visible = false;
-  //         this.messageService.add({
-  //           severity: "error",
-  //           summary: "Đặt vé thất bại",
-  //           detail: "Bạn vui lòng chọn ghế không cách quá 1 ghế. Vui lòng bạn chọn lại ghế"
-  //         });
-  //         return;
-  //       }
-  //     }
-  //
-  //     if (seatsArray.length > this.maxSelectedSeats) {
-  //       this.visible = false;
-  //       this.messageService.add({
-  //         severity: "error",
-  //         summary: "Đặt vé thất bại",
-  //         detail: "Chỉ cho phép đặt tối đa 10 ghế trong 1 lần đặt vé."
-  //       });
-  //       return;
-  //     }
-  //
-  //     seatsArray.forEach((seat, index) => {
-  //       this.bookingService.findSeatByName(seat.row + seat.number).then(
-  //         (res) => {
-  //           console.log(res.price);
-  //           this.total += res.price;
-  //           console.log(this.total);
-  //         },
-  //         (err) => {
-  //         }
-  //       );
-  //     });
-  //
-  //     if (this.lastElementsArray.length > 0) {
-  //       this.lastElementsArray.forEach((value) => {
-  //         this.total += (value.quantity * value.price);
-  //       });
-  //     }
-  //
-  //   } else {
-  //     this.messageService.add({
-  //       severity: "error",
-  //       summary: "Đặt vé thất bại",
-  //       detail: "Vui lòng nhập đủ thông tin"
-  //     });
+  // buyTicket() {
+  //   if (this.ticketForm.invalid) {
+  //     this.ticketForm.markAllAsTouched();
+  //     return;
   //   }
   //
+  //   const formValue = this.ticketForm.value;
+  //   const seatIds = this.selectedSeats.map(seat => seat.id);
   //
-   }
+  //   const payload = {
+  //     name: formValue.name,
+  //     phone: formValue.phone,
+  //     email: formValue.email,
+  //     showTimeId: this.showId,
+  //     selectedSeats: seatIds, // Mảng chứa mã ghế hoặc ID ghế
+  //     paymentMethod: formValue.method,
+  //     totalPrice: this.getTotalPrice()
+  //   };
+  //
+  //
+  //
+  //   console.log("Sending ticket data:", payload);
+  //
+  //   // Gọi API hoặc xử lý tuỳ theo hệ thống
+  //   // this.ticketService.submitTicket(payload).subscribe({
+  //   //   next: (res) => {
+  //   //     console.log('Đặt vé thành công:', res);
+  //   //     // Hiển thị thông báo thành công hoặc chuyển trang
+  //   //   },
+  //   //   error: (err) => {
+  //   //     console.error('Lỗi đặt vé:', err);
+  //   //     // Hiển thị thông báo lỗi
+  //   //   }
+  //   // });
+  // }
 
-  onValueChange(evt: any, id: number, price: number) {
-    var quantity = evt.target.value;
-
-    if (quantity >= 0) {
-      this.comboDetails.push({comboId: id, bookingId: null, quantity: quantity, price: price});
-      console.log(this.comboDetails);
-
-      const lastElementsMap = new Map<number, any>();
-      this.comboDetails.forEach(element => {
-        // Cập nhật hoặc thêm phần tử vào map với key là comboId
-        lastElementsMap.set(element.comboId, element);
+  buyTicket() {
+    // Kiểm tra form
+    if (this.ticketForm.invalid) {
+      this.ticketForm.markAllAsTouched();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Lỗi xác thực',
+        detail: 'Vui lòng nhập đầy đủ thông tin trước khi thanh toán.'
       });
-
-      this.lastElementsArray = Array.from(lastElementsMap.values());
-
-      // Loại bỏ các phần tử có quantity = 0
-      this.lastElementsArray = this.lastElementsArray.filter(element => element.quantity > 0);
-
-      console.log(this.lastElementsArray);
+      return;
     }
 
+    // Lấy danh sách ID ghế
+    const seatIds = this.selectedSeats.map(seat => seat.id);
+
+    if (seatIds.length === 0) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Chưa chọn ghế',
+        detail: 'Vui lòng chọn ít nhất một ghế để tiếp tục.'
+      });
+      return;
+    }
+
+    console.log('form value: ', this.ticketForm.value);
+    // Tạo payload gửi đi
+    const payload = {
+      ...this.ticketForm.value,
+      seatIds: seatIds,
+      showtimeId: this.showId,
+      userId: '12345',
+      total: this.getTotalPrice()
+    };
+
+    console.log("Sending ticket data:", payload)
+
+    this.bookingService.create(payload).then((res) => {
+      console.log('Booking response:', res);
+
+      if (res.status === 'Success' && res.data.urlPayment) {
+        // Chuyển trang đến link thanh toán
+        window.location.href = res.data.urlPayment;
+      } else {
+        // Thông báo lỗi nếu không có urlPayment hoặc status không success
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Thanh toán thất bại',
+          detail: res.data.message || 'Không thể xử lý thanh toán. Vui lòng thử lại.',
+        });
+      }
+    }).catch((err) => {
+      // Bắt lỗi nếu request thất bại
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Lỗi hệ thống',
+        detail: 'Không thể kết nối máy chủ. Vui lòng thử lại sau.',
+      });
+    });
+
+    // this.bookingService.create(payload).subscribe({
+    //   next: () => {
+    //     this.messageService.add({
+    //       severity: 'success',
+    //       summary: 'Đặt vé thành công',
+    //       detail: 'Cảm ơn bạn đã đặt vé tại ABCD Mall!'
+    //     });
+    //     this.ticketForm.reset();
+    //     this.selectedSeats = [];
+    //     this.quantities = {};
+    //   },
+    //   error: () => {
+    //     this.messageService.add({
+    //       severity: 'error',
+    //       summary: 'Đặt vé thất bại',
+    //       detail: 'Có lỗi xảy ra, vui lòng thử lại sau.'
+    //     });
+    //   }
+    // });
   }
+
+
+  getTotalPrice(): number {
+    let comboTotal = 0;
+
+    for (const combo of this.combos) {
+      const quantity = this.quantities[combo.id] || 0;
+      comboTotal += quantity * combo.price;
+    }
+
+    const seatTotal = this.selectedSeats.reduce((sum, seat) => sum + seat.price, 0);
+
+    return comboTotal + seatTotal;
+  }
+
+  adjustQuantity(comboId: string, delta: number) {
+    const currentQty = this.quantities[comboId] || 0;
+    const newQty = Math.max(currentQty + delta, 0);
+    this.quantities[comboId] = newQty;
+    console.log('quantity: ', this.quantities[comboId]);
+  }
+
 
   checkShow() {
     this.showTimeService.findById(this.showId).then(

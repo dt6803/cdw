@@ -28,4 +28,6 @@ public class BookingUserRequest {
     List<String> seatIds;
     @NotNull(message = "Payment method must be not null")
     PaymentMethod paymentMethod;
+
+    BigDecimal total;
 }
