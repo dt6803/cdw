@@ -4,7 +4,7 @@
             <header>{{ 'login' | translate }}</header>
             <form [formGroup]="loginForm" (ngSubmit)="login()">
                 <div class="field input-field">
-                    <input type="email" formControlName="emailLogin" placeholder="Email" class="input">
+                    <input type="text" formControlName="usernameLogin" placeholder="Username" class="input">
                 </div>
 
                 <div class="field input-field">

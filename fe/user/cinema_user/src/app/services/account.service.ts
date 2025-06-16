@@ -14,13 +14,13 @@ export class AccountService{
 
     async create(account: Account) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'account/register', account));
+        + 'users/registration', account));
     }
 
 
     async login(account: AccountLogin) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'account/login', account));
+        + 'authentication/auth/login', account));
     }
 
 
@@ -50,6 +50,11 @@ export class AccountService{
       async findByEmail(email: string) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
         + 'account/findByEmail/' + email));
+    }
+
+    async findByUsername(username: string) : Promise<any>{
+        return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
+        + 'account/findByUsername/' + username));
     }
 
     setAccount(account: any) {
