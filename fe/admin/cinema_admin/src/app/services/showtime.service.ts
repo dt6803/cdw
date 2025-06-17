@@ -12,30 +12,29 @@ export class ShowtimeService{
     ){}
     async findAll() : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'showTime/findAll'));
+        + 'showtime/showtimes'));
     }
 
     async findById(id: number) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'showTime/findById/' + id));
+        + 'showtime/findById/' + id));
     }
 
-    async findAllByCinema(cinemaId: number) : Promise<any>{
+    async findAllByCinema(cinemaId: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'showTime/findAllByCinema/' + cinemaId));
+        + 'showtime/findAllByCinema/' + cinemaId));
     }
     async create(showtime: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'showTime/create', showtime));
+        + 'showtime/create', showtime));
     }
     async edit(showtime: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.put(this.baseUrlService.getBaseUrl()
-        + 'showTime/edit', showtime));
+        + 'showtime/edit', showtime));
     }
-    async delete(id: number) : Promise<any>{
+    async delete(id: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.delete(this.baseUrlService.getBaseUrl()
-        + 'showTime/delete/' + id));
+        + 'showtime/delete/' + id));
     }
 
 }
-   

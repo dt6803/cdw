@@ -39,31 +39,44 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse authenticate(LogInRequest request) {
-        User user = userService.findByUsername(request.getUsername());
-        Set<String> roles = userService.getRolesById(user.getId());
-        List<SimpleGrantedAuthority> authorities = roles.stream().map(SimpleGrantedAuthority::new).toList();
+        try {
+            User user = userService.findByUsername(request.getUsername());
+            Set<String> roles = userService.getRolesById(user.getId());
+            List<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .toList();
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword(),
-                        authorities
-                )
-        );
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword(),
+                            authorities
+                    )
+            );
 
-        String accessToken = jwtService.generateAccessToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
 
-        tokenService.save(Token.builder()
-                .username(user.getUsername())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build());
+            tokenService.save(Token.builder()
+                    .username(user.getUsername())
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build());
 
-        return AuthenticationResponse.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+            return AuthenticationResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+        } catch (AppException ex) {
+            if (ex.getErrorCode() == ErrorCode.USER_NOT_EXISTED) {
+                return AuthenticationResponse.builder()
+                        .message("Login failed: User not found")
+                        .status("fail")
+                        .build();
+            }
+            throw ex; // các lỗi khác vẫn cho nổ tiếp
+        }
     }
 
     @Override

@@ -36,7 +36,7 @@ export class MovieComponent implements OnInit, AfterViewInit {
 
   loadMovies(): void {
     this.movieService.findAll().then(res => {
-      this.movies = res as Movie[];
+      this.movies = res.data as Movie[];
       this.updatePagination();
       this.cdr.detectChanges(); // Đảm bảo UI được cập nhật
     });

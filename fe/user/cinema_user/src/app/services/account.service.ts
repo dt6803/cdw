@@ -19,6 +19,7 @@ export class AccountService{
 
 
     async login(account: AccountLogin) : Promise<any>{
+      console.log('request: ', account)
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
         + 'authentication/auth/login', account));
     }
@@ -36,13 +37,18 @@ export class AccountService{
 
     async findAccountById(id: number) : Promise<any>{
         return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'account/findById/' + id));
+        + 'authentication/users/me' + id));
     }
+
+  async getMyAccountInfo() : Promise<any>{
+    return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
+      + 'authentication/users/me'));
+  }
 
     async verifyAccount(email: string): Promise<any> {
         // Đảm bảo email được mã hóa đúng
         const encodedEmail = encodeURIComponent(email);
-      
+
         // Gọi API và trả về kết quả dưới dạng Promise
         return await lastValueFrom(this.httpClient.get<any>(`${this.baseUrlService.getBaseUrl()}account/verify?email=${encodedEmail}`));
       }
@@ -61,7 +67,7 @@ export class AccountService{
         localStorage.setItem('account', JSON.stringify(account));
         this.accountSubject.next(account);
       }
-    
+
       getAccount() {
         return this.accountSubject.asObservable();
       }

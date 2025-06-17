@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   private routeSub: Subscription = new Subscription();
   isFollowed: boolean;
   selectedLanguage: string = 'vi';
+  currentUser: string;
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
@@ -42,29 +43,41 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const account = JSON.parse(localStorage.getItem('account'));
-    if(account != null){
-      console.log(account.id);
-      this.followService.findById(account.id).then(
-        res => {
-          console.log(res);
-          this.isFollowed = res.status;
+    console.log('App khởi động!');
+    const accessToken = localStorage.getItem('accessToken');
+    // if(account != null){
+    //   console.log(account.id);
+    //   this.followService.findById(account.id).then(
+    //     res => {
+    //       console.log(res);
+    //       this.isFollowed = res.status;
+    //
+    //     }
+    //   );
+    // }
 
-        }
-      );
-    }
+    this.getCurrentUser();
 
-    this.accountService.getAccount().subscribe(account => {
-      if (account) {
-          this.account = account;
-      } else {
-          const accountData = localStorage.getItem('account');
-          if (accountData) {
-              this.account = JSON.parse(accountData);
-          }
+  //   this.accountService.getAccount().subscribe(account => {
+  //     if (account) {
+  //         this.account = account;
+  //     } else {
+  //         const accountData = localStorage.getItem('account');
+  //         if (accountData) {
+  //             this.account = JSON.parse(accountData);
+  //         }
+  //     }
+  // });
+  //  this.loadMovies();
+  }
+
+  async getCurrentUser() {
+    this.accountService.getMyAccountInfo().then(
+      (res) => {
+        console.log('current user: ', res.data.username)
+        this.currentUser = res.data.username;
       }
-  });
-    this.loadMovies();
+    );
   }
 
   private async loadMovies(): Promise<void> {
@@ -77,38 +90,14 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private loadAccount(): void {
-    const accountData = localStorage.getItem('account');
-    this.account = accountData ? JSON.parse(accountData) : null;
-  }
-
-  getFromLocal(key: string): string | null {
-    return localStorage.getItem(key);
-  }
-
-  async clearData(): Promise<void> {
-    localStorage.removeItem('account');
-    this.account = null;
+  async logout(): Promise<void> {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    this.currentUser = '';
     this.cdr.detectChanges();
     await this.router.navigate(['/home']);
   }
 
-  // filterMovies(event: AutoCompleteCompleteEvent): void {
-  //   const query = event.query.toLowerCase();
-  //   this.filteredMovies = this.movies.filter(movie =>
-  //     movie.title.toLowerCase().startsWith(query)
-  //   );
-  // }
-
-  // onMovieSelect(event: any): void {
-  //   if (this.movie) {
-  //     this.router.navigate(['/movie-details', this.movie.id]).then(() => {
-  //       window.location.reload();
-  //       this.movie = null; // Clear selection
-  //     });
-
-  //   }
-  // }
   filterMovies(event: AutoCompleteCompleteEvent): void {
     const query = event.query.toLowerCase();
     this.filteredMovies = this.movies.filter(movie =>

@@ -75,4 +75,11 @@ public class UserController {
                 .message("Delete Successfully!")
                 .build();
     }
+
+    @GetMapping("/me")
+    public BaseResponse<UserResponse> getMyInfo() {
+        return BaseResponse.<UserResponse>builder()
+                .data(userService.getMyInfo("123"))
+                .build();
+    }
 }

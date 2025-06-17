@@ -7,11 +7,12 @@ import { MessageService } from 'primeng/api';
 import { Account, AccountLogin } from 'src/app/models/account.model';
 import { AuthService } from 'src/app/services/auth.service';
 import {jwtDecode} from 'jwt-decode';
+import {AppComponent} from "../../app.component";
 declare let google: any;
 // Các trường dữ liệu sau khi mã hóa jwt thì sẽ cho ra các thông tin
 interface DecodedToken {
-  sub: string; 
-  email: string; 
+  sub: string;
+  email: string;
   name: string;
 }
 @Component({
@@ -34,6 +35,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     private cdr: ChangeDetectorRef,
     private messageService: MessageService,
     private authService: AuthService,
+    private appComponent: AppComponent,
   ) {
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -83,7 +85,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     const formattedBirthday = moment(birthday).format('DD/MM/YYYY HH:mm:ss');
     console.log(formattedBirthday);
     // Khởi tạo đối tượng newAccount
-    this.newAccount = { 
+    this.newAccount = {
       id: 0,
       username: this.signupForm.value.username,
       email: this.signupForm.value.email,
@@ -91,8 +93,8 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
       phone: this.signupForm.value.phone,
       gender: this.signupForm.value.gender,
       birthday: formattedBirthday,
-      securitycode: this.randomNumber.toString(), 
-      verify: 0 
+      securitycode: this.randomNumber.toString(),
+      verify: 0
     };
 
     try {
@@ -105,7 +107,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
       // Lưu tài khoản vào localStorage
       localStorage.setItem('account', JSON.stringify(this.account));
 
-      
+
 
       // Chuẩn bị nội dung email
       const emailContent = `
@@ -149,35 +151,35 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
       });
       return; // Ngăn không cho tiếp tục nếu biểu mẫu không hợp lệ
     }
-  
+
     const loginAccount: AccountLogin = {
       username: this.loginForm.value.usernameLogin,
       password: this.loginForm.value.passwordLogin,
     };
-  
+    console.log('accournt request: ', loginAccount)
+
     try {
       const res = await this.accountService.login(loginAccount);
-  
-      if (res.status) {
-        const accountResponse = await this.accountService.findByUsername(loginAccount.username);
-        this.account = accountResponse as Account;
-        localStorage.setItem('account', JSON.stringify(this.account));
-  
+
+      if (res.status == 'Success' && res.data.status == 'Success') {
+        localStorage.setItem('accessToken', res.data.accessToken);
+        localStorage.setItem('refreshToken', res.data.refreshToken);
+        this.appComponent.getCurrentUser();
         this.messageService.add({
           severity: "success",
           summary: "Đăng nhập thành công",
           detail: "Đăng nhập thành công"
         });
-  
+
         // Redirect to home page after a brief delay
-        this.router.navigate(['/profile']);
+         this.router.navigate(['/']);
       } else {
         this.messageService.add({
           severity: "error",
           summary: "Đăng nhập thất bại",
           detail: "Đăng nhập không thành công. Vui lòng kiểm tra thông tin đăng nhập của bạn."
         });
-  
+
         // Redirect to login page after a brief delay
         setTimeout(() => {
           this.router.navigate(['/login']);
@@ -190,18 +192,18 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
         summary: "Đăng nhập thất bại",
         detail: "Đăng nhập không thành công. Vui lòng kiểm tra thông tin đăng nhập của bạn."
       });
-  
+
       // Redirect to login page after a brief delay
       setTimeout(() => {
         this.router.navigate(['/login']);
       }, 4000);
     }
   }
-  
+
 
   ngOnInit(): void {
     // Thực hiện các thao tác khởi tạo khi component được tạo
- 
+
   }
 
   togglePasswordVisibility(event: Event): void {
@@ -228,7 +230,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     forms.classList.toggle('show-signup');
   }
 
-  
+
 
   loadGoogleSignIn() {
     const script = document.createElement('script');
@@ -287,7 +289,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
                     };
 
                     this.accountService.setAccount(accountGoogle);
-                    
+
                 } else {
                 }
              }
@@ -297,7 +299,7 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
             summary: 'Đăng kí thành công',
             detail: 'Bạn đã đăng kí thành công bằng Google.'
           });
-          
+
           this.router.navigate(['/profile']);
         },
         err => {
@@ -314,6 +316,6 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     }
   }
 
- 
-  
+
+
 }
