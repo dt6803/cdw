@@ -2,6 +2,8 @@ package com.cdw_ticket.authentication_service.exception;
 
 import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,6 +39,29 @@ public class GlobalExceptionHandler {
         baseResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.status(errorCode.getStatusCode()).body(baseResponse);
     }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<BaseResponse<?>> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        String message = "Dữ liệu không hợp lệ.";
+
+        Throwable rootCause = ExceptionUtils.getRootCause(ex); // từ Apache Commons Lang (hoặc viết tay)
+        if (rootCause != null && rootCause.getMessage() != null) {
+            String lowerMsg = rootCause.getMessage().toLowerCase();
+            if (lowerMsg.contains("username")) {
+                message = "Tên đăng nhập đã được sử dụng.";
+            } else if (lowerMsg.contains("email")) {
+                message = "Email đã được sử dụng.";
+            }
+        }
+
+        BaseResponse<?> response = new BaseResponse<>();
+        response.setStatus("Error");
+        response.setMessage(message);
+        response.setCode(ErrorCode.DATA_INTEGRITY_VIOLATION.getCode());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<BaseResponse> handleBadCredentials(BadCredentialsException ex) {

@@ -1,6 +1,8 @@
 package com.cdw_ticket.profile_service.exception;
 
 import com.cdw_ticket.profile_service.dto.response.BaseResponse;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,6 +22,7 @@ public class GlobalExceptionHandler {
         baseResponse.setCode(ErrorCode.UNCATEGORIZED_EXCEPTION.getCode());
         return ResponseEntity.badRequest().body(baseResponse);
     }
+
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<BaseResponse> handlingAppException(AppException exception) {

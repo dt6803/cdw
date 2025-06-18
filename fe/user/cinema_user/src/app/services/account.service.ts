@@ -12,9 +12,9 @@ export class AccountService{
         private httpClient: HttpClient
     ) {}
 
-    async create(account: Account) : Promise<any>{
+    async signUp(request: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'users/registration', account));
+        + 'authentication/users/registration', request));
     }
 
 

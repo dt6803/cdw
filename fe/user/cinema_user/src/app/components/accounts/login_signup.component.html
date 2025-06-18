@@ -63,6 +63,13 @@
                     <small *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'required_email' | translate }}</small>
                 </div>
 
+              <div class="field input-field">
+                <input type="text" formControlName="fullname" placeholder="Ho và tên" class="input">
+              </div>
+              <div *ngIf="signupForm.get('fullname')?.invalid && signupForm.get('fullname')?.touched">
+                <small *ngIf="signupForm.get('fullname')?.errors?.['required']">{{ 'required_email' | translate }}</small>
+              </div>
+
                 <!-- Phone Number Field -->
                 <div class="field input-field">
                     <input type="tel" formControlName="phone" placeholder="{{ 'phone' | translate }}" class="input">
@@ -71,18 +78,18 @@
                     <small *ngIf="signupForm.get('phone')?.errors?.['required']">{{ 'required_phone' | translate }}</small>
                 </div>
 
-                <!-- Gender Field -->
-                <div class="field input-field">
-                    <select id="genderSelect" formControlName="gender" class="form-select">
-                        <option value="" disabled selected>{{ 'gender' | translate }}</option>
-                        <option value="{{ 'male' | translate }}">{{ 'male' | translate }}</option>
-                        <option value="{{ 'female' | translate }}">{{ 'female' | translate }}</option>
-                        <option value="{{ 'other' | translate }}">{{ 'other' | translate }}</option>
-                    </select>
-                </div>
-                <div *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched">
-                    <small *ngIf="signupForm.get('gender')?.errors?.['required']">{{ 'required_gender' | translate }}</small>
-                </div>
+<!--                &lt;!&ndash; Gender Field &ndash;&gt;-->
+<!--                <div class="field input-field">-->
+<!--                    <select id="genderSelect" formControlName="gender" class="form-select">-->
+<!--                        <option value="" disabled selected>{{ 'gender' | translate }}</option>-->
+<!--                        <option value="{{ 'male' | translate }}">{{ 'male' | translate }}</option>-->
+<!--                        <option value="{{ 'female' | translate }}">{{ 'female' | translate }}</option>-->
+<!--                        <option value="{{ 'other' | translate }}">{{ 'other' | translate }}</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched">-->
+<!--                    <small *ngIf="signupForm.get('gender')?.errors?.['required']">{{ 'required_gender' | translate }}</small>-->
+<!--                </div>-->
 
 
                 <!-- Birthday Field with Date Picker -->
@@ -107,12 +114,12 @@
 
                 <!-- Signup Button -->
                 <div class="field button-field">
-                    <button type="submit">{{'dang_ky' | translate }}</button>
+                    <button style="background-color: #B31E8D" type="submit">{{'dang_ky' | translate }}</button>
                 </div>
             </form>
 
             <div class="form-link">
-                <span>{{'if' | translate }} <a [routerLink]="['/login']" class="link login-link" (click)="toggleSignUp($event)">{{'login' | translate }}</a></span>
+                <span>{{'if' | translate }} <a [routerLink]="['/login']" class="link login-link" (click)="toggleSignUp($event)" style="color: #B31E8D">{{'login' | translate }}</a></span>
             </div>
         </div>
 
