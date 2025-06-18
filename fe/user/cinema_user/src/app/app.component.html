@@ -13,7 +13,7 @@
         </div>
         <div class="col-lg-5 px-4 text-end">
             <div class="row">
-                <div class="h-100 w-100 d-inline-flex justify-content-end align-items-center py-2 me-3">
+                <div class="h-100 w-140 d-inline-flex justify-content-end align-items-center py-2 me-3">
                     <a (click)="follow()" style="background-color:#B31E8D; border-radius: 4px; margin: 0 8px;" pTooltip="{{ 'theo_doi_tooltip' | translate }}" class="btn btn-primary py-2 px-2 animated slideInDown">
                         <ng-container *ngIf="isFollowed">
                             {{ 'bo_theo_doi' | translate }}
@@ -26,6 +26,15 @@
                     </a>
                   <ng-container *ngIf="currentUser && currentUser !== ''; else guestLinks">
                     <a [routerLink]="['/profile']" class="me-2">{{ 'tai_khoan' | translate }}</a> |
+
+
+
+                    <ng-container *ngIf="currentUser === 'admin'">
+
+                      <a href="http://localhost:65343/admin/dashboard" target="_blank" class="p-2 ms-2">
+                        Admin
+                      </a>
+                    </ng-container> |
                     <a [routerLink]="['/home']" (click)="logout()" class="p-2 ms-2">{{ 'dang_xuat' | translate }}</a>
                   </ng-container>
 
@@ -45,7 +54,7 @@
 <!-- Topbar End -->
 
 <!-- Navbar Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0" style="z-index: 999;">
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0" style="z-index: 10;">
     <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0" style="color:#B31E8D">
             <img src="assets/img/aaaaaa.png" alt="Logo" style="width: 44px; height: 40px; vertical-align: middle; margin-right: 10px;">

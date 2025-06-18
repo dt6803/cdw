@@ -14,4 +14,9 @@ export class BookingService{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
         + 'booking/bookings', booking));
     }
+
+  async getById(id: string ) : Promise<any>{
+    return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
+      + 'booking/bookings/' + id));
+  }
 }

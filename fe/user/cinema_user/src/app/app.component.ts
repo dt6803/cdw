@@ -72,13 +72,19 @@ export class AppComponent implements OnInit {
   }
 
   async getCurrentUser() {
-    this.accountService.getMyAccountInfo().then(
-      (res) => {
-        console.log('current user: ', res.data.username)
+    try {
+      const res = await this.accountService.getMyAccountInfo();
+      if (res && res.data && res.data.username) {
+        console.log('current user: ', res.data.username);
         this.currentUser = res.data.username;
       }
-    );
+    } catch (error) {
+      console.warn('Không thể lấy thông tin người dùng:', error);
+      // Không gán currentUser nếu lỗi
+      this.currentUser = '';
+    }
   }
+
 
   private async loadMovies(): Promise<void> {
     try {

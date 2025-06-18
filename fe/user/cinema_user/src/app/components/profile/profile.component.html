@@ -1,67 +1,117 @@
-<!-- update-account.component.html -->
-<h2 class="mt-5">Thông tin tài khoản</h2>
-<form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="update-form">
-  <div class="form-group">
-    <label for="username">{{ 'username' | translate }}:</label>
-    <input id="username" formControlName="username" type="text" [ngModel]="account.username"/>
-  </div>
-  
-  <div class="form-group">
-    <label for="currentPassword">{{ 'current_pass' | translate }}:</label>
-    <div class="password-field">
-      <input id="currentPassword" formControlName="currentPassword" [type]="showCurrentPassword ? 'text' : 'password'" />
-      <i class="eye-icon fas" [ngClass]="showCurrentPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('currentPassword')"></i>
+<!-- account-info.component.html -->
+<div class="account-wrapper mt-4">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="profile">
+      <div class="avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <h3 style="color: white">Đặng Cao Hoàng Tuấn</h3>
+<!--      <a class="change-avatar">Thay đổi ảnh đại diện</a>-->
     </div>
-  </div>
-  
-  <div class="form-group">
-    <label for="newPassword">{{ 'new_pass' | translate }}:</label>
-    <div class="password-field">
-      <input id="newPassword" formControlName="newPassword" [type]="showNewPassword ? 'text' : 'password'" />
-      <i class="eye-icon fas" [ngClass]="showNewPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('newPassword')"></i>
+    <div class="menu">
+      <a [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
+        <i class="fas fa-user-circle"></i>Thông tin khách hàng
+      </a>
+      <a [class.active]="activeTab === 'history'" (click)="activeTab = 'history'">
+        <i class="fas fa-receipt"></i>Lịch sử mua hàng
+      </a>
+      <a (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>Đăng xuất
+      </a>
     </div>
-  </div>
+  </aside>
 
-  <div class="form-group">
-    <label for="confirmPassword">{{ 'confirm_pass' | translate }}:</label>
-    <div class="password-field">
-      <input id="confirmPassword" pTooltip="{{ 'notice_pass' | translate }}" formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" />
-      <i class="eye-icon fas" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility('confirmPassword')"></i>
+  <!-- Main Content -->
+  <main class="main-panel">
+    <!-- Thông tin khách hàng -->
+    <div *ngIf="activeTab === 'info'">
+      <div class="panel-header">
+        <h1>THÔNG TIN KHÁCH HÀNG</h1>
+      </div>
+      <div class="panel-body">
+        <form class="info-form">
+          <div class="form-group">
+            <label for="name">Họ và tên</label>
+            <input type="text" id="name" value="Đặng Cao Hoàng Tuấn" />
+          </div>
+          <div class="form-group">
+            <label for="dob">Ngày sinh</label>
+            <input type="date" id="dob" value="2003-04-12" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input type="tel" id="phone" value="0346119237" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" value="hoangtunqs134@gmail.com" />
+          </div>
+          <div class="form-actions">
+            <button type="submit">Lưu thông tin</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input id="email" formControlName="email" type="email" [ngModel]="account.email"/>
-  </div>
+    <!-- Lịch sử mua hàng -->
+    <div *ngIf="activeTab === 'history'">
+      <div class="panel-header">
+        <h1>LỊCH SỬ MUA VÉ</h1>
+      </div>
+      <div class="panel-body">
+        <table class="ticket-table" *ngIf="tickets.length > 0; else noTickets">
+          <thead>
+          <tr>
+            <th>Tên phim</th>
+            <th>Suất chiếu</th>
+            <th>Ngày mua</th>
+            <th>Tổng tiền</th>
+            <th>Hành động</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let ticket of tickets">
+            <td>{{ ticket.tenPhim }}</td>
+            <td>{{ ticket.thoiGian }}</td>
+            <td>{{ ticket.ngayMua }}</td>
+            <td>{{ ticket.tongTien | currency:'VND' }}</td>
+<!--            <td><button (click)="selectedTicket = ticket">Xem chi tiết</button></td>-->
+            <td><button>Xem chi tiết</button></td>
+          </tr>
+          </tbody>
+        </table>
+        <ng-template #noTickets>
+          <p class="no-tickets">Không có vé nào được mua.</p>
+        </ng-template>
 
-  <div class="form-group">
-    <label for="birthday">{{ 'birth' | translate }}:</label>
-    <input id="birthday" formControlName="birthday" type="date" [ngModel]="account.birthday" />
-  </div>
+        <!-- Modal vé điện tử -->
+        <div class="ticket-modal" *ngIf="selectedTicket">
+          <div class="ticket" #ticketContent>
+            <div class="ticket-header">
+              <h2>{{ selectedTicket.tenPhim }}</h2>
+            </div>
 
-  <div class="form-group">
-    <label for="phone">{{ 'phone' | translate }}:</label>
-    <input id="phone" formControlName="phone" type="tel" [ngModel]="account.phone"/>
-  </div>
+            <div class="ticket-body">
+              <p><strong>Suất chiếu:</strong> {{ selectedTicket.thoiGian }}</p>
+              <p><strong>Ngày mua:</strong> {{ selectedTicket.ngayMua }}</p>
+              <p><strong>Tổng tiền:</strong> {{ selectedTicket.tongTien | currency:'VND' }}</p>
+            </div>
 
-  <div class="form-group">
-    <label>{{ 'gender' | translate }}:</label>
-    <div class="radio-group">
-      <label>
-        <input type="radio" formControlName="gender" value="{{ 'male' | translate }}:" [ngModel]="account.gender"/>
-        {{ 'male' | translate }}
-      </label>
-      <label>
-        <input type="radio" formControlName="gender" value="{{ 'female' | translate }}:" [ngModel]="account.gender"/>
-        {{ 'female' | translate }}
-      </label>
-      <label>
-        <input type="radio" formControlName="gender" value="{{ 'other' | translate }}:" [ngModel]="account.gender"/>
-        {{ 'other' | translate }}
-      </label>
+            <div class="ticket-qr">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QR Code" />
+            </div>
+
+            <div class="ticket-actions">
+              <button class="print-btn" >In vé</button>
+              <button class="close-btn" (click)="selectedTicket = null">Đóng</button>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
     </div>
-  </div>
+  </main>
+</div>
 
-  <button type="submit" [disabled]="!updateForm.valid">{{ 'update' | translate }}</button>
-</form>

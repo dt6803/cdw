@@ -63,6 +63,7 @@ import { FollowService } from "./services/follow.service";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import {AuthInterceptor} from "./core/auth.interceptor";
+import {PaymentResultComponent} from "./components/payment_result/payment_result.component";
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -88,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     Login_SignupComponent,
     VerifyAccountComponent,
     ForgotPasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    PaymentResultComponent
   ],
   imports: [
     BrowserModule,
