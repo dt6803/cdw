@@ -28,5 +28,5 @@ payment:
     tmn-code: 4I4FEVKE
     secret-key: XQ8LNANJO4K2QBW8SX005JOB8ZBVCX6U
     init-payment-url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-    return-url: https://www.example.com/
+    return-url: http://localhost:4200/payment-result
     timeout: 15 # in minutes

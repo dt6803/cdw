@@ -13,7 +13,7 @@ export class MovieService{
     ){}
     async findAll() : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'movie/findAllByStatus'));
+        + 'movie/movies'));
     }
     async create(form: FormData) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()

@@ -14,11 +14,14 @@ import com.cdw_ticket.authentication_service.mapper.ProfileMapper;
 import com.cdw_ticket.authentication_service.mapper.UserMapper;
 import com.cdw_ticket.authentication_service.repository.RoleRepository;
 import com.cdw_ticket.authentication_service.repository.UserRepository;
+import com.cdw_ticket.authentication_service.service.JwtService;
 import com.cdw_ticket.authentication_service.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -106,12 +109,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         var user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException());
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         return user;
     }
 
     @Override
     public Set<String> getRolesById(String id) {
         return userRepository.getRolesById(id);
+    }
+
+    @Override
+    public UserResponse getMyInfo(String token) {
+//        var username = jwtService.extractUsername(token);
+//        var user = findByUsername(username);
+//        return userMapper.toUserResponse(user);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        log.info("Current User: {}", username);
+        User user = findByUsername(username);
+        return userMapper.toUserResponse(user);
     }
 }

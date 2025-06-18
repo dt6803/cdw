@@ -16,9 +16,10 @@ export class CinemaComponent implements OnInit {
   ngOnInit(): void {
     this.cinemaService.findAll().then(
       res => {
-        this.cinemas = res as Cinema[];
+        this.cinemas = res.data as Cinema[];
+        console.log(res)
       }
     );
-   
+
   }
 }

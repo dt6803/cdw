@@ -22,6 +22,7 @@ import { ForgotPasswordComponent } from "./components/forgot_password/forgot_pas
 import { ProfileComponent } from "./components/profile/profile.component";
 import { CheckLoginService } from "./services/checkLogin.service";
 import { BlockTicketDetailsService } from "./services/blockTicketDetails.service";
+import {PaymentResultComponent} from "./components/payment_result/payment_result.component";
 
 const routes: Routes = [
   {
@@ -82,7 +83,7 @@ const routes: Routes = [
   {
     path: "movie-details/:movieId",
     component: MovieDetailsComponent,
-  
+
   },
   ,
   {
@@ -110,6 +111,7 @@ const routes: Routes = [
     path: "profile",
     component: ProfileComponent,
   },
+  { path: 'payment-result', component: PaymentResultComponent }
 ];
 
 @NgModule({

@@ -37,10 +37,6 @@ public class ApplicationInitConfig {
     @NonFinal
     String passwordAdmin;
 
-    @Value("${app.admin-info.email}")
-    @NonFinal
-    String emailAdmin;
-
     @Bean
     @ConditionalOnProperty(name = "app.init-data", havingValue = "true", matchIfMissing = false)
     public ApplicationRunner initDataRunner() {
@@ -72,7 +68,7 @@ public class ApplicationInitConfig {
                         User adminUser = User.builder()
                                 .username(usernameAdmin)
                                 .password(passwordEncoder.encode(passwordAdmin))
-                                .email(emailAdmin)
+
                                 .build();
                         roleRepository.findByName(RoleEnum.ADMIN.toString()).ifPresent(adminUser.getRoles()::add);
                         userRepository.save(adminUser);

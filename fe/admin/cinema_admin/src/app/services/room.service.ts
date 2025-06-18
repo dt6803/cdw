@@ -29,7 +29,7 @@ export class RoomService{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'room/findById/' + id));
     }
-    async findByCinemaId(id: number) : Promise<any>{
+    async findByCinemaId(id: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'room/findByCinemaId/' + id));
     }

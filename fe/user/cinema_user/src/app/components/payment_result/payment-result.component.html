@@ -1,0 +1,43 @@
+<div class="payment-container">
+  <div class="payment-card">
+    <div class="icon-wrapper">
+      <i *ngIf="isSuccess; else failedIcon" class="fa fa-check-circle success-icon"></i>
+      <ng-template #failedIcon>
+        <i class="fa fa-times-circle error-icon"></i>
+      </ng-template>
+    </div>
+
+    <h2 class="title">
+      {{ isSuccess ? 'Thanh toán thành công' : 'Thanh toán thất bại' }}
+    </h2>
+
+    <p class="description">
+      {{ isSuccess ? 'Cảm ơn bạn đã thanh toán. Đơn hàng của bạn đang được xử lý.' : 'Thanh toán của bạn không thành công. Vui lòng thử lại hoặc liên hệ hỗ trợ.' }}
+    </p>
+
+    <ng-container *ngIf="isSuccess">
+      <div class="info-row">
+        <span class="label">Số tiền đã thanh toán:</span>
+        <span class="value">{{ amount | number }} VND</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Phương thức thanh toán:</span>
+        <span class="value">{{ bankCode }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Thời gian thanh toán:</span>
+        <span class="value">{{ paymentDate}}</span>
+      </div>
+
+      <p class="email-reminder">
+        Vui lòng kiểm tra email mà bạn đã đăng ký để nhận thông tin chi tiết về vé xem phim.
+      </p>
+
+      <div class="btn-group" *ngIf="currentUser && currentUser !== ''">
+        <a routerLink="/profile" class="history-button">
+          <i class="fa fa-history"></i> Xem lịch sử đặt vé
+        </a>
+      </div>
+    </ng-container>
+  </div>
+</div>

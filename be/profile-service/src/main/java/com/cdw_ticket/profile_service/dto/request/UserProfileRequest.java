@@ -23,7 +23,5 @@ public class UserProfileRequest {
     LocalDate dob;
     @NotBlank(message = "Phone number must be not blank")
     String phoneNumber;
-    @NotBlank(message = "Citizen ID must be not blank")
-    String citizenId;
     String avatarUrl;
 }

@@ -5,7 +5,7 @@ import { MessageService } from "primeng/api";
 import { Cinema } from "src/app/models/cinema.model";
 import { Movie } from "src/app/models/movie.model";
 import { Room } from "src/app/models/room.model";
-import { ShowTime } from "src/app/models/showtime.model";
+import { Showtime } from "src/app/models/showtime.model";
 
 import { Sub } from "src/app/models/sub.model";
 import { CinemaService } from "src/app/services/cinema.service";
@@ -31,13 +31,13 @@ import { SubService } from "src/app/services/sub.service";
         private router: Router,
         private route: ActivatedRoute
         ) {}
-         
+
     rooms: Room[];
     cinemas: Cinema[];
     movies: Movie[];
     subs: Sub[];
     showtimeId: number;
-    showtime: ShowTime;
+    showtime: Showtime;
     date: Date;
         ngOnInit(): void {
             this.route.params.subscribe((params) => {
@@ -47,33 +47,33 @@ import { SubService } from "src/app/services/sub.service";
               });
               this.showtimeService.findById(this.showtimeId).then(
                 res => {
-                  this.showtime = res as ShowTime;
+                  this.showtime = res as Showtime;
                   console.log(res);
                   console.log(this.showtime);
                   this.editShowtimeForm = this.formBuilder.group({
-                    showDate: [this.showtime.showDate, Validators.required],
+                    showDate: [this.showtime.startTime, Validators.required],
                     cinemaId: [this.showtime.cinemaId, Validators.required],
                     movieId: [this.showtime.movieId, Validators.required],
-                    subId: [this.showtime.subId, Validators.required],
+                    // subId: [this.showtime.subId, Validators.required],
                     roomId: [this.showtime.roomId, Validators.required],
-                   
+
                   });
                   this.updateRooms(this.showtime.cinemaId);
                 }
 
               );
-             
+
               this.cinemaService.findAll().then(
                 res => {
                   this.cinemas = res as Cinema[];
-                  this.cinemas = [{ id: -1, name: "Chọn Rạp",city: "No",district: "No",status: true }, ...this.cinemas];
+                  this.cinemas = [{ id: "", name: "Chọn Rạp",city: "No", address: "", description: "", imageUrl: ""}, ...this.cinemas];
                 }
               );
             this.subService.findAll().then(
               res => {
                 this.subs = res as Sub[]
               }
-    
+
             )
             this.movieService.findAll().then(
                 res => {
@@ -87,13 +87,13 @@ import { SubService } from "src/app/services/sub.service";
                 } else {
                     this.rooms = [];
                 }
-            }); 
+            });
         }
         // Cập Nhật Lại List Rooms Khi Cinema Được Chọn
-        updateRooms(cinemaId: number): void {
+        updateRooms(cinemaId: string): void {
             this.roomService.findByCinemaId(cinemaId).then(res => {
                 this.rooms = res as Room[];
-        
+
                 // Nếu danh sách phòng rỗng, reset giá trị roomId
                 if (this.rooms.length === 0) {
                     this.editShowtimeForm.get('roomId')?.reset();
@@ -102,13 +102,13 @@ import { SubService } from "src/app/services/sub.service";
         }
         edit() {
           if(this.editShowtimeForm.valid){
-            var showtime = this.editShowtimeForm.value as ShowTime;
+            var showtime = this.editShowtimeForm.value as Showtime;
             showtime.id = this.showtime.id;
-            showtime.showDate = this.formatDate(this.editShowtimeForm.value.showDate);
+            showtime.startTime = this.formatDate(this.editShowtimeForm.value.showDate);
             console.log(this.editShowtimeForm.value.showDate);
             this.showtimeService.edit(showtime).then(
               res => {
-            
+
                 console.log(res);
                   this.messageService.add({
                     severity: "success",
@@ -126,10 +126,10 @@ import { SubService } from "src/app/services/sub.service";
                   detail: "Sửa Suất Chiếu thất bại"
                 });
               }
-      
+
             );
-             
-            
+
+
           } else {
             this.messageService.add({
               severity: "error",
@@ -142,21 +142,21 @@ import { SubService } from "src/app/services/sub.service";
           console.log(evt.target.value);
           this.roomService.findByCinemaId(evt.target.value).then(res => {
             this.rooms = res as Room[];
-    
-           
+
+
         });
         }
         formatDate(dateString: string): string {
           const date = new Date(dateString);
-        
+
           const day = date.getDate().toString().padStart(2, '0');
           const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0 nên cần +1
           const year = date.getFullYear();
-        
+
           const hours = date.getHours().toString().padStart(2, '0');
           const minutes = date.getMinutes().toString().padStart(2, '0');
           const seconds = date.getSeconds().toString().padStart(2, '0');
-        
+
           return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
         }
   }
