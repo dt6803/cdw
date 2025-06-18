@@ -1,6 +1,7 @@
 package com.cdw_ticket.authentication_service.service.impl;
 
 import com.cdw_ticket.authentication_service.service.JwtService;
+import com.cdw_ticket.authentication_service.service.UserService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -39,6 +40,8 @@ public class JwtServiceImpl implements JwtService {
     @Value("${jwt.refresh-expiration}")
     int refreshExpiration;
 
+    UserService userService;
+
     @Override
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getIssuer);
@@ -71,10 +74,11 @@ public class JwtServiceImpl implements JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
         extraClaims.put("roles", roles);
-
+        String userId = userService.findByUsername(user.getUsername()).getId();
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
+                .setSubject(userId)
                 .setIssuer(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * expiration))

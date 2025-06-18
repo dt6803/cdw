@@ -30,6 +30,4 @@ public class RegisterRequest {
     LocalDate dob;
     @NotBlank(message = "Phone number must be not blank")
     String phoneNumber;
-    @NotBlank(message = "Citizen ID must be not blank")
-    String citizenId;
 }

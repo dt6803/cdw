@@ -55,8 +55,10 @@ export class AppComponent implements OnInit {
     //     }
     //   );
     // }
+    if (accessToken) {
+      this.getCurrentUser();
+    }
 
-    this.getCurrentUser();
 
   //   this.accountService.getAccount().subscribe(account => {
   //     if (account) {

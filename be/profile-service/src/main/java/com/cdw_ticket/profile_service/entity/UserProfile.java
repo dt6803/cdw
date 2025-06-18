@@ -31,6 +31,8 @@ public class UserProfile {
     @Column(name = "phone_number", unique = true)
     String phoneNumber;
 
+    @Column(name = "email", unique = true)
+    String email;
     @Column(name = "avatar_url")
     String avatarUrl;
 }

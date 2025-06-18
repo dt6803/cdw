@@ -6,7 +6,7 @@
       <div class="avatar">
         <i class="fas fa-user"></i>
       </div>
-      <h3 style="color: white">Đặng Cao Hoàng Tuấn</h3>
+      <h3 style="color: white">{{profile?.fullName}}</h3>
 <!--      <a class="change-avatar">Thay đổi ảnh đại diện</a>-->
     </div>
     <div class="menu">
@@ -33,22 +33,42 @@
         <form class="info-form">
           <div class="form-group">
             <label for="name">Họ và tên</label>
-            <input type="text" id="name" value="Đặng Cao Hoàng Tuấn" />
+            <input type="text" id="name" value="{{profile?.fullName}}" />
           </div>
           <div class="form-group">
             <label for="dob">Ngày sinh</label>
-            <input type="date" id="dob" value="2003-04-12" />
+            <input type="date" id="dob" value="{{profile?.dob}}" />
           </div>
           <div class="form-group">
             <label for="phone">Số điện thoại</label>
-            <input type="tel" id="phone" value="0346119237" />
+            <input type="tel" id="phone" value="{{profile?.phoneNumber}}" />
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" value="hoangtunqs134@gmail.com" />
+            <input type="email" id="email" value="{{profile?.email}}" />
           </div>
           <div class="form-actions">
             <button type="submit">Lưu thông tin</button>
+          </div>
+        </form>
+      </div>
+
+
+      <div class="panel-header">
+        <h1>ĐỔI MẬT KHẨU</h1>
+      </div>
+      <div class="panel-body">
+        <form class="info-form">
+          <div class="form-group">
+            <label for="name">Mật khẩu mới</label>
+            <input type="password" id="newPass" value="" />
+          </div>
+          <div class="form-group">
+            <label for="name">Lặp lại mật khẩu mới</label>
+            <input type="password" id="repeatPass" value="" />
+          </div>
+          <div class="form-actions">
+            <button type="submit">Đổi mật khẩu</button>
           </div>
         </form>
       </div>
@@ -60,42 +80,60 @@
         <h1>LỊCH SỬ MUA VÉ</h1>
       </div>
       <div class="panel-body">
-        <table class="ticket-table" *ngIf="tickets.length > 0; else noTickets">
-          <thead>
-          <tr>
-            <th>Tên phim</th>
-            <th>Suất chiếu</th>
-            <th>Ngày mua</th>
-            <th>Tổng tiền</th>
-            <th>Hành động</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let ticket of tickets">
-            <td>{{ ticket.tenPhim }}</td>
-            <td>{{ ticket.thoiGian }}</td>
-            <td>{{ ticket.ngayMua }}</td>
-            <td>{{ ticket.tongTien | currency:'VND' }}</td>
-<!--            <td><button (click)="selectedTicket = ticket">Xem chi tiết</button></td>-->
-            <td><button>Xem chi tiết</button></td>
-          </tr>
-          </tbody>
-        </table>
-        <ng-template #noTickets>
-          <p class="no-tickets">Không có vé nào được mua.</p>
-        </ng-template>
+
+        <!-- Trạng thái đang loading -->
+        <div *ngIf="isLoading" class="loading-container">
+          <div class="spinner"></div>
+          <p>Đang tải vé của bạn...</p>
+        </div>
+
+        <!-- Trạng thái có vé -->
+        <div *ngIf="!isLoading && tickets.length > 0" class="table-container">
+          <table class="ticket-table">
+            <thead>
+            <tr>
+              <th>Tên phim</th>
+              <th>Suất chiếu</th>
+              <th>Rạp</th>
+              <th>Tổng tiền</th>
+              <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ticket of tickets">
+              <td>{{ ticket.movieTitle }}</td>
+              <td>{{ ticket.showtime | date: 'HH:mm - dd/MM/yyyy' }}</td>
+              <td>{{ ticket.cinemaName }}</td>
+              <td>{{ ticket.totalPrice | currency: 'VND' }}</td>
+              <td><button (click)="showTicket(ticket.id)">Xem chi tiết</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Trạng thái không có vé -->
+        <div *ngIf="!isLoading && tickets.length === 0" class="no-tickets">
+          Không có vé nào được mua.
+        </div>
 
         <!-- Modal vé điện tử -->
         <div class="ticket-modal" *ngIf="selectedTicket">
           <div class="ticket" #ticketContent>
             <div class="ticket-header">
-              <h2>{{ selectedTicket.tenPhim }}</h2>
+              <h2>{{ selectedTicket.movieTitle }}</h2>
             </div>
 
             <div class="ticket-body">
-              <p><strong>Suất chiếu:</strong> {{ selectedTicket.thoiGian }}</p>
-              <p><strong>Ngày mua:</strong> {{ selectedTicket.ngayMua }}</p>
-              <p><strong>Tổng tiền:</strong> {{ selectedTicket.tongTien | currency:'VND' }}</p>
+              <p><strong>Suất chiếu:</strong> {{ selectedTicket.showtime }}</p>
+              <p><strong>Rạp:</strong> {{ selectedTicket.cinemaName }}</p>
+              <p><strong>Ngày mua:</strong> {{ selectedTicket.createdAt | date: 'HH:mm - dd/MM/yyyy'}}</p>
+              <p><strong>Tổng tiền:</strong> {{ selectedTicket.totalPrice | currency:'VND' }}</p>
+              <p><strong>Ghế:</strong></p>
+              <ul>
+                <li *ngFor="let seat of selectedTicket.bookingSeats">
+                  {{ seat.seatCode }} ({{ seat.type }})
+                </li>
+              </ul>
             </div>
 
             <div class="ticket-qr">
@@ -108,8 +146,6 @@
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </main>

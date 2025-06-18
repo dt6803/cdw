@@ -60,4 +60,11 @@ public class BookingController {
                 .data(bookingService.getSeatsByBookingId(id))
                 .build();
     }
+
+    @GetMapping("/bookings/user/{userId}")
+    public BaseResponse<List<BookingResponse>> getAllBookingByUserId(@PathVariable String userId) {
+        return BaseResponse.<List<BookingResponse>>builder()
+                .data(bookingService.getAllByUserId(userId))
+                .build();
+    }
 }

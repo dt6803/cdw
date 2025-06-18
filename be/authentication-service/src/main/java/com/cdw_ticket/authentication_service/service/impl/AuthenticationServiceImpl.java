@@ -49,8 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getUsername(),
-                            request.getPassword(),
-                            authorities
+                            request.getPassword()
                     )
             );
 
@@ -71,7 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (AppException ex) {
             if (ex.getErrorCode() == ErrorCode.USER_NOT_EXISTED) {
                 return AuthenticationResponse.builder()
-                        .message("Login failed: User not found")
+                        .message("Login failed: Incorrect username or password")
                         .status("fail")
                         .build();
             }

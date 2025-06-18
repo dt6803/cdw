@@ -40,6 +40,11 @@ export class AccountService{
         + 'authentication/users/me' + id));
     }
 
+  async getProfileByUserId(id: string) : Promise<any>{
+    return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
+      + 'profile/users/' + id));
+  }
+
   async getMyAccountInfo() : Promise<any>{
     return await lastValueFrom(this.httpClient.get(this.baseUrlService.getBaseUrl()
       + 'authentication/users/me'));

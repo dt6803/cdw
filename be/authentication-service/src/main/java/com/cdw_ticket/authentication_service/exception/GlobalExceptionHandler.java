@@ -4,6 +4,7 @@ import com.cdw_ticket.authentication_service.dto.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +36,14 @@ public class GlobalExceptionHandler {
         baseResponse.setCode(errorCode.getCode());
         baseResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.status(errorCode.getStatusCode()).body(baseResponse);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<BaseResponse> handleBadCredentials(BadCredentialsException ex) {
+        BaseResponse baseResponse = new BaseResponse();
+        baseResponse.setStatus("Error");
+        baseResponse.setMessage("Đăng nhập thất bại: Tên đăng nhập hoặc mật khẩu không đúng");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(baseResponse);
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)

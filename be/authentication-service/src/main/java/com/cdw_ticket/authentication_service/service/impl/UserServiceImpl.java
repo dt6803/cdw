@@ -43,7 +43,6 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
     ProfileClient profileClient;
     ProfileMapper profileMapper;
-    JwtService jwtService;
     @Override
     public UserResponse create(RegisterRequest request) {
         var user = userMapper.toUser(request);
