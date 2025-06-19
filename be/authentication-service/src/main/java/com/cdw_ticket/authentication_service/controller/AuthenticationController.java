@@ -58,6 +58,6 @@ public class AuthenticationController {
         authenticationService.forgotPassword(request);
         return BaseResponse.<Void>builder()
                 .message("Reset Password successfully!")
-                .build()
+                .build();
     }
 }
