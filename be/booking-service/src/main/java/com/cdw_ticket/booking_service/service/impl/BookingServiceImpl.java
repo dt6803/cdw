@@ -88,6 +88,16 @@ public class BookingServiceImpl implements BookingService {
         response.setCinemaName(cinemaInfo.getName());
         response.setUrlPayment(urlPayment.getVpnUrl());
 
+        response.setShowtime(showtime.getStartTime());
+        try {
+            var qrCode = qrService.generateQRCodeImage(booking.getId(), 250, 250);
+            String qrCodeBase64 = qrService.toBase64(qrCode);
+            response.setQrCodeBase64(qrCodeBase64);
+            log.info("qr code: {}", qrCode);
+        } catch (Exception e) {
+            log.error("QR code issue: {}", e.getMessage());
+        }
+
         return response;
     }
 
@@ -120,7 +130,7 @@ public class BookingServiceImpl implements BookingService {
         response.setCinemaName(cinema.getName());
 
         try {
-            var qrCode = qrService.generateQRCodeImage(response, 250, 250);
+            var qrCode = qrService.generateQRCodeImage(booking.getId(), 250, 250);
             String qrCodeBase64 = qrService.toBase64(qrCode);
             response.setQrCodeBase64(qrCodeBase64);
         } catch (Exception e) {

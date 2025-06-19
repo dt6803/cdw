@@ -1,10 +1,10 @@
 package com.cdw_ticket.authentication_service.service.impl;
 
-import com.cdw_ticket.authentication_service.dto.request.IntrospectRequest;
-import com.cdw_ticket.authentication_service.dto.request.LogInRequest;
-import com.cdw_ticket.authentication_service.dto.request.RefreshRequest;
+import com.cdw_ticket.authentication_service.client.NotificationClient;
+import com.cdw_ticket.authentication_service.dto.request.*;
 import com.cdw_ticket.authentication_service.dto.response.AuthenticationResponse;
 import com.cdw_ticket.authentication_service.dto.response.IntrospectResponse;
+import com.cdw_ticket.authentication_service.entity.Recipient;
 import com.cdw_ticket.authentication_service.entity.Token;
 import com.cdw_ticket.authentication_service.entity.User;
 import com.cdw_ticket.authentication_service.exception.AppException;
@@ -24,7 +24,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -36,6 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     JwtService jwtService;
     UserService userService;
     TokenService tokenService;
+    NotificationClient notificationClient;
 
     @Override
     public AuthenticationResponse authenticate(LogInRequest request) {
@@ -115,6 +119,39 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String username = jwtService.extractUsername(token);
         tokenService.delete(username);
     }
+
+    @Override
+    public void forgotPassword(ForgotPasswordRequest request) {
+        //String newPass = generateRandomPassword(6);
+        String newPass = "55555";
+        userService.updatePassword(request.getUserId(), newPass);
+
+        var recipient = Recipient.builder()
+                .name("user")
+                .email(request.getEmail())
+                .build();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("fullname", request.getUserId());
+        data.put("newPassword", newPass);
+        data.put("loginUrl", "#");
+
+        notificationClient.sendMail(SendMailRequest.builder()
+                        .to(recipient)
+                        .subject("T CINEMA: KHÔI PHỤC MẬT KHẨU")
+                        .htmlContent("reset-password")
+                        .data(data)
+                .build());
+
+    }
+
+    private String generateRandomPassword(int length) {
+        int min = (int) Math.pow(10, length - 1); // ví dụ: 100000
+        int max = (int) Math.pow(10, length) - 1; // ví dụ: 999999
+        int randomNum = new SecureRandom().nextInt((max - min) + 1) + min;
+        return String.valueOf(randomNum);
+    }
+
 
     @Override
     public IntrospectResponse introspectToken(IntrospectRequest request) {

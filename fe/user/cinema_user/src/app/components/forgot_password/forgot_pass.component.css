@@ -22,7 +22,7 @@ form {
     background: linear-gradient(to right, #f8f9fa, #e9ecef);
     border: 1px solid #e0e0e0;
   }
-  
+
   /* Tiêu đề form */
   h2 {
     text-align: center;
@@ -32,7 +32,7 @@ form {
     color: #343a40;
     text-transform: uppercase;
   }
-  
+
   /* Label cho các trường input */
   label {
     display: block;
@@ -41,7 +41,7 @@ form {
     color: #495057;
     font-size: 0.9rem;
   }
-  
+
   /* Trường input */
   input[type="email"],
   input[type="text"],
@@ -56,14 +56,14 @@ form {
     background-color: #ffffff;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   /* Border và shadow hiệu ứng khi hover và focus */
   input:focus {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
     outline: none;
   }
-  
+
   /* Nút submit */
   button {
     width: 100%;
@@ -76,24 +76,24 @@ form {
     font-size: 1rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
   }
-  
+
   /* Nút submit hover */
   button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
   }
-  
+
   /* Nút submit khi bị vô hiệu hóa */
   button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
   }
-  
+
   /* Ngăn cách giữa các phần tử */
   form > *:not(:last-child) {
     margin-bottom: 1.5rem;
   }
-  
+
  /* Apply general styles for the form container */
 #resetPasswordForm {
   max-width: 400px;
@@ -163,3 +163,23 @@ form {
   font-weight: bold;
   color: #d9534f;
 }
+
+.notification-box {
+  border: 1px solid #B31E8D;
+  background-color: #ffe6f4;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 20px;
+}
+.notification-box h2 {
+  color: #B31E8D;
+}
+.notification-box button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+

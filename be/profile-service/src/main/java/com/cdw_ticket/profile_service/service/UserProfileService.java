@@ -14,4 +14,5 @@ public interface UserProfileService {
     UserProfileResponse getByUserId(String userId);
     UserProfileResponse updateByUserId(String userId, UserProfileUpdateRequest request);
     void deleteByUserId(String userId);
+    UserProfileResponse getByEmail(String email);
 }
