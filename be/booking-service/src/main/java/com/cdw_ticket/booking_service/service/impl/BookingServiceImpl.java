@@ -18,6 +18,7 @@ import com.cdw_ticket.booking_service.mapper.BookingSeatMapper;
 import com.cdw_ticket.booking_service.repository.BookingRepository;
 import com.cdw_ticket.booking_service.repository.BookingSeatRepository;
 import com.cdw_ticket.booking_service.service.BookingService;
+import com.cdw_ticket.booking_service.service.QrService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,7 @@ public class BookingServiceImpl implements BookingService {
     CinemaClient cinemaClient;
     MovieClient movieClient;
     PaymentClient paymentClient;
+    QrService qrService;
     @Override
     public BookingResponse create(BookingUserRequest request) {
         ShowtimeResponse showtime = showtimeClient.getById(request.getShowtimeId()).getData();
@@ -116,6 +118,14 @@ public class BookingServiceImpl implements BookingService {
         response.setMovieTitle(movieTitle);
         response.setShowtime(showtime.getStartTime());
         response.setCinemaName(cinema.getName());
+
+        try {
+            var qrCode = qrService.generateQRCodeImage(response, 250, 250);
+            String qrCodeBase64 = qrService.toBase64(qrCode);
+            response.setQrCodeBase64(qrCodeBase64);
+        } catch (Exception e) {
+            log.error("QR code issue: {}", e.getMessage());
+        }
         return response;
     }
 

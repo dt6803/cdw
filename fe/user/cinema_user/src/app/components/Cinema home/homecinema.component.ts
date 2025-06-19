@@ -52,6 +52,7 @@ export class HomeCinemaComponent implements OnInit {
         alert('Hiện không có suất chiếu phù hợp');
       } // In ra giá trị của myParam
     });
+    this.todayDate1.setDate(this.todayDate1.getDate()  - 4)
     this.date1 = this.todayDate1.setDate(this.todayDate1.getDate() + 0);
     this.date2 = this.todayDate2.setDate(this.todayDate2.getDate() + 1);
     this.date3 = this.todayDate3.setDate(this.todayDate3.getDate() + 2);

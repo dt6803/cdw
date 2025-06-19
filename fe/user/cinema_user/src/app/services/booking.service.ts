@@ -24,4 +24,10 @@ export class BookingService{
     return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
       + 'booking/bookings/user/' + id));
   }
+
+  async sendMailConfirm(booking: any) : Promise<any>{
+    return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
+      + 'notification/email/send', booking));
+  }
+
 }

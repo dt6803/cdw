@@ -59,7 +59,6 @@ export class ProfileComponent implements OnInit {
       this.accountService.getProfileByUserId(this.userId).then(
         (res) => {
           this.profile = res.data;
-          console.log("profile: ", this.profile)
         }
       );
 
@@ -68,7 +67,6 @@ export class ProfileComponent implements OnInit {
       this.bookingService.getAllByUserId(this.userId)
         .then((res) => {
           this.tickets = res.data;
-          console.log("tickets: ", this.tickets);
         })
         .catch((error) => {
           console.error('Lỗi khi tải vé:', error);
