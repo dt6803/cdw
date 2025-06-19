@@ -6,7 +6,7 @@
     </div>
 
     <div style="padding: 20px;">
-      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Xin chào <strong>bạn</strong>,</p>
+      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Xin chào <strong>[[${fullname}]]</strong>,</p>
       <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Cảm ơn bạn đã đặt vé tại <strong>Rạp Chiếu Phim T Cinema</strong>. Đây là vé điện tử của bạn. Vui lòng trình mã QR bên dưới khi đến rạp.</p>
 
       <hr style="border-bottom: 1px solid #f6f6f6; Margin: 20px 0; margin: 20px 0; border: none; border-top: 1px solid #ddd;">
@@ -31,7 +31,11 @@
       </table>
 
       <div style="text-align: center; margin-top: 30px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" alt="QR Code" style="border: none; -ms-interpolation-mode: bicubic; max-width: 100%; width: 150px; height: 150px;" width="150" height="150">
+        <img th:src="'data:image/png;base64,' + ${qrCodeBase64}"
+             alt="QR Code"
+             style="border: none; -ms-interpolation-mode: bicubic; max-width: 100%; width: 150px; height: 150px;"
+             width="150" height="150" />
+
         <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; margin-top: 10px; color: #555;">Đưa mã QR này tại quầy để quét và vào phòng chiếu</p>
       </div>
 

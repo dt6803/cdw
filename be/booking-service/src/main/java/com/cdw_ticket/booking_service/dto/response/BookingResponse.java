@@ -20,6 +20,7 @@ import java.util.List;
 public class BookingResponse {
     String id;
     String showtimeId;
+    String userId;
     String movieTitle;
     String cinemaName;
     LocalDateTime showtime;
@@ -29,4 +30,5 @@ public class BookingResponse {
     LocalDateTime updatedAt;
     List<BookingSeatResponse> bookingSeats;
     String urlPayment;
+    String qrCodeBase64;
 }

@@ -34,6 +34,9 @@ export class PaymentResultComponent implements OnInit {
         (res) => {
           if (res.data.status === 'COMPLETED' && this.responseCode === '00') {
             this.isSuccess = true;
+
+
+
           }
         }
       );

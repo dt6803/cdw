@@ -16,6 +16,8 @@ import {Seat} from "../../models/seat.model";
 import {Showtime} from "../../models/showtime.model";
 import {MovieService} from "../../services/movie.service";
 import {Movie} from "../../models/movie.model";
+import {AccountService} from "../../services/account.service";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   templateUrl: "./buy_ticket.component.html",
@@ -52,6 +54,7 @@ export class BuyTicketComponent {
   seatGrid: (Seat | null)[][] = [];
   roomId: string = '';
   movie: Movie;
+  userId: '';
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +68,8 @@ export class BuyTicketComponent {
     private bookingService: BookingService,
     private paymentService: PaymentService,
     private datePipe: DatePipe,
-    private movieService: MovieService
+    private movieService: MovieService,
+    private accountService: AccountService,
   ) {
   }
 
@@ -140,19 +144,6 @@ export class BuyTicketComponent {
 
   }
 
-  // isSeatSelected(seat: string): boolean {
-  //   return this.selectedSeats.has(seat);
-  // }
-  // Hàm xử lý khi nhấp vào ghế
-  // selectSeat(row: number, col: number): void {
-  //   const rowLabels = ['A', 'B', 'C', 'D', 'E'];
-  //   this.selectedSeat = {row, col};
-  //   console.log(`Selected Seat: Row ${rowLabels[col]}, Column  ${row + 1}`);
-  // }
-
-  // Get the CSS class based on seat status
-
-
   reloadCurrentRoute(): void {
     const currentUrl = this.router.url;
     this.router.navigateByUrl("/", {skipLocationChange: true}).then(() => {
@@ -194,43 +185,24 @@ export class BuyTicketComponent {
     this.comboId = evt.target.value;
   }
 
-  // buyTicket() {
-  //   if (this.ticketForm.invalid) {
-  //     this.ticketForm.markAllAsTouched();
-  //     return;
-  //   }
-  //
-  //   const formValue = this.ticketForm.value;
-  //   const seatIds = this.selectedSeats.map(seat => seat.id);
-  //
-  //   const payload = {
-  //     name: formValue.name,
-  //     phone: formValue.phone,
-  //     email: formValue.email,
-  //     showTimeId: this.showId,
-  //     selectedSeats: seatIds, // Mảng chứa mã ghế hoặc ID ghế
-  //     paymentMethod: formValue.method,
-  //     totalPrice: this.getTotalPrice()
-  //   };
-  //
-  //
-  //
-  //   console.log("Sending ticket data:", payload);
-  //
-  //   // Gọi API hoặc xử lý tuỳ theo hệ thống
-  //   // this.ticketService.submitTicket(payload).subscribe({
-  //   //   next: (res) => {
-  //   //     console.log('Đặt vé thành công:', res);
-  //   //     // Hiển thị thông báo thành công hoặc chuyển trang
-  //   //   },
-  //   //   error: (err) => {
-  //   //     console.error('Lỗi đặt vé:', err);
-  //   //     // Hiển thị thông báo lỗi
-  //   //   }
-  //   // });
-  // }
-
   buyTicket() {
+    //Kiểm tra user
+    const token = localStorage.getItem("accessToken");
+
+
+    if (!token) {
+      this.ticketForm.markAllAsTouched();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Chưa đăng nhập',
+        detail: 'Vui lòng đăng nhập.'
+      });
+      this.router.navigate(['/login']);
+      return;
+    }
+    const decoded: any = jwtDecode(token);
+    this.userId = decoded.sub;
+
     // Kiểm tra form
     if (this.ticketForm.invalid) {
       this.ticketForm.markAllAsTouched();
@@ -260,7 +232,7 @@ export class BuyTicketComponent {
       ...this.ticketForm.value,
       seatIds: seatIds,
       showtimeId: this.showId,
-      userId: '12345',
+      userId: this.userId,
       total: this.getTotalPrice()
     };
 
@@ -268,10 +240,38 @@ export class BuyTicketComponent {
 
     this.bookingService.create(payload).then((res) => {
       console.log('Booking response:', res);
-
+      let email = '';
+      let fullname = '';
       if (res.status === 'Success' && res.data.urlPayment) {
+
+        this.accountService.getProfileByUserId(res.data.userId).then(
+          (res) => {
+            fullname = res.data.fullName;
+            email = res.data.email;
+          }
+        );
+
+        this.bookingService.sendMailConfirm({
+          "to": {
+            "name": fullname,
+            "email": email
+
+          },
+          "subject": "T Cinema Booking Confirmation",
+          "htmlContent": "booking-confirmation",
+          "data": {
+            "movieTitle": res.data.movieTitle,
+            "showtime": res.data.showtime,
+            "createdAt": res.data.createdAt,
+            "totalPrice": res.data.totalPrice,
+            "qrCodeBase64": res.data.qrCodeBase64
+          }
+        }).then(r => {
+          console.log('send mail')
+        });
+
         // Chuyển trang đến link thanh toán
-        window.location.href = res.data.urlPayment;
+        //window.location.href = res.data.urlPayment;
       } else {
         // Thông báo lỗi nếu không có urlPayment hoặc status không success
         this.messageService.add({
@@ -289,25 +289,7 @@ export class BuyTicketComponent {
       });
     });
 
-    // this.bookingService.create(payload).subscribe({
-    //   next: () => {
-    //     this.messageService.add({
-    //       severity: 'success',
-    //       summary: 'Đặt vé thành công',
-    //       detail: 'Cảm ơn bạn đã đặt vé tại ABCD Mall!'
-    //     });
-    //     this.ticketForm.reset();
-    //     this.selectedSeats = [];
-    //     this.quantities = {};
-    //   },
-    //   error: () => {
-    //     this.messageService.add({
-    //       severity: 'error',
-    //       summary: 'Đặt vé thất bại',
-    //       detail: 'Có lỗi xảy ra, vui lòng thử lại sau.'
-    //     });
-    //   }
-    // });
+
   }
 
 

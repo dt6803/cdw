@@ -21,6 +21,8 @@ app:
   services:
     booking-service: http://localhost:8085/booking
     cinema-service: http://localhost:8084/cinema
+    notification-service: http://localhost:8087/notification
+    profile-service: http://localhost:8081/profile
 
 
 payment:

@@ -24,6 +24,8 @@ public class BookingUserRequest {
     String userId;
     @NotBlank(message = "Showtime's must be not blank")
     String showtimeId;
+    @NotBlank(message = "Email must be not blank")
+    String email;
     @NotEmpty(message = "Seat's ids must be not empty")
     List<String> seatIds;
     @NotNull(message = "Payment method must be not null")
