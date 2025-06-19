@@ -18,4 +18,7 @@ public interface BookingClient {
 
     @GetMapping("/bookings/{id}/seats")
     BaseResponse<List<String>> getSeatByBookingId(@PathVariable String id);
+
+    @GetMapping("/bookings/{id}")
+    BaseResponse<BookingResponse> getById(@PathVariable String id);
 }

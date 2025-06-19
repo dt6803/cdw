@@ -1,0 +1,84 @@
+.payment-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+.payment-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.icon-wrapper {
+  margin-bottom: 20px;
+}
+
+.success-icon {
+  font-size: 48px;
+  color: #28a745;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.label {
+  font-weight: 500;
+  color: #555;
+}
+
+.value {
+  font-weight: bold;
+  color: #000;
+}
+
+.email-reminder {
+  font-style: italic;
+  margin-top: 20px;
+  color: #b31e8d;
+}
+
+.btn-group {
+  margin-top: 25px;
+}
+
+.history-button {
+  background-color: #b31e8d;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.history-button:hover {
+  background-color: #991470;
+}
+
+.error-icon {
+  font-size: 48px;
+  color: #dc3545;
+}

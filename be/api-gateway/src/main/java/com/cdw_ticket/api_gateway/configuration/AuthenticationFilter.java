@@ -42,7 +42,8 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
             "/cinema/.*",
             "/showtime/.*",
             "/booking/.*",
-            "/payment/.*"
+            "/payment/.*",
+            "/notification/.*"
     };
     @NonFinal
     @Value(("${app.api-prefix}"))

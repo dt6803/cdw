@@ -24,7 +24,7 @@ public class AuthenticationController {
     AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public BaseResponse<AuthenticationResponse> login(@RequestBody LogInRequest request) {
+    public BaseResponse<?> login(@RequestBody LogInRequest request) {
         return BaseResponse.<AuthenticationResponse>builder()
                 .data(authenticationService.authenticate(request))
                 .build();

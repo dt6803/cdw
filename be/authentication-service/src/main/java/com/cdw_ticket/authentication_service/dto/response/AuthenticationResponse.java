@@ -12,4 +12,8 @@ import lombok.experimental.FieldDefaults;
 public class AuthenticationResponse {
     String accessToken;
     String refreshToken;
+    @Builder.Default
+    String message = "Login successfully";
+    @Builder.Default
+    String status = "Success";
 }

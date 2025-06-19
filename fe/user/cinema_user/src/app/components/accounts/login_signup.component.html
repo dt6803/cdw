@@ -4,7 +4,7 @@
             <header>{{ 'login' | translate }}</header>
             <form [formGroup]="loginForm" (ngSubmit)="login()">
                 <div class="field input-field">
-                    <input type="text" formControlName="usernameLogin" placeholder="Username" class="input">
+                    <input type="text" formControlName="usernameLogin" placeholder="Tên đăng nhập" class="input">
                 </div>
 
                 <div class="field input-field">
@@ -13,20 +13,20 @@
                 </div>
 
                 <div class="form-link">
-                    <a [routerLink]="['/forgot-password']" class="forgot-pass">{{ 'fogot' | translate }}</a>
+                    <a style="color: #B31E8D" [routerLink]="['/forgot-password']" class="forgot-pass">{{ 'fogot' | translate }}</a>
                 </div>
 
                 <div class="field button-field">
-                    <button>{{ 'login' | translate }}</button>
+                    <button class="text-uppercase" style="background-color: #B31E8D">{{ 'login' | translate }}</button>
                 </div>
             </form>
 
             <div class="form-link">
-                <span>{{ 'not_account' | translate }}<a [routerLink]="['/login']" class="link signup-link"  (click)="toggleSignUp($event)">{{ 'register_now' | translate }}</a></span>
+                <span> {{ 'not_account' | translate }}<a [routerLink]="['/login']" class="link signup-link"  (click)="toggleSignUp($event)" style="color: #B31E8D">{{ 'register_now' | translate }}</a></span>
             </div>
         </div>
 
-        <div class="line"></div>
+<!--        <div class="line"></div>-->
 
         <!-- <div class="media-options">
             <a href="#" class="field google">
@@ -35,15 +35,15 @@
             </a>
         </div> -->
 
-        <div id="custom-google-button-container" class="custom-google-button">
-            <div id="google-login-button" class="flex-row justify-center items-center hidden"></div>
-        </div>
+<!--        <div id="custom-google-button-container" class="custom-google-button">-->
+<!--            <div id="google-login-button" class="flex-row justify-center items-center hidden"></div>-->
+<!--        </div>-->
 
     </div>
 
     <!-- Signup Form -->
 
-    <div class="form signup">
+    <div class="form signup mt-5">
         <div class="form-content">
             <header>{{ 'signup' | translate }}</header>
             <form [formGroup]="signupForm" (ngSubmit)="signUp()" method="post">
@@ -54,7 +54,7 @@
                 <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
                     <small *ngIf="signupForm.get('username')?.errors?.['required']">{{ 'required_username' | translate }}</small>
                 </div>
-    
+
                 <!-- Email Field -->
                 <div class="field input-field">
                     <input type="email" formControlName="email" placeholder="Email" class="input">
@@ -63,7 +63,14 @@
                     <small *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'required_email' | translate }}</small>
                     <small *ngIf="signupForm.get('email')?.errors?.['email']">{{ 'valid_email' | translate }}</small>
                 </div>
-    
+
+              <div class="field input-field">
+                <input type="text" formControlName="fullname" placeholder="Ho và tên" class="input">
+              </div>
+              <div *ngIf="signupForm.get('fullname')?.invalid && signupForm.get('fullname')?.touched">
+                <small *ngIf="signupForm.get('fullname')?.errors?.['required']">{{ 'required_email' | translate }}</small>
+              </div>
+
                 <!-- Phone Number Field -->
                 <div class="field input-field">
                     <input type="tel" formControlName="phone" placeholder="{{ 'phone' | translate }}" class="input">
@@ -75,21 +82,21 @@
     {{ 'valid_phone' | translate }}
   </small>
                 </div>
-    
-                <!-- Gender Field -->
-                <div class="field input-field">
-                    <select id="genderSelect" formControlName="gender" class="form-select">
-                        <option value="" disabled selected>{{ 'gender' | translate }}</option>
-                        <option value="{{ 'male' | translate }}">{{ 'male' | translate }}</option>
-                        <option value="{{ 'female' | translate }}">{{ 'female' | translate }}</option>
-                        <option value="{{ 'other' | translate }}">{{ 'other' | translate }}</option>
-                    </select>
-                </div>
-                <div *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched">
-                    <small *ngIf="signupForm.get('gender')?.errors?.['required']">{{ 'required_gender' | translate }}</small>
-                </div>
-                
-    
+
+<!--                &lt;!&ndash; Gender Field &ndash;&gt;-->
+<!--                <div class="field input-field">-->
+<!--                    <select id="genderSelect" formControlName="gender" class="form-select">-->
+<!--                        <option value="" disabled selected>{{ 'gender' | translate }}</option>-->
+<!--                        <option value="{{ 'male' | translate }}">{{ 'male' | translate }}</option>-->
+<!--                        <option value="{{ 'female' | translate }}">{{ 'female' | translate }}</option>-->
+<!--                        <option value="{{ 'other' | translate }}">{{ 'other' | translate }}</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--                <div *ngIf="signupForm.get('gender')?.invalid && signupForm.get('gender')?.touched">-->
+<!--                    <small *ngIf="signupForm.get('gender')?.errors?.['required']">{{ 'required_gender' | translate }}</small>-->
+<!--                </div>-->
+
+
                 <!-- Birthday Field with Date Picker -->
                 <div class="field input-field">
                     <input type="text" formControlName="birthday" class="form-control" placeholder="{{ 'birth' | translate }}" bsDatepicker>
@@ -97,42 +104,42 @@
                 <div *ngIf="signupForm.get('birthday')?.invalid && signupForm.get('birthday')?.touched">
                     <small *ngIf="signupForm.get('birthday')?.errors?.['required']">{{ 'required_birth' | translate }}</small>
                 </div>
-    
+
                 <!-- Password Field -->
                 <div class="field input-field">
                     <input type="password"  formControlName="password" placeholder="{{ 'create_pass' | translate }}" class="password">
                     <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility($event)"></i>
                 </div>
-    
+
                 <!-- Confirm Password Field -->
                 <div class="field input-field">
                     <input type="password" pTooltip="{{ 'notice_pass' | translate }}" formControlName="confirmPassword" placeholder="{{ 'confirm_pass' | translate }}" class="password">
                     <i class='bx bx-hide eye-icon' (click)="togglePasswordVisibility($event)"></i>
                 </div>
-               
+
                 <!-- Signup Button -->
                 <div class="field button-field">
-                    <button type="submit">{{'dang_ky' | translate }}</button>
+                    <button style="background-color: #B31E8D" type="submit">{{'dang_ky' | translate }}</button>
                 </div>
             </form>
-    
+
             <div class="form-link">
-                <span>{{'if' | translate }} <a [routerLink]="['/login']" class="link login-link" (click)="toggleSignUp($event)">{{'login' | translate }}</a></span>
+                <span>{{'if' | translate }} <a [routerLink]="['/login']" class="link login-link" (click)="toggleSignUp($event)" style="color: #B31E8D">{{'login' | translate }}</a></span>
             </div>
         </div>
-    
-        <div class="line"></div>
-    
+
+<!--        <div class="line"></div>-->
+
         <!-- <div class="media-options">
             <a href="#" class="field google">
                 <img src="assets/img/google.png" alt="" class="google-img">
                 <span>Login with Google</span>
             </a>
         </div> -->
-        <div id="custom-google-button-container" class="custom-google-button">
-            <div id="google-signin-button" pTooltip="mật khẩu mặc định là 123" class="flex-row justify-center items-center hidden"></div>
-        </div>
+<!--        <div id="custom-google-button-container" class="custom-google-button">-->
+<!--            <div id="google-signin-button" pTooltip="mật khẩu mặc định là 123" class="flex-row justify-center items-center hidden"></div>-->
+<!--        </div>-->
     </div>
-    
+
 </section>
 <p-toast></p-toast>

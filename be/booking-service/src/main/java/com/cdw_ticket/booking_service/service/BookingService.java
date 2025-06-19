@@ -15,4 +15,5 @@ public interface BookingService {
     BookingResponse getById(String id);
     List<BookingResponse> getAll();
     List<String> getSeatsByBookingId(String id);
+    List<BookingResponse> getAllByUserId(String userId);
 }

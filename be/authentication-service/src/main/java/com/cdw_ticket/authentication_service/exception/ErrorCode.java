@@ -17,7 +17,8 @@ public enum ErrorCode {
     PERMISSION_NOT_EXISTED(1001, "Permission not existed", HttpStatus.NOT_FOUND),
     REFRESH_TOKEN_INVALID(1002, "Refresh token is invalid", HttpStatus.BAD_REQUEST),
     TOKEN_NOT_FOUND(1003, "Token is not found", HttpStatus.NOT_FOUND),
-    UNAUTHENTICATED(403, "Access denied", HttpStatus.UNAUTHORIZED)
+    UNAUTHENTICATED(403, "Access denied", HttpStatus.UNAUTHORIZED),
+    DATA_INTEGRITY_VIOLATION(1011, "Request's data issue", HttpStatus.BAD_REQUEST)
     ;
 
     int code;

@@ -21,4 +21,5 @@ public interface UserService {
     UserDetailsService userDetailsService();
     User findByUsername(String username);
     Set<String> getRolesById(String id);
+    UserResponse getMyInfo(String token);
 }

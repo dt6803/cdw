@@ -1,0 +1,136 @@
+<div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;">
+  <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    
+    <div style="background-color: #B31E8D; padding: 20px; color: white; text-align: center;">
+      <h1 style="color: white; font-family: sans-serif; line-height: 1.4; margin-bottom: 30px; font-size: 35px; font-weight: 300; text-align: center; text-transform: capitalize; margin: 0;">🎬 Vé Xem Phim</h1>
+    </div>
+
+    <div style="padding: 20px;">
+      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Xin chào <strong>[[${fullname}]]</strong>,</p>
+      <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Cảm ơn bạn đã đặt vé tại <strong>Rạp Chiếu Phim T Cinema</strong>. Đây là vé điện tử của bạn. Vui lòng trình mã QR bên dưới khi đến rạp.</p>
+
+      <hr style="border-bottom: 1px solid #f6f6f6; Margin: 20px 0; margin: 20px 0; border: none; border-top: 1px solid #ddd;">
+
+      <table style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; width: 100%; font-size: 16px;" width="100%">
+        <tr>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top"><strong>Tên phim:</strong></td>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">[[${movieTitle}]]</td>
+        </tr>
+        <tr>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top"><strong>Suất chiếu:</strong></td>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">[[${showtime}]]</td>
+        </tr>
+        <tr>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top"><strong>Ngày mua:</strong></td>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">[[${createdAt}]]</td>
+        </tr>
+        <tr>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top"><strong>Tổng tiền:</strong></td>
+          <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">₫[[${totalPrice}]]</td>
+        </tr>
+      </table>
+
+      <div style="text-align: center; margin-top: 30px;">
+        <img th:src="'data:image/png;base64,' + ${qrCodeBase64}"
+             alt="QR Code"
+             style="border: none; -ms-interpolation-mode: bicubic; max-width: 100%; width: 150px; height: 150px;"
+             width="150" height="150" />
+
+        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; margin-top: 10px; color: #555;">Đưa mã QR này tại quầy để quét và vào phòng chiếu</p>
+      </div>
+
+      <div style="margin-top: 30px; font-size: 14px; color: #777;">
+        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Chúc bạn có một trải nghiệm tuyệt vời tại rạp!</p>
+        <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Trân trọng,<br>Đội ngũ Rạp Chiếu Phim XYZ</p>
+      </div>
+    </div>
+
+    <div style="background-color: #f0f0f0; text-align: center; padding: 10px; font-size: 12px; color: #999;">
+      © 2025 Rạp Chiếu Phim T Cinema - Mọi quyền được bảo lưu.
+    </div>
+
+  </div>
+</div>
+<style>
+@media only screen and (max-width: 620px) {
+  table[class=body] h1 {
+    font-size: 28px !important;
+    margin-bottom: 10px !important;
+  }
+
+  table[class=body] p,
+table[class=body] ul,
+table[class=body] ol,
+table[class=body] td,
+table[class=body] span,
+table[class=body] a {
+    font-size: 16px !important;
+  }
+
+  table[class=body] .wrapper,
+table[class=body] .article {
+    padding: 10px !important;
+  }
+
+  table[class=body] .content {
+    padding: 0 !important;
+  }
+
+  table[class=body] .container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  table[class=body] .main {
+    border-left-width: 0 !important;
+    border-radius: 0 !important;
+    border-right-width: 0 !important;
+  }
+
+  table[class=body] .btn table {
+    width: 100% !important;
+  }
+
+  table[class=body] .btn a {
+    width: 100% !important;
+  }
+
+  table[class=body] .img-responsive {
+    height: auto !important;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+@media all {
+  .ExternalClass {
+    width: 100%;
+  }
+
+  .ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+    line-height: 100%;
+  }
+
+  .apple-link a {
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    text-decoration: none !important;
+  }
+
+  .btn-primary table td:hover {
+    background-color: #d5075d !important;
+  }
+
+  .btn-primary a:hover {
+    background-color: #d5075d !important;
+    border-color: #d5075d !important;
+  }
+}
+</style>

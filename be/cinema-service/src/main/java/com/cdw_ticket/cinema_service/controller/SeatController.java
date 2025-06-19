@@ -67,7 +67,7 @@ public class SeatController {
                 .build();
     }
 
-    @GetMapping("/seats/updateStatus")
+    @PostMapping("/seats/updateStatus")
     public BaseResponse<Void> updateStatusByIds(@RequestBody List<String> ids,
                                                 @RequestParam SeatStatus status) {
         seatService.updateStatusBySeatIds(ids, status);

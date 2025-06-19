@@ -20,16 +20,16 @@
           <thead>
             <tr>
               <th class="text-center"><div class="d-flex justify-content-center align-items-center">
-                Mã 
+                Mã
                 <button class="btn btn-outline ms-2" (click)="sort()">
                   <i class='bx bx-sort'></i>
                 </button>
               </div></th>
-              <th>Hình Ảnh</th>
+<!--              <th>Hình Ảnh</th>-->
               <th>Tên Phim </th>
               <th>Tên Rạp</th>
               <th>Bắt Đầu Chiếu</th>
-              <th>Loại Phụ Đề</th>
+<!--              <th>Loại Phụ Đề</th>-->
               <th>Trạng thái</th>
               <th>Hành động</th>
             </tr>
@@ -38,11 +38,11 @@
             <ng-container *ngFor="let showtime of filteredShowtimes">
               <tr>
                 <th>{{showtime.id}}</th>
-                <th> <img width="100px" class="img-fluid" src="{{showtime.photo}}"> </th>
-                <th> {{showtime.title}}</th>
+<!--                <th> <img width="100px" class="img-fluid" src="{{showtime.photo}}"> </th>-->
+                <th> {{showtime.movieTitle}}</th>
                 <th> {{showtime.cinemaName}}</th>
-                <th> {{showtime.showDate}}</th>
-                <th> {{showtime.subName}}</th>
+                <th> {{showtime.startTime}}</th>
+<!--                <th> {{showtime.subName}}</th>-->
                 <th>{{showtime.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
                 <th>
                   <button (click)="confirmDelete(showtime.id)" type="button"

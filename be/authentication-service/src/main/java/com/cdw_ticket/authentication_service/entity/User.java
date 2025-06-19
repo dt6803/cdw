@@ -27,7 +27,6 @@ public class User implements UserDetails {
     String id;
     String username;
     String password;
-    String email;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",

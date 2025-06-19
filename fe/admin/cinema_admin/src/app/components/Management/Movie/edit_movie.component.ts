@@ -39,16 +39,16 @@ export class EditMovieComponent implements OnInit {
         console.log(this.movie);
         this.editMovieForm = this.formBuilder.group({
           title: [this.movie.title, Validators.required],
-          photo: [this.movie.photo, Validators.required],
+          photo: [this.movie.posterUrl, Validators.required],
           description: [this.movie.description, Validators.required],
           duration: [this.movie.duration, Validators.required],
-          genre: [this.movie.genre, Validators.required],
+          genre: [this.movie.genres, Validators.required],
           releaseDate: [this.movie.releaseDate, Validators.required],
-          age: [this.movie.age, [Validators.required, Validators.min(1)]],
-          trailer: [this.movie.trailer, Validators.required],
+          age: [this.movie.rating, [Validators.required, Validators.min(1)]],
+          trailer: [this.movie.trailerUrl, Validators.required],
           director: [this.movie.director, Validators.required],
-          actor: [this.movie.actor, Validators.required],
-          publisher: [this.movie.publisher, Validators.required],
+          actor: [this.movie.casts, Validators.required],
+          publisher: [this.movie.releaseDate, Validators.required],
 
         });
 

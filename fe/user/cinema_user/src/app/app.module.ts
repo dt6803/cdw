@@ -9,7 +9,7 @@ import { Food_DrinkComponent } from "./components/food-drink/food_drink.componen
 import { HomeComponent } from "./components/home/home.component";
 import { ShopAPIService } from "./services/shopAPI.service";
 import { BaseUrlService } from "./services/baseUrl.service";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { ShoppingComponent } from "./components/shopping/shopping.component";
 import { Enter_learnComponent } from "./components/enter_learn/enter_learn.component";
 import { ProductAPIService } from "./services/productAPI.service";
@@ -63,6 +63,9 @@ import { FollowService } from "./services/follow.service";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { PricingComponent } from "./components/price_ticket/pricing.component";
+import {AuthInterceptor} from "./core/auth.interceptor";
+import {PaymentResultComponent} from "./components/payment_result/payment_result.component";
+
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -90,6 +93,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ForgotPasswordComponent,
     ProfileComponent,
     PricingComponent
+    PaymentResultComponent
   ],
   imports: [
     BrowserModule,
@@ -148,8 +152,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CheckLoginService,
     BlockTicketDetailsService,
     AuthService,
-    FollowService
-  
+    FollowService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

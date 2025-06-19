@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Cinema } from "src/app/models/cinema.model";
-import { ShowTime, ShowTimeDetails } from "src/app/models/showtime.model";
+import { Showtime } from "src/app/models/showtime.model";
 import { CinemaService } from "src/app/services/cinema.service";
 import { ShowtimeService } from "src/app/services/showtime.service";
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,16 +17,16 @@ export class ShowtimeComponent implements OnInit {
       private router: Router,
       private messageService: MessageService,
     ){}
-    showtimes: ShowTimeDetails[];
-    filteredShowtimes: ShowTimeDetails[];
+    showtimes: Showtime[];
+    filteredShowtimes: Showtime[];
     cinemas: Cinema[];
-    cinemaId: number;
+    cinemaId: string;
     selectedCinema: Cinema; // Cinema được chọn
     sortAscending: boolean = true;
     ngOnInit(): void {
       this.showTimeService.findAll().then(
         res => {
-          this.showtimes = res as ShowTimeDetails[];
+          this.showtimes = res.data as Showtime[];
           this.filteredShowtimes = this.showtimes;
         }
       );
@@ -34,29 +34,29 @@ export class ShowtimeComponent implements OnInit {
         res => {
           this.cinemas = res as Cinema[];
           // Thêm tùy chọn "Xem tất cả" vào danh sách cinemas
-        this.cinemas = [{ id: 0, name: "Xem tất cả",city: "No",district: "No",status: true }, ...this.cinemas];
+        this.cinemas = [{ id: "", name: "Chọn Rạp",city: "No", address: "", description: "", imageUrl: ""}, ...this.cinemas];
         }
       );
     }
-    confirmUpdate(showTimeId: number): void {
+    confirmUpdate(showTimeId: string): void {
       if (confirm('Bạn có chắc muốn sửa?')) {
        this.update(showTimeId);
       }
     }
-    update(showTimeId: number){
+    update(showTimeId: string){
       this.router.navigate(['/admin/edit-showtime', showTimeId]);
     }
 
     onCinemaChange(cinema: Cinema) {
       if (cinema) {
-        
+
         this.cinemaId = cinema.id;
-        if(this.cinemaId == 0) {
+        if(this.cinemaId == "") {
           this.filteredShowtimes = this.showtimes;
         }else {
           this.showTimeService.findAllByCinema(this.cinemaId).then(
             res => {
-              this.filteredShowtimes = res as ShowTimeDetails[];
+              this.filteredShowtimes = res as Showtime[];
             }
           );
         }
@@ -64,13 +64,13 @@ export class ShowtimeComponent implements OnInit {
         this.filteredShowtimes = this.showtimes; // Nếu không chọn cinema nào thì hiển thị tất cả
       }
     }
-    confirmDelete(showTimeId: number): void {
+    confirmDelete(showTimeId: string): void {
       if (confirm('Bạn có chắc muốn xóa?')) {
         this.delete(showTimeId);
       }
     }
 
-    delete(id: number){
+    delete(id: string){
         this.showTimeService.delete(id).then(
           res => {
             console.log(res);
@@ -82,7 +82,7 @@ export class ShowtimeComponent implements OnInit {
             this.showTimeService.findAll().then(
                 resp => {
                   console.log(resp);
-                  this.filteredShowtimes = resp as ShowTimeDetails[];
+                  this.filteredShowtimes = resp as Showtime[];
                 }
             );
           }
@@ -97,13 +97,13 @@ export class ShowtimeComponent implements OnInit {
         );
     }
     sort() {
-      this.filteredShowtimes.sort((a, b) => {
-        if (this.sortAscending) {
-          return a.id - b.id; // Sắp xếp tăng dần
-        } else {
-          return b.id - a.id; // Sắp xếp giảm dần
-        }
-      });
-      this.sortAscending = !this.sortAscending;
+      // this.filteredShowtimes.sort((a, b) => {
+      //   if (this.sortAscending) {
+      //     return a.id - b.id; // Sắp xếp tăng dần
+      //   } else {
+      //     return b.id - a.id; // Sắp xếp giảm dần
+      //   }
+      // });
+      // this.sortAscending = !this.sortAscending;
     }
 }
