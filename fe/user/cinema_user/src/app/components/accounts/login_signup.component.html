@@ -61,6 +61,7 @@
                 </div>
                 <div *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
                     <small *ngIf="signupForm.get('email')?.errors?.['required']">{{ 'required_email' | translate }}</small>
+                    <small *ngIf="signupForm.get('email')?.errors?.['email']">{{ 'valid_email' | translate }}</small>
                 </div>
 
               <div class="field input-field">
@@ -76,6 +77,10 @@
                 </div>
                 <div *ngIf="signupForm.get('phone')?.invalid && signupForm.get('phone')?.touched">
                     <small *ngIf="signupForm.get('phone')?.errors?.['required']">{{ 'required_phone' | translate }}</small>
+                    <small *ngIf="signupForm.get('phone')?.errors?.['pattern']">{{ 'valid_phone' | translate }}</small>
+                    <small *ngIf="signupForm.get('phone')?.errors?.['minlength'] || signupForm.get('phone')?.errors?.['maxlength']">
+    {{ 'valid_phone' | translate }}
+  </small>
                 </div>
 
 <!--                &lt;!&ndash; Gender Field &ndash;&gt;-->

@@ -14,7 +14,7 @@
           <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
             <div class="row mt-2">
               <div class="col-5">
-                <h5><i class="fa-solid fa-tags"></i> Thể loại</h5>
+                <h5><i class="fa-solid fa-tags"></i> {{ 'genre' | translate }}</h5>
               </div>
               <div class="col-7">
                 <p style="font-size: 16px;text-align: left;margin-top: 0;">{{ movie.genres }}</p>
@@ -22,7 +22,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <h5><i class="fa-solid fa-clock"></i> Thời lượng </h5>
+                <h5><i class="fa-solid fa-clock"></i> {{ 'duration' | translate }} </h5>
               </div>
               <div class="col-7">
                 <p style="font-size: 16px;text-align: left;margin-top: 0;">{{ movie.duration + ' phút' }}</p>
@@ -30,7 +30,7 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <h5><i class="fa-solid fa-earth-asia"></i> Ngôn ngữ </h5>
+                <h5><i class="fa-solid fa-earth-asia"></i> {{ 'language' | translate }} </h5>
               </div>
               <div class="col-7">
                 <p style="font-size: 16px;text-align: left;margin-top: 0;">{{ movie.language }}</p>
@@ -39,7 +39,7 @@
 
             <div class="row mt-2">
               <div class="col-5">
-                <h5><i class="fa-solid fa-message"></i> Phụ đề </h5>
+                <h5><i class="fa-solid fa-message"></i> {{ 'sub' | translate }} </h5>
               </div>
               <div class="col-7">
                 <p style="font-size: 16px;text-align: left;margin-top: 0;">{{ movie.subtitle }}</p>
@@ -47,17 +47,17 @@
             </div>
             <div class="row mt-2">
               <div class="col-5">
-                <h5><i class="fa-solid fa-user-check"></i> Phân loại độ tuổi</h5>
+                <h5><i class="fa-solid fa-user-check"></i> {{ 'rating' | translate }}</h5>
               </div>
               <div class="col-7">
                 <p style="font-size: 16px;text-align: left;margin-top: 0;">{{ movie.rating }}</p>
               </div>
             </div>
-            <h2 class="mt-4 mb-3 text-uppercase">Mô tả</h2>
-            <p>Ngày phát hành: {{ movie.releaseDate }}</p>
-            <p>Diễn viên: {{ movie.casts }}</p>
-            <p>Đạo diễn: {{ movie.director }}</p>
-            <h2 class="mt-4 mb-3 text-uppercase">Nội dung phim</h2>
+            <h2 class="mt-4 mb-3 text-uppercase">{{ 'mota' | translate }}</h2>
+            <p>{{ 'release_time' | translate }}: {{ movie.releaseDate }}</p>
+            <p>{{ 'actor' | translate }}: {{ movie.casts }}</p>
+            <p>{{ 'director' | translate }}: {{ movie.director }}</p>
+            <h2 class="mt-4 mb-3 text-uppercase">{{ 'movie_content' | translate }}</h2>
             <p>{{ movie.description }}</p>
 
           </div>
@@ -219,24 +219,24 @@
     <div class="row mt-5">
       <div class="col-lg-12">
         <div class="section-heading">
-          <h2>Bình luận và Đánh giá</h2>
+          <h2>{{ 'cmt_and_rating' | translate }}</h2>
         </div>
 
         <!-- Comment Form -->
         <div class="comment-form mb-4">
           <form (submit)="submitComment($event)">
             <div class="mb-3">
-              <label class="form-label" for="userName">Tên của bạn:</label>
+              <label class="form-label" for="userName">{{ 'username' | translate }}:</label>
               <input [value]="accountUsername != null ? accountUsername : 'Tài khoản ẩn danh'" class="form-control"
                      id="userName"
                      readonly required type="text">
             </div>
             <div class="mb-3">
-              <label class="form-label" for="userComment">Bình luận:</label>
+              <label class="form-label" for="userComment">{{ 'cmt' | translate }}:</label>
               <textarea class="form-control" id="userComment" required rows="4"></textarea>
             </div>
             <div class="mb-3">
-              <label class="form-label">Đánh giá:</label>
+              <label class="form-label">{{ 'rating' | translate }}:</label>
               <div class="rating">
                 <input id="star5" name="rating" type="radio" value="5">
                 <label for="star5" title="5 stars"></label>
@@ -261,7 +261,7 @@
 
         <!-- Display Comments and Ratings -->
         <div class="comments-section">
-          <h3>Những bình luận và đánh giá</h3>
+          <h3>{{ 'cmt_and_ratings' | translate }}</h3>
           <div *ngFor="let comment of listComment" class="comment">
             <div class="comment-header" style="display: block;">
               <strong>{{ comment.accountId }}</strong>

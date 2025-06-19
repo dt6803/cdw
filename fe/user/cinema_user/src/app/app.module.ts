@@ -62,8 +62,10 @@ import { TooltipModule } from 'primeng/tooltip';
 import { FollowService } from "./services/follow.service";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { PricingComponent } from "./components/price_ticket/pricing.component";
 import {AuthInterceptor} from "./core/auth.interceptor";
 import {PaymentResultComponent} from "./components/payment_result/payment_result.component";
+
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
@@ -90,6 +92,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     VerifyAccountComponent,
     ForgotPasswordComponent,
     ProfileComponent,
+    PricingComponent
     PaymentResultComponent
   ],
   imports: [

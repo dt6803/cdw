@@ -7,9 +7,9 @@
                 </div>
               </div>
             <div class="col-lg-6">
-                <h6 class=" text-uppercase" style="color:#B31E8D; font-size: 32px;">Rạp phim {{payment.cinema}}</h6>
-                <h1 class="mb-4">Thông tin vé xem phim của bạn</h1>
-                <p class="mb-4" style="font-size: 16px;">Dưới đây là thông tin về vé xem phim mà bạn đã đặt. Bạn vui lòng kiểm tra lại. Nếu có thắc mắc xin liên hệ vào số hotline.</p>
+                <h6 class=" text-uppercase" style="color:#B31E8D; font-size: 32px;">{{ 'cinema' | translate }} {{payment.cinema}}</h6>
+                <h1 class="mb-4">{{ 'ticket_detail' | translate }}</h1>
+                <p class="mb-4" style="font-size: 16px;">{{ 'ticket_note' | translate }}</p>
                 <div class="row g-4 mb-3 pb-3">
                     <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
                         <div class="d-flex">
@@ -17,11 +17,11 @@
                                 <span class="fw-bold text-secondary">01</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Tên phim</h6>
+                                <h6>{{ 'movie_name' | translate }}</h6>
                                 <span>{{payment.title}}</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Phụ đề</h6>
+                                <h6>{{ 'sub' | translate }}</h6>
                                 <span>{{payment.subName}}</span>
                             </div>
                         </div>
@@ -32,11 +32,11 @@
                                 <span class="fw-bold text-secondary">02</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Thời gian chiếu</h6>
+                                <h6>{{ 'screenings' | translate }}</h6>
                                 <span>{{payment.showDate}} - {{payment.showTime}}</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Số ghế đã đặt </h6>
+                                <h6>{{ 'booked_seat' | translate }} </h6>
 <!--                                <span>{{ getSeatNames()}}</span>-->
                             </div>
                         </div>
@@ -47,11 +47,11 @@
                                 <span class="fw-bold text-secondary">03</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Thời lượng: {{payment.duration}}</h6>
+                                <h6>{{ 'duration' | translate }}: {{payment.duration}}</h6>
                                 <span>Cinema</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Phòng chiếu </h6>
+                                <h6>{{ 'room' | translate }} </h6>
                                 <span>{{payment.room}}</span>
                             </div>
                         </div>
@@ -62,11 +62,11 @@
                                 <span class="fw-bold text-secondary">03</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Mã vé: {{payment.ticketNumber}}</h6>
-                                <span>Mã giao dịch: {{payment.transactionNo}}</span>
+                                <h6>{{ 'ticket_number' | translate }}: {{payment.ticketNumber}}</h6>
+                                <span>{{ 'transaction_no' | translate }}: {{payment.transactionNo}}</span>
                             </div>
                             <div class="ps-3 col-6">
-                                <h6>Số tiền thanh toán</h6>
+                                <h6>{{ 'payment_price' | translate }}</h6>
                                 <span>{{payment.price}}</span>
                             </div>
                         </div>
@@ -78,7 +78,7 @@
 
         <div class="row">
             <div class="qr-code mt-5 text-center">
-               <h1>Mã QR vé của bạn</h1>
+               <h1>{{ 'qr_code' | translate }}</h1>
             </div>
             <div class="qr-code mt-2 text-center">
                 <qrcode [qrdata]="payment.ticketNumber.toString()" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
