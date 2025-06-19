@@ -27,34 +27,34 @@
           <div class="col-lg-7 align-self-center">
             <div>
               <h1 class="display-2 text-uppercase">{{ showDetail?.movieTitle }} </h1>
-              <h5>Ngày chiếu : {{ showDetail.startTime  | date: 'dd/MM/YYYY' }} - Suất chiếu
+              <h5>{{ 'show_date' | translate }} : {{ showDetail.startTime  | date: 'dd/MM/YYYY' }} - {{ 'show_time' | translate }}
                 : {{ showDetail.startTime | date: 'HH:mm' }}</h5
               >
 
               <ul class="display-5" style="margin-top: 20px;">
                 <li>
-                  <span>Độ tuổi:</span>
+                  <span>{{ 'rating' | translate }}:</span>
                   <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.rating }}</span>
                 </li>
                 <li>
-                  <span>Thể loại:</span>
+                  <span>{{ 'genre' | translate }}:</span>
                   <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.genres }}</span>
                 </li>
                 <li>
-                  <span>Thời lượng:</span>
+                  <span>{{ 'duration' | translate }}:</span>
                   <span style="color: #333">{{ this.movie.duration }}</span>
                 </li>
                 <li>
-                  <span>Ngày ra mắt:</span>
+                  <span>{{ 'release_time' | translate }}:</span>
                   <span
                     style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.releaseDate | date: 'dd/MM/YYYY' }}  </span>
                 </li>
                 <li>
-                  <span>Ngôn ngữ:</span>
+                  <span>{{ 'language' | translate }}:</span>
                   <span style="color: #333; text-transform: capitalize; width: 350px;">{{ this.movie?.language }}</span>
                 </li>
                 <li>
-                  <span>Phụ đề:</span>
+                  <span>{{ 'sub' | translate }}:</span>
                   <span style="color: #333; text-transform: capitalize;  width: 350px;">{{ this.movie?.subtitle }}</span>
                 </li>
               </ul>
@@ -101,7 +101,7 @@
                 <label
                   class="block text-900 font-medium mb-2"
                   for="NameCustomer"
-                >Họ và tên:</label
+                >{{ 'fullname' | translate }}:</label
                 >
                 <input
                   class="w-full"
@@ -114,7 +114,7 @@
 
                 />
                 <div *ngIf="ticketForm.get('name')?.invalid && ticketForm.get('name')?.touched">
-                  <small *ngIf="ticketForm.get('name')?.errors?.['required']">Full Name is required.</small>
+                  <small *ngIf="ticketForm.get('name')?.errors?.['required']">{{ 'required_fullname' | translate }}</small>
                 </div>
               </div>
               <div
@@ -127,7 +127,7 @@
                 <label
                   class="block text-900 font-medium mb-2"
                   for="PhoneCustomer"
-                >Số điện thoại:</label
+                >{{ 'phone' | translate }}:</label
                 >
                 <input
                   class="w-full"
@@ -140,9 +140,11 @@
 
                 />
                 <div *ngIf="ticketForm.get('phone')?.invalid && ticketForm.get('phone')?.touched">
-                  <small *ngIf="ticketForm.get('phone')?.errors?.['required']">Phone is required.</small>
-                  <small *ngIf="ticketForm.get('phone')?.errors?.['pattern']">Phone must be a valid number with 10 to 11
-                    digits.</small>
+                  <small *ngIf="ticketForm.get('phone')?.errors?.['required']">{{ 'required_phone' | translate }}</small>
+                  <small *ngIf="ticketForm.get('phone')?.errors?.['pattern']">{{ 'valid_phone' | translate }}</small>
+                  <small *ngIf="ticketForm.get('phone')?.errors?.['minlength'] || ticketForm.get('phone')?.errors?.['maxlength']">
+    {{ 'valid_phone' | translate }}
+  </small>
                 </div>
               </div>
               <div
@@ -168,8 +170,8 @@
 
                 />
                 <div *ngIf="ticketForm.get('email')?.invalid && ticketForm.get('email')?.touched">
-                  <small *ngIf="ticketForm.get('email')?.errors?.['required']">Email is required.</small>
-                  <small *ngIf="ticketForm.get('email')?.errors?.['email']">Enter a valid email address.</small>
+                  <small *ngIf="ticketForm.get('email')?.errors?.['required']">{{ 'required_email' | translate }}</small>
+                  <small *ngIf="ticketForm.get('email')?.errors?.['email']">{{ 'valid_email' | translate }}</small>
                 </div>
               </div>
 
@@ -181,7 +183,7 @@
                 "
               >
                 <label class="block text-900 font-medium mb-2"
-                >Danh sách ghế đã chọn:</label
+                >{{ 'list_seat' | translate }}:</label
                 >
                 <input
                   [value]="selectedSeatStr"
@@ -200,13 +202,13 @@
                 margin-bottom: 20px;
               "
               >
-                <label class="block text-900 font-medium mb-2">Chọn combo:</label>
+                <label class="block text-900 font-medium mb-2">Combo:</label>
 
                 <table class="table table-bordered">
                   <thead>
                   <tr>
-                    <th>Tên combo</th>
-                    <th class="text-center">Số lượng</th>
+                    <th>{{ 'combo_name' | translate }}</th>
+                    <th class="text-center">{{ 'count' | translate }}</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -242,12 +244,12 @@
 
                 <div class="text-end mt-4 p-3 bg-light border rounded shadow-sm">
                   <h5 class="mb-0">
-                    Tổng tiền:
+                    {{ 'total' | translate }}:
                     <span class="text-primary fw-bold">{{ getTotalPrice() | number }} VND</span>
                   </h5>
                 </div>
                 <div class="mb-3">
-                  <label class="form-label fw-bold">Phương thức thanh toán:</label>
+                  <label class="form-label fw-bold">{{ 'payment_method' | translate }}:</label>
                   <div class="row g-2">
                     <div class="col-6">
                       <div class="form-check payment-option">
@@ -424,15 +426,15 @@
       <div class="seat-note-row">
         <div class="note-item">
           <span class="seat available"></span>
-          <span class="label">Ghế trống</span>
+          <span class="label">{{ 'empty' | translate }}</span>
         </div>
         <div class="note-item">
           <span class="seat selected"></span>
-          <span class="label">Đang chọn</span>
+          <span class="label">{{ 'selecting' | translate }}</span>
         </div>
         <div class="note-item">
           <span class="seat booked"></span>
-          <span class="label">Đã đặt</span>
+          <span class="label">{{ 'already_booked' | translate }}</span>
         </div>
         <!--        <div class="note-item">-->
         <!--          <span class="seat double-seat"></span>-->

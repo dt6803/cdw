@@ -1,5 +1,5 @@
 <!-- update-account.component.html -->
-<h2 class="mt-5">Thông tin tài khoản</h2>
+<h2 class="mt-5">{{ 'profile' | translate }}</h2>
 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="update-form">
   <div class="form-group">
     <label for="username">{{ 'username' | translate }}:</label>

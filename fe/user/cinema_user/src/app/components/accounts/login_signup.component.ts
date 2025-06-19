@@ -38,7 +38,8 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required],
+      phone: ['', Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10),
+    Validators.maxLength(11)],
       gender: ['', Validators.required],
       birthday: ['', Validators.required],
       password: ['', Validators.required],
