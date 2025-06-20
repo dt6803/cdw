@@ -68,7 +68,9 @@ export class AppComponent implements OnInit {
     console.log('ahahah')
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
-      window.location.href = `http://localhost:65343?token=${accessToken}`;
+      // Đảm bảo accessToken có giá trị và được encode URI
+      const encodedToken = encodeURIComponent(accessToken);
+      window.location.href = `http://localhost:65343?token=${encodedToken}`;
     }
   }
 
@@ -88,6 +90,7 @@ export class AppComponent implements OnInit {
     localStorage.removeItem('refreshToken');
     this.currentUser = '';
     this.cdr.detectChanges();
+    window.location.href = 'http://localhost:65343/logout?sync=true';
     await this.router.navigate(['/home']);
   }
 
