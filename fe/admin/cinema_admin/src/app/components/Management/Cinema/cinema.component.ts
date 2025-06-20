@@ -20,8 +20,16 @@ export class CinemaComponent implements OnInit {
     ) {}
   cinemas: Cinema[];
   displayEditDialog = false;
+  displayAddRoom = false;
   selectedCinema: any = {};
   rooms: any[];
+  room = {
+    name: '',
+    type: '_2D',
+    capacity: null,
+    cinemaId: ''
+  };
+
   ngOnInit(): void {
     this.cinemaService.findAll().then(
       res => {
@@ -48,12 +56,43 @@ export class CinemaComponent implements OnInit {
   }
 
   showAddRoomPopup() {
+    this.displayEditDialog = false;
+    this.displayAddRoom = true;
 
   }
 
   editRoom(roomId: string) {
     console.log('edit room: ' , roomId)
     this.router.navigate(['admin/edit-room', roomId]);
+  }
+
+  saveRoom() {
+    if (!this.room.name || !this.room.type || !this.room.capacity) {
+      alert('Vui lòng điền đầy đủ thông tin!');
+      return;
+    }
+
+    const payload = {
+      name: this.room.name,
+      type: this.room.type,
+      capacity: this.room.capacity,
+      cinemaId: this.selectedCinema.id,
+    };
+
+    console.log('create room req: ', payload)
+
+    this.roomService.createRoom(payload).then(
+      (res) => {
+        console.log('Tạo phòng chiếu thành công:', res);
+        this.closeAddRoomPopup();
+      }
+    );
+  }
+
+
+  closeAddRoomPopup() {
+    this.displayAddRoom = false;
+    this.displayEditDialog = true;
   }
 
 

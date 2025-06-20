@@ -1,1 +1,73 @@
-<h1>ROOM</h1>
+<div class="container mt-4">
+  <div class="row">
+    <!-- Sơ đồ ghế -->
+    <div class="col-md-8">
+      <div class="border p-3 rounded shadow-sm">
+        <h5 class="text-uppercase text-secondary mb-3">Sơ đồ ghế</h5>
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex gap-2 justify-content-center" *ngFor="let row of seatGrid">
+            <div
+              *ngFor="let seat of row"
+              class="seat-box"
+              [ngClass]="{
+                'normal-seat': seat?.status === 'AVAILABLE',
+                'booking-seat': seat?.status === 'BOOKED',
+                'empty-seat': !seat
+              }"
+            >
+              <small *ngIf="seat">{{ seat.seatCode }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thông tin phòng + seat note -->
+    <div class="col-md-4">
+      <div class="border p-3 rounded shadow-sm mb-3">
+        <h5 class="text-uppercase text-secondary mb-3">Thông tin phòng chiếu</h5>
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Tên phòng</label>
+            <input type="text" class="form-control" [(ngModel)]="room.name" name="name" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Loại</label>
+            <select class="form-select" [(ngModel)]="room.type" name="type">
+              <option value="_2D">2D</option>
+              <option value="_3D">3D</option>
+              <option value="_IMAX">IMAX</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Sức chứa</label>
+            <input type="number" class="form-control" [(ngModel)]="room.capacity" name="capacity" />
+          </div>
+
+          <button type="button" class="btn btn-primary w-100" (click)="saveRoom(room.id)">Lưu</button>
+        </form>
+
+      </div>
+
+      <!-- Ghi chú ghế -->
+      <div class="border p-3 rounded shadow-sm">
+        <h6 class="text-center text-secondary mb-3">Ghi chú ghế</h6>
+        <div class="d-flex flex-column gap-2">
+          <div class="d-flex align-items-center gap-2">
+            <div class="seat-box normal-seat"></div> Ghế trống
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="seat-box booking-seat"></div> Đã có người đặt
+          </div>
+        </div>
+      </div>
+
+      <div class="border p-3 rounded shadow-sm">
+        <h6 class="text-center text-secondary mb-3">Reset ghế</h6>
+        <button type="button" class="btn btn-primary w-100" (click)="resetRoom()">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>

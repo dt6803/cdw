@@ -37,8 +37,6 @@ public class CinemaRoomServiceImpl implements CinemaRoomService {
         var room = cinemaRoomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         cinemaRoomMapper.updateInf(room, request);
-        var cinema = cinemaService.getCinemaById(request.getCinemaId());
-        room.setCinema(cinema);
         cinemaRoomRepository.save(room);
         return cinemaRoomMapper.toCinemaRoomResponse(room);
     }
@@ -47,7 +45,9 @@ public class CinemaRoomServiceImpl implements CinemaRoomService {
     public CinemaRoomResponse getInfoById(String id) {
         var room = cinemaRoomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-        return cinemaRoomMapper.toCinemaRoomResponse(room);
+        var response = cinemaRoomMapper.toCinemaRoomResponse(room);
+        response.setCinemaId(room.getCinema().getId());
+        return response;
     }
 
     @Override

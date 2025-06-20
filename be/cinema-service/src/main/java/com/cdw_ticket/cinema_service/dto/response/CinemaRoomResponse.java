@@ -17,4 +17,5 @@ public class CinemaRoomResponse {
     String name;
     RoomType type;
     int capacity;
+    String cinemaId;
 }
