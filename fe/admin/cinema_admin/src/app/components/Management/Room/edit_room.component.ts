@@ -12,6 +12,7 @@ import { RoomService } from 'src/app/services/room.service';
 
 @Component({
   templateUrl: './edit_room.component.html',
+  styleUrls: ['./edit_room.component.css'],
 })
 export class EditRoomComponent implements OnInit {
   editRoomForm: FormGroup;
@@ -23,83 +24,127 @@ export class EditRoomComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
     ) {}
-  rooms: Room[];
-  cinemas: Cinema[];
-  roomId: number;
-  room: Room;
-  ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      const roomId = params["roomId"];
-      this.roomId = roomId;
-      console.log(this.roomId);
-    });
-    this.roomService.findById(this.roomId).then(
-      res => {
-        this.room = res as Room;
-        console.log(this.room);
-        this.editRoomForm = this.formBuilder.group({
-          name: [this.room.name, Validators.required],
-          cinemaId: [this.room.cinemaId, Validators.required],
-          quantity: [this.room.quantity,[Validators.required, Validators.min(1)]],
-         
-        });
 
+  roomId: string;
+  room: any = {
+    name: '',
+    type: '',
+    capacity: 0
+  };
+
+  seatLayout = [];
+  seatGrid: any[][] = [];
+  ngOnInit(): void {
+    this.roomId = this.route.snapshot.paramMap.get('roomId')!;
+    this.roomService.findById(this.roomId).then(
+      (res) => {
+        if (res.status === 'Success')
+        {
+          this.room = res.data;
+        }
+      }
+    )
+    this.roomService.getSeatLayout(this.roomId).then(
+      (res) => {
+        console.log('seat layout: ', res)
+        this.seatLayout = res.data.seats;
+        this.buildSeatGrid();
       }
     );
-    this.editRoomForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      cinemaId: [1, Validators.required],
-      quantity: [0,[Validators.required, Validators.min(1)]],
-     
-    });
-    this.roomService.findAll().then(
-      res => {
-        this.rooms = res as Room[];
-      }
+  }
+
+  buildSeatGrid() {
+    const maxRow = Math.max(...this.seatLayout.map(seat => seat.rowNumber));
+    const maxCol = Math.max(...this.seatLayout.map(seat => seat.colNumber));
+    // const maxRow = 20
+    // const maxCol = 15
+    // Khởi tạo ma trận trống
+    const grid = Array.from({ length: maxRow }, () =>
+      Array.from({ length: maxCol }, () => null)
     );
-    this.cinemaService.findAll().then(
-      res => {
-        this.cinemas = res as Cinema[];
-      }
-    );
-   
-  
+
+    for (const seat of this.seatLayout) {
+      grid[seat.rowNumber - 1][seat.colNumber - 1] = seat;
+    }
+
+    this.seatGrid = grid;
+    console.log("seat grid: ", this.seatGrid)
   }
 
   edit(){
-    if(this.editRoomForm.valid){
-      var room = this.editRoomForm.value as Room;
-      room.id = this.room.id;
-      this.roomService.edit(room).then(
-        res => {
-      
-          console.log(res);
-            this.messageService.add({
-              severity: "success",
-              summary: "Thành công",
-              detail: "Sửa phòng thành công"
-            });
-            setTimeout(() => {
-              this.router.navigate(['/admin/room']);
-            }, 2000);
-        },
-        err => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Lỗi",
-            detail: "Sửa phòng thất bại"
-          });
-        }
 
-      );
-       
-      
-    } else {
-      this.messageService.add({
-        severity: "error",
-        summary: "Lỗi",
-        detail: "Vui lòng nhập đủ thông tin"
-      });
-    }
   }
+
+  saveRoom(id: string) {
+    const payload = {
+      name: this.room.name,
+      type: this.room.type,
+      capacity: this.room.capacity,
+      cinemaId: this.room.cinemaId
+    };
+
+    console.log('Saving room with payload:', payload);
+
+    this.roomService.updateRoom(id, payload).then(
+      (res) => {
+        console.log('Lưu phòng thành công:', res);
+
+      },
+      (err) => {
+        console.error('Lỗi khi lưu phòng:', err);
+      }
+    );
+  }
+
+
+  resetRoom() {
+    const seatTypes = ['NORMAL', 'VIP', 'COUPLE'];
+    const seatPrices: { [key: string]: number } = {
+      NORMAL: 50000,
+      VIP: 80000,
+      COUPLE: 120000
+    };
+    const seatPerRow = 15
+
+    const rows = Math.ceil(this.room.capacity / seatPerRow); // Giả sử mỗi hàng có 10 ghế
+    const seats = [];
+    let seatIndex = 0;
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < seatPerRow; col++) {
+        if (seatIndex >= this.room.capacity) break;
+
+        const seatType = seatTypes[seatIndex % seatTypes.length];
+        const seatPrice = seatPrices[seatType];
+        const seatCode = String.fromCharCode(65 + row) + (col + 1); // A1, A2, B1...
+
+        seats.push({
+          seatCode: seatCode,
+          rowNumber: row + 1,
+          colNumber: col + 1,
+          type: seatType,
+          price: seatPrice,
+          status: 'AVAILABLE'
+        });
+
+        seatIndex++;
+      }
+    }
+
+    const payload = {
+      roomId: this.room.id,
+      seats: seats
+    };
+
+    console.log('Reset payload:', payload);
+
+    this.roomService.createSeatLayout(this.roomId, payload).then(
+      (res) => {
+        if (res.status === 'Success')
+          console.log('cresate seat alout')
+      }
+
+    )
+  }
+
 }

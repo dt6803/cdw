@@ -129,4 +129,12 @@ public class UserServiceImpl implements UserService {
         User user = findByUsername(username);
         return userMapper.toUserResponse(user);
     }
+
+    @Override
+    public void updatePassword(String userId, String newPass) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        user.setPassword(passwordEncoder.encode(newPass));
+        userRepository.save(user);
+    }
 }

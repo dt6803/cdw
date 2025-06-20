@@ -14,4 +14,16 @@ export class CinemaService{
         + 'cinema/cinemas'));
     }
 
+  async updateCinema(id: string, request: any) : Promise<any>{
+    return await lastValueFrom(this .httpClient.put(this.baseUrlService.getBaseUrl()
+      + 'cinema/cinemas/info/' + id, request));
+  }
+
+  async createCinema(request: any) : Promise<any>{
+    return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
+      + 'cinema/cinemas', request));
+  }
+
+
+
 }

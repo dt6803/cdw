@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 
 
+// @ts-ignore
 @Component({
   templateUrl: './layout.component.html',
 })
@@ -14,7 +15,7 @@ export class LayoutComponent implements OnInit {
  username: string = localStorage.getItem("username");
   ngOnInit(): void {
     this.open = false
-   
+
   }
   menu(){
     this.open = !this.open;

@@ -1,39 +1,23 @@
 <section class="container-form forms">
-    <div *ngIf="!isVerificationSent; else resetPasswordForm">
-        <form (ngSubmit)="sendVerificationEmail()" #forgotPasswordForm="ngForm">
-        <h2>Quên mật khẩu</h2>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="email" required>
-        <button type="submit">Gửi mã xác thực</button>
-        </form>
-    </div>
-    
-    <ng-template #resetPasswordForm>
-        <div class="form-container">
-          <form (ngSubmit)="resetPassword()" #resetPasswordForm="ngForm" class="reset-password-form">
-            <h2>Nhập lại mật khẩu</h2>
-      
-            <div class="form-group">
-              <label for="verificationCode">Mã xác thực:</label>
-              <input type="text" id="verificationCode" name="verificationCode" [(ngModel)]="verificationCode" required>
-            </div>
-      
-            <div class="form-group">
-              <label for="newPassword">Mật khẩu mới:</label>
-              <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
-            </div>
-      
-            <button type="submit">Đặt lại mật khẩu</button>
-          </form>
-      
-          <div class="timer-container">
-            <h6>Mã xác nhận sẽ hết hiệu lực trong 5 phút.</h6>
-            <div class="countdown pt-4 text-center">
-              {{ timeLeft }}
-            </div>
-          </div>
-        </div>
-      </ng-template>
-      
+  <!-- Form gửi yêu cầu reset password -->
+  <div *ngIf="!isVerificationSent">
+    <form (ngSubmit)="sendVerificationEmail()" #forgotPasswordForm="ngForm">
+      <h2>Quên mật khẩu</h2>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="email" required />
+      <button style="background-color: #B31E8D" type="submit">Gửi mã xác thực</button>
+    </form>
+  </div>
+
+  <!-- Box hiển thị sau khi gửi thành công -->
+  <div *ngIf="isVerificationSent" class="notification-box">
+    <h2>Yêu cầu thành công</h2>
+    <p>
+      Chúng tôi đã gửi một email khôi phục mật khẩu đến <strong>{{ email }}</strong>.
+    </p>
+    <p>Vui lòng kiểm tra hộp thư của bạn và đăng nhập lại bằng mật khẩu mới.</p>
+    <button style="background-color: #B31E8D" routerLink="/login">Quay lại trang đăng nhập</button>
+  </div>
 </section>
+
 <p-toast></p-toast>

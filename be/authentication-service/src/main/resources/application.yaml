@@ -42,6 +42,7 @@ app:
     email: admin123@gmail.com
   services:
     profile: http://localhost:8081/profile
+    notification-service: http://localhost:8087
 
 jwt:
   secret-key: 3c03248c00967ffebb8cee416bd0382d130da0b0cc3015ea149e40536fb80de1

@@ -13,10 +13,21 @@ export class RoomService{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'room/findAll'));
     }
-    async create(room: any) : Promise<any>{
+    async createRoom(room: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'room/create', room));
+        + 'cinema/rooms', room));
     }
+  async createSeatLayout(id: string, request: any) : Promise<any>{
+    return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
+      + 'cinema/rooms/' + id + '/seats/layout', request));
+  }
+
+  async updateRoom(id: string, request: any) : Promise<any>{
+    return await lastValueFrom(this .httpClient.put(this.baseUrlService.getBaseUrl()
+      + 'cinema/rooms/' + id, request));
+  }
+
+
     async delete(id: number) : Promise<any>{
         return await lastValueFrom(this .httpClient.delete(this.baseUrlService.getBaseUrl()
         + 'room/delete/' + id));
@@ -25,13 +36,27 @@ export class RoomService{
         return await lastValueFrom(this .httpClient.put(this.baseUrlService.getBaseUrl()
         + 'room/edit', room));
     }
-    async findById(id: number) : Promise<any>{
+    async findById(id: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
-        + 'room/findById/' + id));
+        + 'cinema/rooms/' + id));
     }
     async findByCinemaId(id: string) : Promise<any>{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'room/findByCinemaId/' + id));
     }
+
+  async getSeatLayout(id: string) : Promise<any>{
+    return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
+      + 'cinema/rooms/'+ id +'/seats/layout'));
+  }
+
+
+
+
+
+  async findRoomInfoByCinemaId(id: string) : Promise<any>{
+    return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
+      + 'cinema/cinemas/' + id + '/rooms'));
+  }
 
 }

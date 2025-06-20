@@ -55,6 +55,8 @@ export class BuyTicketComponent {
   roomId: string = '';
   movie: Movie;
   userId: '';
+  email: string = '';
+  fullname: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -237,24 +239,21 @@ export class BuyTicketComponent {
     };
 
     console.log("Sending ticket data:", payload)
-
+    this.accountService.getProfileByUserId(this.userId).then(
+      (res) => {
+        this.fullname = res.data.fullName;
+        this.email = res.data.email;
+      }
+    );
     this.bookingService.create(payload).then((res) => {
       console.log('Booking response:', res);
-      let email = '';
-      let fullname = '';
+
       if (res.status === 'Success' && res.data.urlPayment) {
 
-        this.accountService.getProfileByUserId(res.data.userId).then(
-          (res) => {
-            fullname = res.data.fullName;
-            email = res.data.email;
-          }
-        );
-
-        this.bookingService.sendMailConfirm({
+        let mailRequest = {
           "to": {
-            "name": fullname,
-            "email": email
+            "name": this.fullname,
+            "email": this.email
 
           },
           "subject": "T Cinema Booking Confirmation",
@@ -264,14 +263,18 @@ export class BuyTicketComponent {
             "showtime": res.data.showtime,
             "createdAt": res.data.createdAt,
             "totalPrice": res.data.totalPrice,
-            "qrCodeBase64": res.data.qrCodeBase64
-          }
-        }).then(r => {
+            "qrCodeBase64": res.data.qrCodeBase64,
+            "fullname": this.fullname
+          }};
+        console.log('mail requst: ', mailRequest)
+        this.bookingService.sendMailConfirm(mailRequest
+        ).then(r => {
           console.log('send mail')
+
         });
 
         // Chuyển trang đến link thanh toán
-        //window.location.href = res.data.urlPayment;
+        window.location.href = res.data.urlPayment;
       } else {
         // Thông báo lỗi nếu không có urlPayment hoặc status không success
         this.messageService.add({

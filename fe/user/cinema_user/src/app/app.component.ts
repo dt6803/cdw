@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
   filteredMovies: Movie[] = [];
   movie: Movie | null = null;
   private routeSub: Subscription = new Subscription();
-  isFollowed: boolean;
+  isFollowed: boolean = false;
   selectedLanguage: string = 'vi';
   currentUser: string;
   constructor(
@@ -45,32 +45,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('App khởi động!');
     const accessToken = localStorage.getItem('accessToken');
-    // if(account != null){
-    //   console.log(account.id);
-    //   this.followService.findById(account.id).then(
-    //     res => {
-    //       console.log(res);
-    //       this.isFollowed = res.status;
-    //
-    //     }
-    //   );
-    // }
     if (accessToken) {
       this.getCurrentUser();
     }
-
-
-  //   this.accountService.getAccount().subscribe(account => {
-  //     if (account) {
-  //         this.account = account;
-  //     } else {
-  //         const accountData = localStorage.getItem('account');
-  //         if (accountData) {
-  //             this.account = JSON.parse(accountData);
-  //         }
-  //     }
-  // });
-  //  this.loadMovies();
   }
 
   async getCurrentUser() {
@@ -84,6 +61,14 @@ export class AppComponent implements OnInit {
       console.warn('Không thể lấy thông tin người dùng:', error);
       // Không gán currentUser nếu lỗi
       this.currentUser = '';
+    }
+  }
+
+  async goToAdminPage() {
+    console.log('ahahah')
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      window.location.href = `http://localhost:65343?token=${accessToken}`;
     }
   }
 

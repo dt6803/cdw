@@ -58,4 +58,11 @@ public class UserProfileServiceImpl implements UserProfileService {
     public void deleteByUserId(String userId) {
         userProfileRepository.deleteByUserId(userId);
     }
+
+    @Override
+    public UserProfileResponse getByEmail(String email) {
+        var profile = userProfileRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.PROFILE_NOT_FOUND));
+        return userProfileMapper.toUserProfileResponse(profile);
+    }
 }

@@ -1,0 +1,14 @@
+button {
+  background-color: #B31E8D;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #9d1a7a; /* màu đậm hơn một chút khi hover */
+}

@@ -92,7 +92,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     VerifyAccountComponent,
     ForgotPasswordComponent,
     ProfileComponent,
-    PricingComponent
+    PricingComponent,
     PaymentResultComponent
   ],
   imports: [

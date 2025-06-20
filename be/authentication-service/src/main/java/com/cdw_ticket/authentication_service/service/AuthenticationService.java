@@ -1,5 +1,6 @@
 package com.cdw_ticket.authentication_service.service;
 
+import com.cdw_ticket.authentication_service.dto.request.ForgotPasswordRequest;
 import com.cdw_ticket.authentication_service.dto.request.IntrospectRequest;
 import com.cdw_ticket.authentication_service.dto.request.LogInRequest;
 import com.cdw_ticket.authentication_service.dto.request.RefreshRequest;
@@ -14,4 +15,6 @@ public interface AuthenticationService {
     AuthenticationResponse refresh(RefreshRequest request);
     IntrospectResponse introspectToken(IntrospectRequest request);
     void delete(HttpServletRequest request);
+
+    void forgotPassword(ForgotPasswordRequest request);
 }

@@ -21,7 +21,6 @@ import { CinemaComponent } from './components/Management/Cinema/cinema.component
 import { CinemaService } from './services/cinema.service';
 import { RoomService } from './services/room.service';
 import { RoomComponent } from './components/Management/Room/room.component';
-import { AddRoomComponent } from './components/Management/Room/add_room.component';
 import { ToastModule } from "primeng/toast";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -55,7 +54,11 @@ import { BookingComponent } from './components/Management/Booking/booking.compon
 import { BookingService } from './services/booking.service';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import {InputTextModule} from "primeng/inputtext";
+import {ButtonModule} from "primeng/button";
+import {CardModule} from "primeng/card";
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,9 +69,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     AccessDenied,
     CinemaComponent,
     RoomComponent,
-    AddRoomComponent,
     EditRoomComponent,
-    AccountComponent, 
+    AccountComponent,
     MovieComponent,
     AddMovieComponent,
     EditMovieComponent,
@@ -99,6 +101,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     DialogModule,
     FileUploadModule,
+    DialogModule,
+    InputTextModule,
+    ButtonModule,
+    FormsModule,
+    CardModule,
   ],
   providers: [
     BaseUrlService,
@@ -118,7 +125,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ShowtimeService,
     RatingService,
     BookingService
-    
+
   ],
   bootstrap: [AppComponent]
 })

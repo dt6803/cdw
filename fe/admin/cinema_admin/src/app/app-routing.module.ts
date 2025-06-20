@@ -9,7 +9,6 @@ import { CheckLoginService } from './services/checkLogin.service';
 import { AccessDenied } from './components/Access Denied/access_denied.component';
 import { CinemaComponent } from './components/Management/Cinema/cinema.component';
 import { RoomComponent } from './components/Management/Room/room.component';
-import { AddRoomComponent } from './components/Management/Room/add_room.component';
 import { EditRoomComponent } from './components/Management/Room/edit_room.component';
 import { AccountComponent } from './components/Management/Account/account.component';
 import { MovieComponent } from './components/Management/Movie/movie.component';
@@ -47,7 +46,7 @@ const routes: Routes = [
         path: "chat",
         component: ChatComponent,
       },
-     
+
       {
         path: "dashboard",
         component: DashboardComponent,
@@ -63,10 +62,6 @@ const routes: Routes = [
       {
         path: "account",
         component: AccountComponent,
-      },
-      {
-        path: "add-room",
-        component: AddRoomComponent,
       },
       {
         path: "edit-room/:roomId",
@@ -139,7 +134,7 @@ const routes: Routes = [
     path: "access-denied",
     component: AccessDenied,
   },
-  
+
 ];
 
 @NgModule({

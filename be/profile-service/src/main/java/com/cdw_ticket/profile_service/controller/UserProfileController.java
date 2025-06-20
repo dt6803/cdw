@@ -51,4 +51,11 @@ public class UserProfileController {
                 .data(new String("Delete successfully!"))
                 .build();
     }
+
+    @GetMapping("/findEmail/{email}")
+    public BaseResponse<UserProfileResponse> getByEmail(@PathVariable String email) {
+        return BaseResponse.<UserProfileResponse>builder()
+                .data(userProfileService.getByEmail(email))
+                .build();
+    }
 }

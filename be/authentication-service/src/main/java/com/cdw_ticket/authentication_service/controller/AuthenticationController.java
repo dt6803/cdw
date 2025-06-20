@@ -1,5 +1,6 @@
 package com.cdw_ticket.authentication_service.controller;
 
+import com.cdw_ticket.authentication_service.dto.request.ForgotPasswordRequest;
 import com.cdw_ticket.authentication_service.dto.request.IntrospectRequest;
 import com.cdw_ticket.authentication_service.dto.request.LogInRequest;
 import com.cdw_ticket.authentication_service.dto.request.RefreshRequest;
@@ -49,6 +50,14 @@ public class AuthenticationController {
         authenticationService.delete(request);
         return BaseResponse.<String>builder()
                 .data(new String("Delete successfully!"))
+                .build();
+    }
+
+    @PostMapping("/forgot-password")
+    public BaseResponse<Void> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        authenticationService.forgotPassword(request);
+        return BaseResponse.<Void>builder()
+                .message("Reset Password successfully!")
                 .build();
     }
 }
