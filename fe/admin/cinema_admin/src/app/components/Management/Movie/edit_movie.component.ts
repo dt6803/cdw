@@ -79,28 +79,28 @@ export class EditMovieComponent implements OnInit {
     if (this.editMovieForm.valid) {
       var movie = this.editMovieForm.value as Movie;
       movie.id = this.movie.id;
-      this.movieService.edit(movie).then(
-        res => {
-
-          console.log(res);
-          this.messageService.add({
-            severity: "success",
-            summary: "Thành công",
-            detail: "Sửa phim thành công"
-          });
-          setTimeout(() => {
-            this.router.navigate(['/admin/movie']);
-          }, 2000);
-        },
-        err => {
-          this.messageService.add({
-            severity: "error",
-            summary: "Lỗi",
-            detail: "Sửa phim thất bại"
-          });
-        }
-
-      );
+      // this.movieService.edit(movie).then(
+      //   res => {
+      //
+      //     console.log(res);
+      //     this.messageService.add({
+      //       severity: "success",
+      //       summary: "Thành công",
+      //       detail: "Sửa phim thành công"
+      //     });
+      //     setTimeout(() => {
+      //       this.router.navigate(['/admin/movie']);
+      //     }, 2000);
+      //   },
+      //   err => {
+      //     this.messageService.add({
+      //       severity: "error",
+      //       summary: "Lỗi",
+      //       detail: "Sửa phim thất bại"
+      //     });
+      //   }
+      //
+      // );
 
 
     } else {

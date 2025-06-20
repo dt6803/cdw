@@ -16,7 +16,10 @@ export class MovieComponent implements OnInit, AfterViewInit {
   currentPage: number = 1;
   itemsPerPage: number = 3;
   totalPages: number = 0;
-   ratings: MovieRatings[];
+  selectedMovie: any = null;
+  displayMovieDialog: boolean = false;
+  isLoading = false;
+
   constructor(
     private movieService: MovieService,
     private messageService: MessageService,
@@ -35,20 +38,23 @@ export class MovieComponent implements OnInit, AfterViewInit {
   }
 
   loadMovies(): void {
+    this.isLoading = true;
     this.movieService.findAll().then(res => {
       this.movies = res.data as Movie[];
+      this.isLoading = false;
       this.updatePagination();
       this.cdr.detectChanges(); // Đảm bảo UI được cập nhật
     });
   }
 
-  // updatePagination(): void {
-  //   this.totalPages = this.getTotalPages();
-  //   if (this.totalPages < this.currentPage) {
-  //     this.currentPage = 1;  // Reset lại trang nếu trang hiện tại lớn hơn tổng số trang
-  //   }
-  //   this.cdr.detectChanges();  // Đảm bảo UI được cập nhật sau khi tính toán pagination
-  // }
+  openMovieDialog(movie: any) {
+    this.selectedMovie = {
+      ...movie,
+      genresString: movie.genres?.join(', '),
+      castsString: movie.casts?.join(', ')
+    };
+    this.displayMovieDialog = true;
+  }
   updatePagination(): void {
     this.totalPages = this.getTotalPages();
     this.cdr.detectChanges();  // Đảm bảo UI được cập nhật sau khi tính toán pagination
@@ -59,19 +65,7 @@ export class MovieComponent implements OnInit, AfterViewInit {
     return this.movies.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  // changePage(page: number): void {
-  //   if (page >= 1 && page <= this.totalPages) {
-  //     this.currentPage = page;
-  //     this.cdr.detectChanges();
-  //   }
-  // }
-  // changePage(page: number): void {
-  //   if (page >= 1 && page <= this.totalPages) {
-  //     this.currentPage = page; // Cập nhật giá trị currentPage
-  //     this.updatePagination(); // Cập nhật lại pagination sau khi đổi trang
-  //     this.cdr.detectChanges();  // Cập nhật UI
-  //   }
-  // }
+
   changePage(page: number): void {
   if (page >= 1 && page <= this.totalPages) {
     this.currentPage = page;
@@ -89,47 +83,62 @@ export class MovieComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/admin/edit-movie', movieId]);
   }
 
-  delete(id: number): void {
-    this.movieService.delete(id).then(
-      res => {
-        this.messageService.add({
-          severity: "success",
-          summary: "Thành công",
-          detail: "Xoá phim thành công"
-        });
-        this.loadMovies();
-      },
-      err => {
-        this.messageService.add({
-          severity: "error",
-          summary: "Lỗi",
-          detail: "Xóa phim thất bại"
-        });
-      }
-    );
+  saveMovie() {
+    const payload = { ...this.selectedMovie };
+    this.isLoading = true;
+    if (this.selectedMovie.id) {
+      // Đã có id => cập nhật
+      this.movieService.updateMovie(this.selectedMovie.id, payload).then((res) => {
+        if (res.status === 'Success') {
+          alert("Chỉnh sửa thành công");
+          this.displayMovieDialog = false;
+          this.isLoading = false;
+          this.loadMovies();
+
+        }
+      });
+    } else {
+      // Không có id => thêm mới
+      this.movieService.createMovie(payload).then((res) => {
+        if (res.status === 'Success') {
+          alert("Thêm phim thành công");
+          this.displayMovieDialog = false;
+          this.isLoading = false;
+          this.loadMovies();
+        }
+      });
+    }
   }
+
+  showAddMoviePopup() {
+    this.selectedMovie = {
+      title: '',
+      description: '',
+      duration: 0,
+      releaseDate: '',
+      genres: [],
+      director: '',
+      casts: [],
+      rating: '',
+      posterUrl: '',
+      trailerUrl: '',
+      language: '',
+      status: 'NOW_SHOWING',
+      subtitle: ''
+    };
+    this.displayMovieDialog = true;
+  }
+
+
+
 
   setVideo(trailer: string): void {
-    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`${trailer}`);
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.getEmbedUrl(trailer));
   }
 
-  confirmDelete(movieId: number): void {
-    if (confirm('Bạn có chắc muốn xóa?')) {
-      this.delete(movieId);
-    }
-  }
-
-  confirmUpdate(movieId: number): void {
-    if (confirm('Bạn có chắc muốn sửa?')) {
-      this.update(movieId);
-    }
-  }
-  loadRating(movieId: number): void {
-    this.ratingService.findAll(movieId).then(
-      res => {
-        this.ratings = res.status as MovieRatings[];
-        console.log(res.status);
-      }
-    );
+  getEmbedUrl(url: string): string {
+    const regExp = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w\-]{11})/;
+    const match = url.match(regExp);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : '';
   }
 }
