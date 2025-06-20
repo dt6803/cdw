@@ -137,7 +137,8 @@ export class BuyTicketComponent {
 
     this.ticketForm = this.formBuilder.group({
       name: ['', Validators.required], // Thêm Validators.required
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$')]], // Thêm Validators.required và pattern
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10,11}$'), Validators.minLength(10),
+    Validators.maxLength(11)]], // Thêm Validators.required và pattern
       email: ['', [Validators.required, Validators.email]], // Thêm Validators.required và email
       paymentMethod: ['VNPAY', Validators.required]
     });
