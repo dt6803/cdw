@@ -42,8 +42,6 @@ import { ComboService } from './services/combo.service';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
-import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
-import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { ShowtimeService } from './services/showtime.service';
 import { DropdownModule } from 'primeng/dropdown';
 import { RatingComponent } from './components/Management/Rating/rating.component';
@@ -57,6 +55,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
 import {CardModule} from "primeng/card";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {LogoutComponent} from "./components/logout/logout.component";
+import {TokenRedirectComponent} from "./components/Login/token-redirect.component";
 
 // @ts-ignore
 @NgModule({
@@ -82,10 +83,10 @@ import {CardModule} from "primeng/card";
     ComboComponent,
     AddComboComponent,
     ShowtimeComponent,
-    AddShowtimeComponent,
-    EditShowtimeComponent,
     RatingComponent,
-    BookingComponent
+    BookingComponent,
+    LogoutComponent,
+    TokenRedirectComponent
 
   ],
   imports: [
@@ -106,6 +107,7 @@ import {CardModule} from "primeng/card";
     ButtonModule,
     FormsModule,
     CardModule,
+    ProgressSpinnerModule,
   ],
   providers: [
     BaseUrlService,

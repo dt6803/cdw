@@ -48,21 +48,6 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a [routerLink]="['/admin/room']" class="menu-link">
-                    <div data-i18n="Without navbar">Phòng</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a [routerLink]="['/admin/seat']" class="menu-link">
-                    <div data-i18n="Container">Ghế</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a [routerLink]="['/admin/sub']" class="menu-link">
-                    <div data-i18n="Container">Phụ Đề</div>
-                  </a>
-                </li>
-                <li class="menu-item">
                   <a [routerLink]="['/admin/combo']" class="menu-link">
                     <div data-i18n="Container">Combo</div>
                   </a>
@@ -87,49 +72,11 @@
                 <div data-i18n="Boxicons">Suất chiếu</div>
               </a>
             </li>
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Tài Khoản Trên Hệ Thống</span>
-            </li>
-            <li class="menu-item">
-              <a [routerLink]="['/admin/account']" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Boxicons">Tài Khoản</div>
-              </a>
-            </li>
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Vé</span>
-            </li>
-            <li class="menu-item">
-              <a [routerLink]="['/admin/booking']" class="menu-link">
-                <i class='menu-icon bx bx-qr'></i>
-                <div data-i18n="Boxicons">Vé</div>
-              </a>
-            </li>
 
 
 
 
-            <!-- Forms & Tables -->
-            <li class="menu-header small text-uppercase"><span class="menu-header-text">Khác</span></li>
-            <!-- Forms -->
-            <li class="menu-item" [ngClass]="{'open': open}" (click)="menu()">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon bx bx-dots-horizontal-rounded'></i>
-                <div data-i18n="Form Elements">Quản lý khác</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a [routerLink]="['/admin/payment']" class="menu-link">
-                    <div data-i18n="Basic Inputs" >Thanh toán vé</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a [routerLink]="['/admin/movie']" class="menu-link">
-                    <div data-i18n="Input groups">Đánh giá phim</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+
 
             <!-- Tables -->
             <li class="menu-item">

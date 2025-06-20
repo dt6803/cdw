@@ -4,66 +4,145 @@
   <div class="container-xxl flex-grow-1 container-p-y">
 
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Quản Lí /</span> Suất Chiếu</h4>
-    <button type="button" class="btn btn-primary"><a [routerLink]="['/admin/add-showtime']" style="color: white;">Thêm
-        Suất Chiếu</a></button>
+    <button type="button" class="btn btn-primary" (click)="openAddShowtimeDialog()">Thêm
+        Suất Chiếu</button>
 
     <br><br>
     <!-- Basic Bootstrap Table -->
     <div class="card">
+
+
       <h5 class="card-header">Quản Lí Suất Chiếu</h5>
-      <div class="table-responsive text-nowrap">
-        <div class="card flex justify-content-center p-4">
-          <p-dropdown [options]="cinemas" [(ngModel)]="selectedCinema" optionLabel="name" placeholder="Chọn Rạp"
-            (onChange)="onCinemaChange($event.value)"></p-dropdown>
+      <div class="table-responsive text-nowrap p-3" style="max-height: 500px; overflow-y: auto;">
+        <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-3">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="text-center"><div class="d-flex justify-content-center align-items-center">
-                Mã
-                <button class="btn btn-outline ms-2" (click)="sort()">
-                  <i class='bx bx-sort'></i>
-                </button>
-              </div></th>
-<!--              <th>Hình Ảnh</th>-->
-              <th>Tên Phim </th>
-              <th>Tên Rạp</th>
-              <th>Bắt Đầu Chiếu</th>
-<!--              <th>Loại Phụ Đề</th>-->
-              <th>Trạng thái</th>
-              <th>Hành động</th>
-            </tr>
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+          <tr>
+
+            <th>Tên Phim</th>
+            <th>Rạp</th>
+            <th>Bắt đầu</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+          </tr>
           </thead>
-          <tbody class="table-border-bottom-0">
-            <ng-container *ngFor="let showtime of filteredShowtimes">
-              <tr>
-                <th>{{showtime.id}}</th>
-<!--                <th> <img width="100px" class="img-fluid" src="{{showtime.photo}}"> </th>-->
-                <th> {{showtime.movieTitle}}</th>
-                <th> {{showtime.cinemaName}}</th>
-                <th> {{showtime.startTime}}</th>
-<!--                <th> {{showtime.subName}}</th>-->
-                <th>{{showtime.status ? 'Hoạt động' : 'Không hoạt động'}}</th>
-                <th>
-                  <button (click)="confirmDelete(showtime.id)" type="button"
-                    class="btn rounded-pill btn-icon btn-outline-primary">
-                    <span class="tf-icons bx bx-x"></span>
+          <tbody>
 
-                  </button> |
-                  <button (click)="confirmUpdate(showtime.id)" type="button"
-                    class="btn rounded-pill btn-icon btn-outline-primary">
-                    <span class="tf-icons bx bx-edit"></span>
+          <tr *ngFor="let showtime of filteredShowtimes">
 
-                  </button>
-                </th>
-              </tr>
-            </ng-container>
-
+            <td>{{showtime.movieTitle}}</td>
+            <td>{{showtime.cinemaName}}</td>
+            <td>{{showtime.startTime | date:'short'}}</td>
+            <td>
+            <span [ngClass]="{'badge bg-success': showtime.status === 'AVAILABLE', 'badge bg-danger': showtime.status !== 'AVAILABLE'}" style="color: white">
+              {{showtime.status}}
+            </span>
+            </td>
+            <td>
+              <button (click)="openShowtimeDialog(showtime)" class="btn btn-sm btn-outline-info">
+                Chi tiết
+              </button>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
     </div>
+
+
+    <!-- Optional pagination control if needed -->
+      <!-- <p-paginator [rows]="10" [totalRecords]="filteredShowtimes.length" (onPageChange)="paginate($event)"> </p-paginator> -->
+
+
     <!--/ Basic Bootstrap Table -->
+    <p-dialog header="Chi tiết suất chiếu"
+              [(visible)]="displayShowtimeDialog"
+              [modal]="true"
+              [style]="{width: '600px'}"
+              [closable]="true">
+
+      <form *ngIf="selectedShowtime" class="p-fluid">
+        <div class="p-field">
+          <label>Mã suất chiếu</label>
+          <input pInputText [value]="selectedShowtime.id" disabled />
+        </div>
+
+        <div class="p-field">
+          <label>Tên phim</label>
+          <input pInputText [(ngModel)]="selectedShowtime.movieTitle" name="movieTitle" disabled />
+        </div>
+
+        <div class="p-field">
+          <label>Tên rạp</label>
+          <input pInputText [(ngModel)]="selectedShowtime.cinemaName" name="cinemaName" disabled />
+        </div>
+
+        <div class="p-field">
+          <label>Giờ bắt đầu</label>
+          <input type="datetime-local" [(ngModel)]="selectedShowtime.startTime" name="startTime" class="form-control"/>
+        </div>
+
+        <div class="p-field">
+          <label>Giờ kết thúc</label>
+          <input type="datetime-local" [(ngModel)]="selectedShowtime.endTime" name="endTime" class="form-control"/>
+        </div>
+
+        <div class="p-field">
+          <label>Giá vé</label>
+          <input type="number" [(ngModel)]="selectedShowtime.price" name="price" class="form-control"/>
+        </div>
+      </form>
+    </p-dialog>
+
+    <p-dialog header="Thêm Suất Chiếu" [(visible)]="displayAddShowtimeDialog" [modal]="true" [style]="{ width: '600px' }">
+      <div class="p-fluid">
+        <div class="field">
+          <label >Phim</label>
+          <p-dropdown [options]="movies" [(ngModel)]="newShowtime.movieId" optionLabel="title" placeholder="Chọn phim"></p-dropdown>
+        </div>
+
+        <div class="field">
+          <label>Rạp</label>
+          <p-dropdown [options]="cinemas" [(ngModel)]="selectedCinema"  optionLabel="name" placeholder="Chọn rạp"
+                      (onChange)="onCinemaChange($event.value)">
+          </p-dropdown>
+        </div>
+
+        <div class="field">
+          <label>Phòng</label>
+          <p-dropdown [options]="rooms" [(ngModel)]="newShowtime.roomId" optionLabel="name" placeholder="Chọn phòng"></p-dropdown>
+        </div>
+
+        <div class="field">
+          <label>Thời gian bắt đầu</label>
+          <input type="datetime-local" [(ngModel)]="newShowtime.startTime" class="form-control" />
+        </div>
+
+        <div class="field">
+          <label>Thời gian kết thúc</label>
+          <input type="datetime-local" [(ngModel)]="newShowtime.endTime" class="form-control" />
+        </div>
+
+        <div class="field">
+          <label>Giá vé</label>
+          <input type="number" [(ngModel)]="newShowtime.price" class="form-control" />
+        </div>
+
+        <div class="field">
+          <label>Trạng thái</label>
+          <p-dropdown [options]="statuses" [(ngModel)]="newShowtime.status" placeholder="Chọn trạng thái"></p-dropdown>
+        </div>
+
+        <div class="mt-3 text-end">
+          <button class="btn btn-primary" (click)="saveShowtime()">Lưu</button>
+        </div>
+      </div>
+    </p-dialog>
+
 
 
 
@@ -71,4 +150,5 @@
 
     <div class="content-backdrop fade"></div>
   </div>
+</div>
   <p-toast></p-toast>

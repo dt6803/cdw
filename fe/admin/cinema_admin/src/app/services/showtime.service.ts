@@ -24,9 +24,9 @@ export class ShowtimeService{
         return await lastValueFrom(this .httpClient.get(this.baseUrlService.getBaseUrl()
         + 'showtime/findAllByCinema/' + cinemaId));
     }
-    async create(showtime: any) : Promise<any>{
+    async createShowtime(showtime: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.post(this.baseUrlService.getBaseUrl()
-        + 'showtime/create', showtime));
+        + 'showtime/showtimes', showtime));
     }
     async edit(showtime: any) : Promise<any>{
         return await lastValueFrom(this .httpClient.put(this.baseUrlService.getBaseUrl()

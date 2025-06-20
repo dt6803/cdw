@@ -21,17 +21,16 @@ import { SeatComponent } from './components/Management/Seat/seat.component';
 import { ComboComponent } from './components/Management/Combo/combo.component';
 import { AddComboComponent } from './components/Management/Combo/add_combo.component';
 import { ShowtimeComponent } from './components/Management/Showtime/showtime.component';
-import { AddShowtimeComponent } from './components/Management/Showtime/add_showtime.component';
-import { EditShowtimeComponent } from './components/Management/Showtime/edit_showtime.component';
 import { RatingComponent } from './components/Management/Rating/rating.component';
 import { AddSeatComponent } from './components/Management/Seat/add_seat.component';
 import { BookingComponent } from './components/Management/Booking/booking.component';
+import {LogoutComponent} from "./components/logout/logout.component";
+import {AppComponent} from "./app.component";
+import {TokenRedirectComponent} from "./components/Login/token-redirect.component";
 
 const routes: Routes = [
-  {
-    path: "",
-    component: LoginComponent,
-  },
+  { path: '', component: TokenRedirectComponent },
+  { path: 'logout', component: LogoutComponent },
   {
     path: "login",
     component: LoginComponent,
@@ -42,6 +41,7 @@ const routes: Routes = [
     canActivate: [CheckLoginService],
 
     children: [
+
       {
         path: "chat",
         component: ChatComponent,
@@ -111,14 +111,7 @@ const routes: Routes = [
         path: "showtime",
         component: ShowtimeComponent,
       } ,
-      {
-        path: "add-showtime",
-        component: AddShowtimeComponent,
-      } ,
-      {
-        path: "edit-showtime/:showTimeId",
-        component: EditShowtimeComponent,
-      },
+
       {
         path: "rating",
         component: RatingComponent,

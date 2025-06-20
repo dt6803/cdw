@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from "@angular/router";
 import { AccountService } from './account.service';
+import {jwtDecode} from "jwt-decode";
 @Injectable()
 export class CheckLoginService implements CanActivate{
     constructor(
@@ -8,15 +9,22 @@ export class CheckLoginService implements CanActivate{
         private router: Router
     ){}
     canActivate(){
-        var username = localStorage.getItem("username");
-        console.log(username);
-        // if(username != null){
-        //     return true;
-        // } else{
-        //     this.router.navigate(['/access-denied']);
-        //    return false;
-        // }
-      return true;
+      const token = localStorage.getItem('accessToken');
+
+      if (token) {
+        try {
+          const payload: any = jwtDecode(token);
+          if (payload?.iss === 'admin') {
+            return true;
+          }
+        } catch (err) {
+          // Token lỗi
+        }
+      }
+
+      // ❌ Không hợp lệ → chuyển về login
+      this.router.navigate(['/login']);
+      return false;
 
     }
 }
