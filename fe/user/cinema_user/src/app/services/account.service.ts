@@ -29,7 +29,7 @@ export class AccountService {
 
   async forgotPassword(request: any): Promise<any> {
     return await lastValueFrom(this.httpClient.post(this.baseUrlService.getBaseUrl()
-      + 'authentication/forgot-password', request));
+      + 'authentication/auth/forgot-password', request));
   }
 
   async update(account: Account): Promise<any> {

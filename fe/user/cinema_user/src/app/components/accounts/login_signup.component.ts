@@ -43,7 +43,6 @@ export class Login_SignupComponent implements OnInit, AfterViewInit  {
       phone: ['', Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(10),
     Validators.maxLength(11)],
       gender: ['', Validators.required],
-      phone: ['', Validators.required],
       fullname: ['', Validators.required],
       birthday: ['', Validators.required],
       password: ['', Validators.required],

@@ -8,7 +8,7 @@ spring:
     name: notification-service
 
 brevo:
-  api-key: []
+  api-key: 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
   sender-email: hoangtunqs134@gmail.com
   sender-name: T Cinema
 

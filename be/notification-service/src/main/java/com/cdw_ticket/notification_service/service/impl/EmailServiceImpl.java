@@ -42,7 +42,6 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public EmailResponse sendMail(SendMailRequest request) {
         String htmlContent = emailTemplateService.buildEmail(request.getHtmlContent(), request.getData());
-        log.info(htmlContent);
 
         EmailRequest emailRequest = EmailRequest.builder()
                 .sender(Sender.builder()
@@ -54,7 +53,10 @@ public class EmailServiceImpl implements EmailService {
                 .htmlContent(htmlContent)
                 .build();
         try {
+            log.info("send mail successfully!");
+            log.info("email: {}", request.getTo().getEmail());
             return emailClient.sendMail(apiKey, emailRequest);
+
         } catch (FeignException exception) {
             log.info("issue: {}", exception.getMessage());
             throw new AppException(ErrorCode.CANNOT_SEND_MAIL);

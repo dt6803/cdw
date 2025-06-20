@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
         name = "notification-service",
         url = "${app.services.notification-service}")
 public interface NotificationClient {
-    @PostMapping("/email/send")
-    public BaseResponse<EmailResponse> sendMail(@RequestBody SendMailRequest request);
+    @PostMapping("/notification/email/send")
+    BaseResponse<EmailResponse> sendMail(@RequestBody SendMailRequest request);
 }

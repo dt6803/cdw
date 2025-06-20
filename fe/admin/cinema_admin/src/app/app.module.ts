@@ -55,7 +55,11 @@ import { BookingComponent } from './components/Management/Booking/booking.compon
 import { BookingService } from './services/booking.service';
 import { DialogModule } from 'primeng/dialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import {InputTextModule} from "primeng/inputtext";
+import {ButtonModule} from "primeng/button";
+import {CardModule} from "primeng/card";
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +72,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     RoomComponent,
     AddRoomComponent,
     EditRoomComponent,
-    AccountComponent, 
+    AccountComponent,
     MovieComponent,
     AddMovieComponent,
     EditMovieComponent,
@@ -99,6 +103,11 @@ import { FileUploadModule } from 'primeng/fileupload';
     CalendarModule,
     DialogModule,
     FileUploadModule,
+    DialogModule,
+    InputTextModule,
+    ButtonModule,
+    FormsModule,
+    CardModule,
   ],
   providers: [
     BaseUrlService,
@@ -118,7 +127,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     ShowtimeService,
     RatingService,
     BookingService
-    
+
   ],
   bootstrap: [AppComponent]
 })

@@ -126,6 +126,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String newPass = "55555";
         userService.updatePassword(request.getUserId(), newPass);
 
+        log.info("userId: {}", request.getUserId());
+        log.info("email: {}", request.getEmail());
+
         var recipient = Recipient.builder()
                 .name("user")
                 .email(request.getEmail())

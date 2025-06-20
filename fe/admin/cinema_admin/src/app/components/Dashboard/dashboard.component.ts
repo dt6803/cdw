@@ -7,6 +7,7 @@ import { MovieRatings } from 'src/app/models/movieRatings.model';
 import { MovieService } from 'src/app/services/movie.service';
 import { RatingService } from 'src/app/services/rating.service';
 
+// @ts-ignore
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

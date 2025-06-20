@@ -27,11 +27,11 @@
                   <ng-container *ngIf="currentUser && currentUser !== ''; else guestLinks">
                     <a [routerLink]="['/profile']" class="me-2">{{ 'tai_khoan' | translate }}</a> |
                     <ng-container *ngIf="currentUser === 'admin'">
-
-                      <a href="http://localhost:65343/admin/dashboard" target="_blank" class="p-2 ms-2">
+                      <a href="#" (click)="goToAdminPage()" class="p-2 ms-2">
                         Admin
                       </a> |
                     </ng-container>
+
                     <a [routerLink]="['/home']" (click)="logout()" class="p-2 ms-2">{{ 'dang_xuat' | translate }}</a>
                   </ng-container>
 
